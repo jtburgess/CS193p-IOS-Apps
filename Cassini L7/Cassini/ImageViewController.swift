@@ -11,7 +11,7 @@ import UIKit
 class ImageViewController: UIViewController, UIScrollViewDelegate
 {
     // MARK: Model
-    var imageURL: URL? {
+    var imageURL: String? {
         didSet {
             image = nil
             print ("imageURL was set to \(String(describing: imageURL))")
@@ -21,14 +21,22 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
         }
     }
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     // MARK: Implementation
     fileprivate func fetchImage() {
-        if let url = imageURL {
-            if let imageData = try? Data(contentsOf: url) {
-                print ("fetchImage")
-                image = UIImage(data: imageData)
-            } else {
-                print ("fetch image failed") //\(url)
+        if let url =  imageURL {
+            // fetch the image in a separate thread, notify the main thread when done
+            spinner.startAnimating()
+            print ("fetch start")
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                let urlContents = try? Data(contentsOf: URL(string:url)!)
+                if let imageData = urlContents, url == self?.imageURL {
+                    DispatchQueue.main.async {
+                        print ("fetch complete")
+                        self?.image = UIImage(data: imageData)
+                    }
+                }
             }
         } else {
             print ("attempt to fetch NIL image")
@@ -40,16 +48,17 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
     fileprivate var image: UIImage? {
         get {
             print ("get image")
-            return imageView.image
+            return imageView.image ?? nil
         }
         set {
             imageView.image = newValue
-            imageView.sizeToFit()
-            scrollView?.contentSize = imageView.frame.size
-            if self.image  == nil {
+            if newValue == nil {
                 print ("set image to nil")
             } else {
+                imageView.sizeToFit()
+                scrollView?.contentSize = imageView.frame.size
                 print ("set image; size \(imageView.frame.size)")
+                spinner?.stopAnimating()
             }
         }
     }
@@ -59,7 +68,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
         print ("viewDidLoad")
         super.viewDidLoad()
         // (doesnt work) imageURL = URL(string: DemoURL.Stanford)
-        imageURL = URL(string: DemoURL.SF)
+        // (Used before image selection) imageURL = URL(string: DemoURL.SF)
         //imageURL = DemoURL.NASAImageNamed("Cassini")
 
     }
