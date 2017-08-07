@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  GraphingCalculator
 //
-//  Created by Olesia Kalashnik on 12/28/15.
-//  Copyright © 2015 Olesia Kalashnik. All rights reserved.
+//  Created by John Burgess on 8/7/17.
+//  Copyright © 2017 JTBURGESS. All rights reserved.
 //
 
 import UIKit
