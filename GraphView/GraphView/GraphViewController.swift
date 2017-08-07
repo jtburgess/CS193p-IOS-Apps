@@ -9,11 +9,12 @@
 import UIKit
 
 
-class GraphViewController: UIViewController, GraphFunctionDelegate {
+class GraphViewController: UIViewController {
 
-    var myRange = Range( 0...7 )
-    func theFunction ( x:Double ) -> Double {
-        return sin(x)
+    var myRange = myXrange( minX: -2.0, maxX: CGFloat(3.0 * Double.pi)
+    )
+    func myFunction ( x:Double ) -> Double {
+        return cos(x)
     }
     
     override func viewDidLoad() {
@@ -33,7 +34,8 @@ class GraphViewController: UIViewController, GraphFunctionDelegate {
     @IBOutlet weak var graphView: graphView! {
         didSet {
             print ("GVC graphView didSet delegate")
-            graphView.delegate = self
+            graphView.theRange = myRange
+            graphView.theFunction = myFunction
         }
     }
 
