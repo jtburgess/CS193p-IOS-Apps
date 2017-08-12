@@ -11,7 +11,7 @@ import Foundation
 
 class CalcViewController: UIViewController {
     
-    @IBOutlet weak var paperTape: UILabel!
+    @IBOutlet weak var paperTape: UITextView!
     @IBOutlet weak var display: UILabel! // aka accumulator, as optional string
     @IBOutlet weak var formula: UILabel!
     var userIsTypingANumber = false
@@ -51,7 +51,7 @@ class CalcViewController: UIViewController {
 
     @IBAction func pushVariable(_ sender: UIButton) {
         addToHistory("Push variable on stack")
-        brain.pushOperand(sender.currentTitle!)
+        _ = brain.pushOperand(sender.currentTitle!)
         formula.text = brain.description
     }
 
@@ -73,7 +73,7 @@ class CalcViewController: UIViewController {
         if (userIsTypingANumber) {
             EnterKey()
         }
-        print ("perform \(operation) on \(display.text ?? nil)")
+        print ("perform \(operation) on \(String(describing: display.text ?? nil))")
         if let result = brain.performOperation(operation) {
             displayValue = result
             addToHistory("\(operation) result: \(display.text!)")
@@ -88,7 +88,7 @@ class CalcViewController: UIViewController {
     @IBAction func setM(_ sender: UIButton) {
         if let theValue = displayValue {
             brain.setVariable("M", value: theValue)
-            addToHistory("set M = \(displayValue ?? nil)")
+            addToHistory("set M = \(String(describing: displayValue ?? nil))")
         } else {
             brain.setVariable("M", value: nil)
             addToHistory("set M = NIL")

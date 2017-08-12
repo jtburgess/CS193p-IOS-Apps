@@ -62,7 +62,7 @@ class CalculatorBrain
         learnOp ( Op.unaryOperation("sin", { sin($0) } ) )
         learnOp ( Op.unaryOperation("cos", { cos($0) } ) )
 
-        learnOp ( Op.constantOperation("π", M_PI ) )
+        learnOp ( Op.constantOperation("π", Double.pi ) )
         learnOp ( Op.constantOperation("e", M_E ) )
     }
 
@@ -176,7 +176,7 @@ class CalculatorBrain
             variableValues[symbol] = value
         }
 
-        print ("Set variable '\(symbol)' = \(value)")
+        print ("Set variable '\(symbol)' = \(String(describing: value))")
     }
 
     func performOperation(_ symbol: String) -> Double? {
