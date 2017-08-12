@@ -329,6 +329,9 @@
                                 <state key="normal" title="Graph">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="wPW-25-Cxy" kind="showDetail" identifier="showGraph" id="6AN-n3-iPt"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSD-FM-AI3">
                                 <rect key="frame" x="16" y="411" width="339" height="28"/>
@@ -483,4 +486,7 @@
             <point key="canvasLocation" x="-13583.5" y="-690.5"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="6AN-n3-iPt"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -131,4 +131,31 @@ class CalcViewController: UIViewController {
             paperTape.text! = theEntry+"\n" + paperTape.text!
         }
     }
+    
+    // MARK: - Navigation
+    func evalMorZero (x: Double) -> Double {
+        print ("evalMOrZero (\(x))")
+        brain.setVariable("M", value: x)
+        if let eValue = brain.evaluate() {
+            return eValue
+        } else {
+            return 0.0
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        print ("Calc-to-graph  VC segue; id=\(segue.identifier!)")
+        var destVC = segue.destination
+        if let navigationVC = destVC as? UINavigationController {
+            destVC = navigationVC.visibleViewController ?? destVC
+        }
+        if let graphVC = destVC as? GraphViewController {
+            graphVC.myRange = myXrange(minX: -5.0 , maxX: 5.0)
+            graphVC.myFunction = evalMorZero
+            print ("set to graph: <\(brain.description)>")
+        } else {
+            print ("Segue Calc NOT to GraphViewController")
+        }
+    }
 }

@@ -83,6 +83,8 @@ class CalculatorBrain
                 if let operand = operandEvaluation.result {
                     //print ("\(opName) on \(operand)")
                     return (operation(operand), operandEvaluation.remainingOps)
+                } else {
+                    print ("Unary Op eval(\(remainingOps)) returned NIL")
                 }
             case .binaryOperation(_, let operation):
                 // pop TWO operands off the stack and use both
@@ -91,7 +93,11 @@ class CalculatorBrain
                     let operand2Eval = evaluate(operandEval1.remainingOps)
                     if let opTwo = operand2Eval.result {
                         return (operation(opOne, opTwo), operand2Eval.remainingOps)
+                    } else {
+                        print ("Binary Op2 eval(\(operandEval1.remainingOps)) returned NIL")
                     }
+                } else {
+                    print ("Binary Op1 eval(\(remainingOps)) returned NIL")
                 }
             case .constantOperation(_, let operation):
                 //pushOperand(operation)
@@ -100,6 +106,7 @@ class CalculatorBrain
                 return (variableValues[symbol], remainingOps)
             }
         }
+        print ("Evaluate error, returning (nil, \(ops))")
         return (nil,ops)
     }
 
@@ -144,7 +151,7 @@ class CalculatorBrain
                 }
             }
         }
-        return (nil,ops)
+        return ("NIL",ops)
 
     }
 
@@ -153,7 +160,7 @@ class CalculatorBrain
     func evaluate() -> Double? {
         let (result, remainder) = evaluate(opStack)
         // don't replace : opStack = remainingOps
-        print ("evaluate \(opStack) = result leaving \(remainder)")
+        print ("API evaluate \(opStack) = \(result) leaving \(remainder)")
         return result
     }
 
