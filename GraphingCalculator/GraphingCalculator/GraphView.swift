@@ -44,7 +44,7 @@ class graphView: UIView
             (self.bounds.width)
         let scaleToView: CGFloat = 1.0 / xIncrement
         // where across the X axis is "0.0"?
-        let zeroXOffset = min(1.0, max(0.0, (0.0-theRange.minX))) * scaleToView
+        let zeroXOffset = max(0.0, (-theRange.minX) * scaleToView)
         
         func convertToView (x: CGFloat, y: CGFloat) -> CGPoint {
             let drawX : CGFloat = zeroXOffset + x * scaleToView

@@ -134,7 +134,7 @@ class CalcViewController: UIViewController {
     
     // MARK: - Navigation
     func evalMorZero (x: Double) -> Double {
-        print ("evalMOrZero (\(x))")
+        // print ("evalMOrZero (\(x))")
         brain.setVariable("M", value: x)
         if let eValue = brain.evaluate() {
             return eValue

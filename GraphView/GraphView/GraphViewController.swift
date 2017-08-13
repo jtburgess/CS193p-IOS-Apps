@@ -11,10 +11,10 @@ import UIKit
 
 class GraphViewController: UIViewController {
 
-    var myRange = myXrange( minX: -2.0, maxX: CGFloat(3.0 * Double.pi)
+    var myRange = myXrange( minX: -3.0, maxX: CGFloat(10.0)
     )
     func myFunction ( x:Double ) -> Double {
-        return cos(x)
+        return cos(x) * 2
     }
     
     override func viewDidLoad() {
