@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class CalcViewController: UIViewController {
+class CalcViewController: UIViewController,UISplitViewControllerDelegate {
     
     @IBOutlet weak var paperTape: UITextView!
     @IBOutlet weak var display: UILabel! // aka accumulator, as optional string
@@ -18,6 +18,7 @@ class CalcViewController: UIViewController {
 
     var brain = CalculatorBrain()
 
+    // MARK UI functions
     @IBAction func appendDigit(_ sender: UIButton) {
         // use ! to "unwrap Optional (?)"
         let digit = sender.currentTitle!
@@ -56,17 +57,13 @@ class CalcViewController: UIViewController {
     }
 
     @IBAction func clearAll() {
-        ClearDisplay()
+        displayValue = nil
 
         brain.clear()
         print ("stack cleared")
         addToHistory("-- clear brain --")
+        EnterKey()
     }
-    @IBAction func ClearDisplay() {
-        displayValue = nil
-        addToHistory("-- clear --")
-    }
-    
     
     @IBAction func PerformArithmetic(_ sender: UIButton) {
         let operation = sender.currentTitle!
@@ -93,6 +90,29 @@ class CalcViewController: UIViewController {
             brain.setVariable("M", value: nil)
             addToHistory("set M = NIL")
         }
+        reDisplay()
+    }
+
+    @IBAction func UnDo(_ sender: UIButton) {
+        if userIsTypingANumber {
+            if let dispText = display.text {
+                if strlen(dispText) <= 1 {
+                    display.text = nil
+                    userIsTypingANumber = false
+                } else {
+                    display.text = String(dispText.characters.dropLast())
+                }
+            } else {
+                print ("HUH? display.text is not set while userIsTyping?")
+            }
+        } else {
+            brain.popStack()
+            reDisplay()
+        }
+    }
+
+    // MARK internals
+    fileprivate func reDisplay() {
         if let result = brain.evaluate() {
             displayValue = result
             addToHistory("new result: \(display.text!)")
@@ -104,7 +124,7 @@ class CalcViewController: UIViewController {
         formula.text = brain.description
     }
 
-    var displayValue : Double? {
+    fileprivate var displayValue : Double? {
         get {
             if let dispText = display.text {
                 return NumberFormatter().number(from: dispText)!.doubleValue
@@ -123,7 +143,7 @@ class CalcViewController: UIViewController {
         }
     }
     
-    func addToHistory(_ theEntry : String) {
+    fileprivate func addToHistory(_ theEntry : String) {
         print (theEntry)
         if paperTape.text == nil {
             paperTape.text! = theEntry+"\n"
@@ -133,6 +153,15 @@ class CalcViewController: UIViewController {
     }
     
     // MARK: - Navigation
+    
+    override func awakeFromNib() {
+        // first make me the delegate, then see below
+        // this makes THIS view the first one you see
+        super.awakeFromNib()
+        self.splitViewController?.delegate = self
+    }
+    
+    // function passed to the grapher
     func evalMorZero (x: Double) -> Double {
         // print ("evalMOrZero (\(x))")
         brain.setVariable("M", value: x)
@@ -142,6 +171,7 @@ class CalcViewController: UIViewController {
             return 0.0
         }
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

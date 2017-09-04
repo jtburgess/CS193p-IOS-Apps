@@ -156,7 +156,7 @@ class CalculatorBrain
     }
 
     //////////
-    // external API
+    // MARK - external API
     func evaluate() -> Double? {
         let (result, remainder) = evaluate(opStack)
         // don't replace : opStack = remainingOps
@@ -198,7 +198,9 @@ class CalculatorBrain
     }
     
     func popStack() {
-        opStack.removeLast()
+        if !opStack.isEmpty {
+            opStack.removeLast()
+        }
     }
 
     func clear() {
