@@ -146,16 +146,27 @@ class CalcViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         print ("Calc-to-graph  VC segue; id=\(segue.identifier!)")
-        var destVC = segue.destination
-        if let navigationVC = destVC as? UINavigationController {
-            destVC = navigationVC.visibleViewController ?? destVC
-        }
-        if let graphVC = destVC as? GraphViewController {
+        if let graphVC = segue.destination.contents as? GraphViewController {
             graphVC.myRange = myXrange(minX: -5.0 , maxX: 5.0)
+            graphVC.title = brain.description
             graphVC.myFunction = evalMorZero
             print ("set to graph: <\(brain.description)>")
         } else {
             print ("Segue Calc NOT to GraphViewController")
+        }
+    }
+}
+
+// clever way to automatically get the actual visible view controller when embedded in a Nav VC
+extension UIViewController
+{
+    var contents: UIViewController {
+        get {
+            if let navCon = self as? UINavigationController {
+                return navCon.visibleViewController ?? self
+            } else {
+                return self
+            }
         }
     }
 }
