@@ -10,11 +10,9 @@ import UIKit
 
 
 class GraphViewController: UIViewController {
-
-    var myRange = myXrange( minX: -2.0, maxX: CGFloat(3.0 * Double.pi)
-    )
+    
     var myFunction: ( _ x:Double ) -> Double = sampleFunction
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -23,19 +21,27 @@ class GraphViewController: UIViewController {
         super.viewWillAppear(animated)
         print ("GVC viewWillAppear")
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    @IBOutlet var graphView: graphView! {
+    
+    @IBOutlet weak var graphView: graphView! {
         didSet {
             print ("GVC graphView didSet delegate")
-            graphView.theRange = myRange
             graphView.theFunction = myFunction
+            
+            // MARK - set gesture recognizers
+            graphView.addGestureRecognizer(UIPinchGestureRecognizer(
+                target: graphView, action: #selector(graphView.changeScale(_:))
+            ))
+            
+            graphView.addGestureRecognizer(UIPanGestureRecognizer(
+                target: graphView, action: #selector(graphView.moveZero(_:))
+            ))
         }
     }
-
+    
 }
 

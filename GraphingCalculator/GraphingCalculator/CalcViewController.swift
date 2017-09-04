@@ -147,7 +147,6 @@ class CalcViewController: UIViewController {
         // Pass the selected object to the new view controller.
         print ("Calc-to-graph  VC segue; id=\(segue.identifier!)")
         if let graphVC = segue.destination.contents as? GraphViewController {
-            graphVC.myRange = myXrange(minX: -5.0 , maxX: 5.0)
             graphVC.title = brain.description
             graphVC.myFunction = evalMorZero
             print ("set to graph: <\(brain.description)>")
