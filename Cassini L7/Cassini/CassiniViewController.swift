@@ -12,6 +12,7 @@ class CassiniViewController: UIViewController, UISplitViewControllerDelegate {
 
     override func awakeFromNib() {
         // first make me the delegate, then see below
+        // this makes THIS view the first one you see
         super.awakeFromNib()
         self.splitViewController?.delegate = self
     }
@@ -35,6 +36,7 @@ class CassiniViewController: UIViewController, UISplitViewControllerDelegate {
             print ("segue to image \(url)")
             if let imageVC = (segue.destination.contents as? ImageViewController) {
                 imageVC.imageURL = url
+                // (or use sender.identifier, since we set that to be the same)
                 imageVC.title = (sender as? UIButton)?.currentTitle
             } else {
                 print ("segue ERROR: destination is not an ImageViewController")
@@ -47,6 +49,7 @@ class CassiniViewController: UIViewController, UISplitViewControllerDelegate {
 
 }
 
+// clever way to automatically get the actual visible view controller when embedded in a Nav VC
 extension UIViewController
 {
     var contents: UIViewController {

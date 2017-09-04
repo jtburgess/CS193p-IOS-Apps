@@ -26,14 +26,16 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
     // MARK: Implementation
     fileprivate func fetchImage() {
         if let url =  imageURL {
-            // fetch the image in a separate thread, notify the main thread when done
+            // fetch the image in a separate Queue/thread, notify the main Queue when done
             spinner.startAnimating()
             print ("fetch start")
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let urlContents = try? Data(contentsOf: URL(string:url)!)
+                // amd I still waiting for this image, or was another one requested
                 if let imageData = urlContents, url == self?.imageURL {
                     DispatchQueue.main.async {
                         print ("fetch complete")
+                        // self will be NIL if another URL was selected.
                         self?.image = UIImage(data: imageData)
                     }
                 }
