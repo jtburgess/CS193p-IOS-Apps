@@ -160,7 +160,19 @@ class CalcViewController: UIViewController,UISplitViewControllerDelegate {
         super.awakeFromNib()
         self.splitViewController?.delegate = self
     }
-    
+
+    func splitViewController(_ splitViewController: UISplitViewController,
+                             collapseSecondary secondaryViewController: UIViewController,
+                             onto primaryViewController: UIViewController
+        ) -> Bool {
+        if primaryViewController.contents == self {
+            // this allows THIS view to show up on launch, inscread of a blank screen
+            // always do it
+            return true
+        }
+        return false
+    }
+
     // function passed to the grapher
     func evalMorZero (x: Double) -> Double {
         // print ("evalMOrZero (\(x))")
