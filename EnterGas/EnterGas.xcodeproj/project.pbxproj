@@ -1,0 +1,573 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0841F9D23EF00921302 /* AppDelegate.swift */; };
+		8DE2D0871F9D23EF00921302 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0861F9D23EF00921302 /* ViewController.swift */; };
+		8DE2D08A1F9D23EF00921302 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D0881F9D23EF00921302 /* Main.storyboard */; };
+		8DE2D08C1F9D23EF00921302 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D08B1F9D23EF00921302 /* Assets.xcassets */; };
+		8DE2D08F1F9D23EF00921302 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D08D1F9D23EF00921302 /* LaunchScreen.storyboard */; };
+		8DE2D09A1F9D23F000921302 /* EnterGasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0991F9D23F000921302 /* EnterGasTests.swift */; };
+		8DE2D0A51F9D23F000921302 /* EnterGasUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0A41F9D23F000921302 /* EnterGasUITests.swift */; };
+		8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */; };
+		8DE2D0B71F9D2AE200921302 /* gasEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0B61F9D2AE200921302 /* gasEntry.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8DE2D0961F9D23F000921302 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DE2D0791F9D23EF00921302 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DE2D0801F9D23EF00921302;
+			remoteInfo = EnterGas;
+		};
+		8DE2D0A11F9D23F000921302 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DE2D0791F9D23EF00921302 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DE2D0801F9D23EF00921302;
+			remoteInfo = EnterGas;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8DE2D0811F9D23EF00921302 /* EnterGas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnterGas.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DE2D0841F9D23EF00921302 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8DE2D0861F9D23EF00921302 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8DE2D0891F9D23EF00921302 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8DE2D08B1F9D23EF00921302 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8DE2D08E1F9D23EF00921302 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8DE2D0901F9D23EF00921302 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DE2D0951F9D23F000921302 /* EnterGasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnterGasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DE2D0991F9D23F000921302 /* EnterGasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterGasTests.swift; sourceTree = "<group>"; };
+		8DE2D09B1F9D23F000921302 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DE2D0A01F9D23F000921302 /* EnterGasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnterGasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DE2D0A41F9D23F000921302 /* EnterGasUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterGasUITests.swift; sourceTree = "<group>"; };
+		8DE2D0A61F9D23F000921302 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasListTableViewController.swift; sourceTree = "<group>"; };
+		8DE2D0B61F9D2AE200921302 /* gasEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gasEntry.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DE2D07E1F9D23EF00921302 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DE2D0921F9D23F000921302 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DE2D09D1F9D23F000921302 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8DE2D0781F9D23EF00921302 = {
+			isa = PBXGroup;
+			children = (
+				8DE2D0831F9D23EF00921302 /* EnterGas */,
+				8DE2D0981F9D23F000921302 /* EnterGasTests */,
+				8DE2D0A31F9D23F000921302 /* EnterGasUITests */,
+				8DE2D0821F9D23EF00921302 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8DE2D0821F9D23EF00921302 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DE2D0811F9D23EF00921302 /* EnterGas.app */,
+				8DE2D0951F9D23F000921302 /* EnterGasTests.xctest */,
+				8DE2D0A01F9D23F000921302 /* EnterGasUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8DE2D0831F9D23EF00921302 /* EnterGas */ = {
+			isa = PBXGroup;
+			children = (
+				8DE2D0861F9D23EF00921302 /* ViewController.swift */,
+				8DE2D0881F9D23EF00921302 /* Main.storyboard */,
+				8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */,
+				8DE2D0B61F9D2AE200921302 /* gasEntry.swift */,
+				8DE2D0B31F9D274E00921302 /* Supporting Files */,
+				8DE2D0901F9D23EF00921302 /* Info.plist */,
+			);
+			path = EnterGas;
+			sourceTree = "<group>";
+		};
+		8DE2D0981F9D23F000921302 /* EnterGasTests */ = {
+			isa = PBXGroup;
+			children = (
+				8DE2D0991F9D23F000921302 /* EnterGasTests.swift */,
+				8DE2D09B1F9D23F000921302 /* Info.plist */,
+			);
+			path = EnterGasTests;
+			sourceTree = "<group>";
+		};
+		8DE2D0A31F9D23F000921302 /* EnterGasUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8DE2D0A41F9D23F000921302 /* EnterGasUITests.swift */,
+				8DE2D0A61F9D23F000921302 /* Info.plist */,
+			);
+			path = EnterGasUITests;
+			sourceTree = "<group>";
+		};
+		8DE2D0B31F9D274E00921302 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8DE2D08B1F9D23EF00921302 /* Assets.xcassets */,
+				8DE2D0841F9D23EF00921302 /* AppDelegate.swift */,
+				8DE2D08D1F9D23EF00921302 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DE2D0801F9D23EF00921302 /* EnterGas */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8DE2D0A91F9D23F000921302 /* Build configuration list for PBXNativeTarget "EnterGas" */;
+			buildPhases = (
+				8DE2D07D1F9D23EF00921302 /* Sources */,
+				8DE2D07E1F9D23EF00921302 /* Frameworks */,
+				8DE2D07F1F9D23EF00921302 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EnterGas;
+			productName = EnterGas;
+			productReference = 8DE2D0811F9D23EF00921302 /* EnterGas.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8DE2D0941F9D23F000921302 /* EnterGasTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8DE2D0AC1F9D23F000921302 /* Build configuration list for PBXNativeTarget "EnterGasTests" */;
+			buildPhases = (
+				8DE2D0911F9D23F000921302 /* Sources */,
+				8DE2D0921F9D23F000921302 /* Frameworks */,
+				8DE2D0931F9D23F000921302 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8DE2D0971F9D23F000921302 /* PBXTargetDependency */,
+			);
+			name = EnterGasTests;
+			productName = EnterGasTests;
+			productReference = 8DE2D0951F9D23F000921302 /* EnterGasTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8DE2D09F1F9D23F000921302 /* EnterGasUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8DE2D0AF1F9D23F000921302 /* Build configuration list for PBXNativeTarget "EnterGasUITests" */;
+			buildPhases = (
+				8DE2D09C1F9D23F000921302 /* Sources */,
+				8DE2D09D1F9D23F000921302 /* Frameworks */,
+				8DE2D09E1F9D23F000921302 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8DE2D0A21F9D23F000921302 /* PBXTargetDependency */,
+			);
+			name = EnterGasUITests;
+			productName = EnterGasUITests;
+			productReference = 8DE2D0A01F9D23F000921302 /* EnterGasUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8DE2D0791F9D23EF00921302 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = JTBURGESS;
+				TargetAttributes = {
+					8DE2D0801F9D23EF00921302 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+					8DE2D0941F9D23F000921302 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 8DE2D0801F9D23EF00921302;
+					};
+					8DE2D09F1F9D23F000921302 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 8DE2D0801F9D23EF00921302;
+					};
+				};
+			};
+			buildConfigurationList = 8DE2D07C1F9D23EF00921302 /* Build configuration list for PBXProject "EnterGas" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8DE2D0781F9D23EF00921302;
+			productRefGroup = 8DE2D0821F9D23EF00921302 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DE2D0801F9D23EF00921302 /* EnterGas */,
+				8DE2D0941F9D23F000921302 /* EnterGasTests */,
+				8DE2D09F1F9D23F000921302 /* EnterGasUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DE2D07F1F9D23EF00921302 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DE2D08F1F9D23EF00921302 /* LaunchScreen.storyboard in Resources */,
+				8DE2D08C1F9D23EF00921302 /* Assets.xcassets in Resources */,
+				8DE2D08A1F9D23EF00921302 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DE2D0931F9D23F000921302 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DE2D09E1F9D23F000921302 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DE2D07D1F9D23EF00921302 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */,
+				8DE2D0871F9D23EF00921302 /* ViewController.swift in Sources */,
+				8DE2D0B71F9D2AE200921302 /* gasEntry.swift in Sources */,
+				8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DE2D0911F9D23F000921302 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DE2D09A1F9D23F000921302 /* EnterGasTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DE2D09C1F9D23F000921302 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DE2D0A51F9D23F000921302 /* EnterGasUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8DE2D0971F9D23F000921302 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DE2D0801F9D23EF00921302 /* EnterGas */;
+			targetProxy = 8DE2D0961F9D23F000921302 /* PBXContainerItemProxy */;
+		};
+		8DE2D0A21F9D23F000921302 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DE2D0801F9D23EF00921302 /* EnterGas */;
+			targetProxy = 8DE2D0A11F9D23F000921302 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8DE2D0881F9D23EF00921302 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DE2D0891F9D23EF00921302 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8DE2D08D1F9D23EF00921302 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DE2D08E1F9D23EF00921302 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8DE2D0A71F9D23F000921302 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8DE2D0A81F9D23F000921302 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8DE2D0AA1F9D23F000921302 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = EnterGas/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGas";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8DE2D0AB1F9D23F000921302 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = EnterGas/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGas";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8DE2D0AD1F9D23F000921302 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = EnterGasTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGasTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EnterGas.app/EnterGas";
+			};
+			name = Debug;
+		};
+		8DE2D0AE1F9D23F000921302 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = EnterGasTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGasTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EnterGas.app/EnterGas";
+			};
+			name = Release;
+		};
+		8DE2D0B01F9D23F000921302 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = EnterGasUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGasUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EnterGas;
+			};
+			name = Debug;
+		};
+		8DE2D0B11F9D23F000921302 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = EnterGasUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGasUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EnterGas;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8DE2D07C1F9D23EF00921302 /* Build configuration list for PBXProject "EnterGas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DE2D0A71F9D23F000921302 /* Debug */,
+				8DE2D0A81F9D23F000921302 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8DE2D0A91F9D23F000921302 /* Build configuration list for PBXNativeTarget "EnterGas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DE2D0AA1F9D23F000921302 /* Debug */,
+				8DE2D0AB1F9D23F000921302 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8DE2D0AC1F9D23F000921302 /* Build configuration list for PBXNativeTarget "EnterGasTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DE2D0AD1F9D23F000921302 /* Debug */,
+				8DE2D0AE1F9D23F000921302 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8DE2D0AF1F9D23F000921302 /* Build configuration list for PBXNativeTarget "EnterGasUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DE2D0B01F9D23F000921302 /* Debug */,
+				8DE2D0B11F9D23F000921302 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8DE2D0791F9D23EF00921302 /* Project object */;
+}
