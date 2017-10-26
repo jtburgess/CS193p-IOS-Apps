@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */; };
 		8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0841F9D23EF00921302 /* AppDelegate.swift */; };
-		8DE2D0871F9D23EF00921302 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0861F9D23EF00921302 /* ViewController.swift */; };
 		8DE2D08A1F9D23EF00921302 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D0881F9D23EF00921302 /* Main.storyboard */; };
 		8DE2D08C1F9D23EF00921302 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D08B1F9D23EF00921302 /* Assets.xcassets */; };
 		8DE2D08F1F9D23EF00921302 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D08D1F9D23EF00921302 /* LaunchScreen.storyboard */; };
@@ -36,9 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasEntryCellTableViewCell.swift; sourceTree = "<group>"; };
 		8DE2D0811F9D23EF00921302 /* EnterGas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnterGas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DE2D0841F9D23EF00921302 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8DE2D0861F9D23EF00921302 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8DE2D0891F9D23EF00921302 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8DE2D08B1F9D23EF00921302 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DE2D08E1F9D23EF00921302 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -101,8 +101,8 @@
 		8DE2D0831F9D23EF00921302 /* EnterGas */ = {
 			isa = PBXGroup;
 			children = (
-				8DE2D0861F9D23EF00921302 /* ViewController.swift */,
 				8DE2D0881F9D23EF00921302 /* Main.storyboard */,
+				8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */,
 				8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */,
 				8DE2D0B61F9D2AE200921302 /* gasEntry.swift */,
 				8DE2D0B31F9D274E00921302 /* Supporting Files */,
@@ -274,8 +274,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */,
-				8DE2D0871F9D23EF00921302 /* ViewController.swift in Sources */,
 				8DE2D0B71F9D2AE200921302 /* gasEntry.swift in Sources */,
+				8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */,
 				8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

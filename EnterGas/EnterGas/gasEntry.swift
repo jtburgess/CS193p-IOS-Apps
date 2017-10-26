@@ -9,14 +9,14 @@
 import UIKit
 
 public class gasEntry: NSObject {
-    var vendor: String
+    var brand: String
     var date: Date
     var odometer: Int
     var cost: Decimal
     var gallons: Decimal
     
-    public init (vendor:String, dateString:String, odometer:Int, cost:Decimal, gallons:Decimal) {
-        self.vendor = vendor
+    public init (brand:String, dateString:String, odometer:Int, cost:Decimal, gallons:Decimal) {
+        self.brand = brand
         self.date = (toDate(from:dateString) ?? nil)!
         self.odometer = odometer
         self.cost = cost

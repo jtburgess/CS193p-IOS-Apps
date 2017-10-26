@@ -12,21 +12,20 @@
         <scene sceneID="2Ye-rH-cyo">
             <objects>
                 <tableViewController id="pce-Xv-GIH" customClass="GasListTableViewController" customModule="EnterGas" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="O0n-O0-ilf">
+                    <tableView key="view" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="O0n-O0-ilf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="gasEntry" rowHeight="38" id="r4M-NW-zvp">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="gasEntryCell" rowHeight="38" id="r4M-NW-zvp" customClass="GasEntryCellTableViewCell" customModule="EnterGas" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="38"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="r4M-NW-zvp" id="v2Z-Gu-wdd">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="37.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="equalSpacing" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="3lE-lU-7Af">
-                                            <rect key="frame" x="8" y="0.0" width="187.5" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="equalSpacing" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="3lE-lU-7Af">
+                                            <rect key="frame" x="8" y="0.0" width="367" height="25"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PY6-Ik-j1Y">
                                                     <rect key="frame" x="0.0" y="0.0" width="32.5" height="25"/>
@@ -38,7 +37,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Brand" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vlb-XH-Fzj">
-                                                    <rect key="frame" x="36.5" y="0.0" width="45.5" height="25"/>
+                                                    <rect key="frame" x="81.5" y="0.0" width="45.5" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="mU5-Jb-uf0"/>
                                                     </constraints>
@@ -47,7 +46,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Odo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40q-5f-4sW">
-                                                    <rect key="frame" x="86" y="0.0" width="32.5" height="25"/>
+                                                    <rect key="frame" x="176" y="0.0" width="32.5" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="OQV-29-UOK"/>
                                                     </constraints>
@@ -55,8 +54,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Dols" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8n-Ww-dSa">
-                                                    <rect key="frame" x="122.5" y="0.0" width="30.5" height="25"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="cost" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e8n-Ww-dSa">
+                                                    <rect key="frame" x="257.5" y="0.0" width="30" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="Ood-79-wsn"/>
                                                     </constraints>
@@ -65,7 +64,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Gals" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1G-A4-hQX">
-                                                    <rect key="frame" x="157" y="0.0" width="30.5" height="25"/>
+                                                    <rect key="frame" x="336.5" y="0.0" width="30.5" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="C3e-bn-dCN"/>
                                                     </constraints>
@@ -76,7 +75,18 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3lE-lU-7Af" firstAttribute="leading" secondItem="v2Z-Gu-wdd" secondAttribute="leading" constant="8" id="FZ2-qs-bJl"/>
+                                        <constraint firstAttribute="trailing" secondItem="3lE-lU-7Af" secondAttribute="trailing" id="eKp-Ag-cZa"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="brand" destination="Vlb-XH-Fzj" id="FKs-Jv-CW9"/>
+                                    <outlet property="cost" destination="e8n-Ww-dSa" id="Zp4-FK-OdD"/>
+                                    <outlet property="date" destination="PY6-Ik-j1Y" id="U4a-Oo-jsI"/>
+                                    <outlet property="gallons" destination="G1G-A4-hQX" id="QTc-xB-hCY"/>
+                                    <outlet property="odometer" destination="40q-5f-4sW" id="YaO-ad-n6W"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

@@ -24,27 +24,34 @@ class GasListTableViewController: UITableViewController {
     
     // load test data
     func loadTestData() {
-        gasList.append ( [ gasEntry (vendor:"Speedway", dateString:"1/1/2017", odometer:1000, cost:20.0, gallons:9.9) ] )
+        gasList.append ( [ gasEntry (brand:"Speedway", dateString:"1/1/2017", odometer:1000, cost:20.0, gallons:9.9) ] )
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        // multiple sections aren't implemented
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        // num rows is just the size of the gasList
+        return gasList[0].count + 1
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        
+        let dqCell = tableView.dequeueReusableCell(withIdentifier: "gasEntryCell", for: indexPath)
+        if let gasEntryCell = dqCell as? GasEntryCellTableViewCell {
+            if indexPath.row == 0 {
+                gasEntryCell.updateHeader()
+            } else {
+                let data = gasList[indexPath.section][indexPath.row-1]
+                gasEntryCell.myData = data
+            }
+            
+        }
         // Configure the cell...
 
-        return cell
+        return dqCell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
