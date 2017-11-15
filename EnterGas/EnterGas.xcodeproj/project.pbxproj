@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D6305CA1FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */; };
 		8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */; };
+		8DB5D0331FA6492B0084D519 /* gasEntryDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5D0311FA6492B0084D519 /* gasEntryDB.xcdatamodeld */; };
 		8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0841F9D23EF00921302 /* AppDelegate.swift */; };
 		8DE2D08A1F9D23EF00921302 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D0881F9D23EF00921302 /* Main.storyboard */; };
 		8DE2D08C1F9D23EF00921302 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D08B1F9D23EF00921302 /* Assets.xcassets */; };
@@ -15,7 +17,11 @@
 		8DE2D09A1F9D23F000921302 /* EnterGasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0991F9D23F000921302 /* EnterGasTests.swift */; };
 		8DE2D0A51F9D23F000921302 /* EnterGasUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0A41F9D23F000921302 /* EnterGasUITests.swift */; };
 		8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */; };
-		8DE2D0B71F9D2AE200921302 /* gasEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0B61F9D2AE200921302 /* gasEntry.swift */; };
+		8DE2D0B71F9D2AE200921302 /* old_gasEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0B61F9D2AE200921302 /* old_gasEntry.swift */; };
+		8DED1C0D1FB607DD009943CB /* Brand+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DED1C091FB607DD009943CB /* Brand+CoreDataClass.swift */; };
+		8DED1C0E1FB607DD009943CB /* Brand+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DED1C0A1FB607DD009943CB /* Brand+CoreDataProperties.swift */; };
+		8DED1C0F1FB607DD009943CB /* GasEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DED1C0B1FB607DD009943CB /* GasEntry+CoreDataClass.swift */; };
+		8DED1C101FB607DD009943CB /* GasEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DED1C0C1FB607DD009943CB /* GasEntry+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterFuelPurchaseViewController.swift; sourceTree = "<group>"; };
 		8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasEntryCellTableViewCell.swift; sourceTree = "<group>"; };
+		8DB5D0321FA6492B0084D519 /* gasEntryDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = gasEntryDB.xcdatamodel; sourceTree = "<group>"; };
 		8DE2D0811F9D23EF00921302 /* EnterGas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnterGas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DE2D0841F9D23EF00921302 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DE2D0891F9D23EF00921302 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -50,7 +58,11 @@
 		8DE2D0A41F9D23F000921302 /* EnterGasUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterGasUITests.swift; sourceTree = "<group>"; };
 		8DE2D0A61F9D23F000921302 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasListTableViewController.swift; sourceTree = "<group>"; };
-		8DE2D0B61F9D2AE200921302 /* gasEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gasEntry.swift; sourceTree = "<group>"; };
+		8DE2D0B61F9D2AE200921302 /* old_gasEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = old_gasEntry.swift; sourceTree = "<group>"; };
+		8DED1C091FB607DD009943CB /* Brand+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Brand+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8DED1C0A1FB607DD009943CB /* Brand+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Brand+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8DED1C0B1FB607DD009943CB /* GasEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GasEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8DED1C0C1FB607DD009943CB /* GasEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GasEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +90,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D9ADC541FAA65CA00714209 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				8DED1C091FB607DD009943CB /* Brand+CoreDataClass.swift */,
+				8DED1C0A1FB607DD009943CB /* Brand+CoreDataProperties.swift */,
+				8DED1C0B1FB607DD009943CB /* GasEntry+CoreDataClass.swift */,
+				8DED1C0C1FB607DD009943CB /* GasEntry+CoreDataProperties.swift */,
+				8DB5D0311FA6492B0084D519 /* gasEntryDB.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		8DE2D0781F9D23EF00921302 = {
 			isa = PBXGroup;
 			children = (
+				8D9ADC541FAA65CA00714209 /* CoreData */,
 				8DE2D0831F9D23EF00921302 /* EnterGas */,
 				8DE2D0981F9D23F000921302 /* EnterGasTests */,
 				8DE2D0A31F9D23F000921302 /* EnterGasUITests */,
@@ -102,9 +127,10 @@
 			isa = PBXGroup;
 			children = (
 				8DE2D0881F9D23EF00921302 /* Main.storyboard */,
+				8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */,
 				8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */,
 				8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */,
-				8DE2D0B61F9D2AE200921302 /* gasEntry.swift */,
+				8DE2D0B61F9D2AE200921302 /* old_gasEntry.swift */,
 				8DE2D0B31F9D274E00921302 /* Supporting Files */,
 				8DE2D0901F9D23EF00921302 /* Info.plist */,
 			);
@@ -273,10 +299,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DED1C101FB607DD009943CB /* GasEntry+CoreDataProperties.swift in Sources */,
 				8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */,
-				8DE2D0B71F9D2AE200921302 /* gasEntry.swift in Sources */,
+				8DE2D0B71F9D2AE200921302 /* old_gasEntry.swift in Sources */,
+				8DB5D0331FA6492B0084D519 /* gasEntryDB.xcdatamodeld in Sources */,
+				8DED1C0E1FB607DD009943CB /* Brand+CoreDataProperties.swift in Sources */,
+				8DED1C0F1FB607DD009943CB /* GasEntry+CoreDataClass.swift in Sources */,
 				8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */,
+				8DED1C0D1FB607DD009943CB /* Brand+CoreDataClass.swift in Sources */,
 				8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */,
+				8D6305CA1FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +411,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -430,7 +462,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -447,7 +479,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGas";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -461,7 +493,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGas";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -568,6 +600,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8DB5D0311FA6492B0084D519 /* gasEntryDB.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8DB5D0321FA6492B0084D519 /* gasEntryDB.xcdatamodel */,
+			);
+			currentVersion = 8DB5D0321FA6492B0084D519 /* gasEntryDB.xcdatamodel */;
+			path = gasEntryDB.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8DE2D0791F9D23EF00921302 /* Project object */;
 }

@@ -16,19 +16,21 @@ class GasEntryCellTableViewCell: UITableViewCell {
     @IBOutlet weak var cost: UILabel!
     @IBOutlet weak var gallons: UILabel!
     
-    var myData: gasEntry? {didSet { updateUI() }}
+    var myData: GasEntry? {didSet { updateUI() }}
     
     fileprivate func updateUI()
     {
         // update the display fields in the UI
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateString = dateFormatter.string(from: (myData?.date)!)
+        dateFormatter.timeZone = TimeZone (abbreviation:"EST5EDT")
+        let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: (myData?.date)!))
         date.text  = dateString
-        brand.text  = myData?.brand ?? "missing"
+        print ("date 2017-01-01 = \(dateString)")
+        brand.text  = myData?.brand?.brandName ?? "unknown"
         odometer.text = "\(myData?.odometer ?? 0)"
         cost.text    = "\(myData?.cost ?? 0)"
-        gallons.text = "\(myData?.gallons ?? 0.0)"
+        gallons.text = "\(myData?.amount ?? 0.0)"
     }
 
     func updateHeader()
@@ -39,7 +41,7 @@ class GasEntryCellTableViewCell: UITableViewCell {
         brand.text = "Brand"
         odometer.text = "Miles"
         cost.text = "Cost"
-        gallons.text = "Gallons"
+        gallons.text = "Amount"
     }
 
 }

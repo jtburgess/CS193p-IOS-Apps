@@ -7,25 +7,69 @@
 //
 
 import UIKit
-// import gasEntry
+import CoreData
 
 class GasListTableViewController: UITableViewController {
 
-    // MARK: - UI TableView dataSource
     // model -- array (sections) of array of Gas Entrys
-    private var gasList = [ Array<gasEntry> ]()
-
-    // FOR TESTING
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        loadTestData()
-        // later, load from the DB...
+    var gasList = Array<GasEntry>() {
+        didSet {
+            tableView.reloadData()
+            // fix -- need to change number of rows and re-display
+            // and reloadData is brute force
+        }
     }
-    
+
+    // load gasList from the DB
+    override func viewDidLoad() {
+        print("TableView DidLoad")
+        super.viewDidLoad()
+        // clear the list (delete), then re-init
+        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
+        let delList = (GasEntry.RequestAll(context:myContext) as? Array<GasEntry>)!
+        for entry in delList {
+            print("delete!")
+            myContext.delete (entry)
+        }
+        loadTestData()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("TableView WillAppear")
+        loadFromCoreData()
+    }
+    func loadFromCoreData () {
+        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
+        gasList = (GasEntry.RequestAll(context:myContext) as? Array<GasEntry>)!
+        print("loaded \(gasList.count) entries")
+    }
     // load test data
     func loadTestData() {
-        gasList.append ( [ gasEntry (brand:"Speedway", dateString:"1/1/2017", odometer:1000, cost:20.0, gallons:9.9) ] )
+        print ("Insert TestData")
+        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
+        if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
+            print("create Test gasentry Entity")
+            let brandEntry = Brand.Request(theBrand:"theBrand", context:gasEntry.managedObjectContext!)
+            gasEntry.brand = brandEntry
+            print("created Brand Entity link")
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            gasEntry.date = (dateFormatter.date(from: "2017-01-01"))!.timeIntervalSince1970
+            print ("set date 2017-01-01 = \(gasEntry.date)")
+            gasEntry.odometer = 100
+            gasEntry.cost = 99.9
+            gasEntry.amount = 9.9
+            gasList.append ( gasEntry )
+            
+            do {
+                try myContext.save()
+            } catch let error {
+                print("Core Data Save Error: \(error)")
+            }
+        }
     }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         // multiple sections aren't implemented
         return 1
@@ -33,7 +77,7 @@ class GasListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // num rows is just the size of the gasList
-        return gasList[0].count + 1
+        return gasList.count + 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -43,7 +87,7 @@ class GasListTableViewController: UITableViewController {
             if indexPath.row == 0 {
                 gasEntryCell.updateHeader()
             } else {
-                let data = gasList[indexPath.section][indexPath.row-1]
+                let data = gasList[indexPath.row-1]
                 gasEntryCell.myData = data
             }
             
@@ -88,14 +132,10 @@ class GasListTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+ 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        print ("segue to Entry screen; not used with Tab View Controller")
     }
-    */
 
 }
