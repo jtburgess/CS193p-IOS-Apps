@@ -21,6 +21,7 @@ extension GasEntry {
     @NSManaged public var cost: NSDecimalNumber?
     @NSManaged public var date: TimeInterval
     @NSManaged public var odometer: NSDecimalNumber?
+    @NSManaged public var toEmpty: NSDecimalNumber?
     @NSManaged public var brand: Brand?
 
 }

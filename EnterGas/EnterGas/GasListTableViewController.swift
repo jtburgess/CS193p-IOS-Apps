@@ -24,14 +24,19 @@ class GasListTableViewController: UITableViewController {
     override func viewDidLoad() {
         print("TableView DidLoad")
         super.viewDidLoad()
-        // clear the list (delete), then re-init
+        // if the list is empty or doesn't have a proper initialze entry, then initialize it!
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
-        let delList = (GasEntry.RequestAll(context:myContext) as? Array<GasEntry>)!
-        for entry in delList {
-            print("delete!")
-            myContext.delete (entry)
+        let initList = (GasEntry.RequestAll(context:myContext) as? Array<GasEntry>)!
+        if initList.count == 0 {
+            initializeHistory()
+        } else if initList.last!.brand?.brandName != "initialize" {
+            print("brand.last=\(String(describing: initList.last!.brand?.brandName)), count=\(initList.count)")
+            for entry in initList {
+                print("delete!")
+                myContext.delete (entry)
+            }
+            initializeHistory()
         }
-        loadTestData()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,24 +48,23 @@ class GasListTableViewController: UITableViewController {
         gasList = (GasEntry.RequestAll(context:myContext) as? Array<GasEntry>)!
         print("loaded \(gasList.count) entries")
     }
-    // load test data
-    func loadTestData() {
-        print ("Insert TestData")
+    // load initial row
+    func initializeHistory() {
+        print ("Insert Initial Row")
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
             print("create Test gasentry Entity")
-            let brandEntry = Brand.Request(theBrand:"theBrand", context:gasEntry.managedObjectContext!)
+            let brandEntry = Brand.Request(theBrand:"initialize", context:gasEntry.managedObjectContext!)
             gasEntry.brand = brandEntry
             print("created Brand Entity link")
 
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
-            gasEntry.date = (dateFormatter.date(from: "2017-01-01"))!.timeIntervalSince1970
+            gasEntry.date = (dateFormatter.date(from: "2010-01-01"))!.timeIntervalSince1970
             print ("set date 2017-01-01 = \(gasEntry.date)")
-            gasEntry.odometer = 100
-            gasEntry.cost = 99.9
-            gasEntry.amount = 9.9
-            gasList.append ( gasEntry )
+            gasEntry.odometer = 0
+            gasEntry.cost = 0
+            gasEntry.amount = 0
             
             do {
                 try myContext.save()
@@ -77,17 +81,17 @@ class GasListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // num rows is just the size of the gasList
-        return gasList.count + 1
+        return gasList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let dqCell = tableView.dequeueReusableCell(withIdentifier: "gasEntryCell", for: indexPath)
         if let gasEntryCell = dqCell as? GasEntryCellTableViewCell {
-            if indexPath.row == 0 {
-                gasEntryCell.updateHeader()
+            if false { // indexPath.section == 0 {
+                // gasTitleCell.updateHeader()
             } else {
-                let data = gasList[indexPath.row-1]
+                let data = gasList[indexPath.row]
                 gasEntryCell.myData = data
             }
             

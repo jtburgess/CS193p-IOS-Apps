@@ -18,6 +18,7 @@
 		8DE2D0A51F9D23F000921302 /* EnterGasUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0A41F9D23F000921302 /* EnterGasUITests.swift */; };
 		8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */; };
 		8DE2D0B71F9D2AE200921302 /* old_gasEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0B61F9D2AE200921302 /* old_gasEntry.swift */; };
+		8DE640011FBE0B0100B0A166 /* GasTitleCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE640001FBE0B0100B0A166 /* GasTitleCellTableViewCell.swift */; };
 		8DED1C0D1FB607DD009943CB /* Brand+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DED1C091FB607DD009943CB /* Brand+CoreDataClass.swift */; };
 		8DED1C0E1FB607DD009943CB /* Brand+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DED1C0A1FB607DD009943CB /* Brand+CoreDataProperties.swift */; };
 		8DED1C0F1FB607DD009943CB /* GasEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DED1C0B1FB607DD009943CB /* GasEntry+CoreDataClass.swift */; };
@@ -59,6 +60,7 @@
 		8DE2D0A61F9D23F000921302 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasListTableViewController.swift; sourceTree = "<group>"; };
 		8DE2D0B61F9D2AE200921302 /* old_gasEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = old_gasEntry.swift; sourceTree = "<group>"; };
+		8DE640001FBE0B0100B0A166 /* GasTitleCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasTitleCellTableViewCell.swift; sourceTree = "<group>"; };
 		8DED1C091FB607DD009943CB /* Brand+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Brand+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8DED1C0A1FB607DD009943CB /* Brand+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Brand+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8DED1C0B1FB607DD009943CB /* GasEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GasEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				8DE2D0881F9D23EF00921302 /* Main.storyboard */,
 				8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */,
 				8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */,
+				8DE640001FBE0B0100B0A166 /* GasTitleCellTableViewCell.swift */,
 				8DE2D0B41F9D280100921302 /* GasListTableViewController.swift */,
 				8DE2D0B61F9D2AE200921302 /* old_gasEntry.swift */,
 				8DE2D0B31F9D274E00921302 /* Supporting Files */,
@@ -307,6 +310,7 @@
 				8DED1C0F1FB607DD009943CB /* GasEntry+CoreDataClass.swift in Sources */,
 				8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */,
 				8DED1C0D1FB607DD009943CB /* Brand+CoreDataClass.swift in Sources */,
+				8DE640011FBE0B0100B0A166 /* GasTitleCellTableViewCell.swift in Sources */,
 				8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */,
 				8D6305CA1FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift in Sources */,
 			);

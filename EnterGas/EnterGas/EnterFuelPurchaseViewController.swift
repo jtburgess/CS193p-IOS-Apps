@@ -14,9 +14,11 @@ class EnterFuelPurchaseViewController: UIViewController {
     // MARK - data
     @IBOutlet weak var brand: UITextField!
     @IBOutlet weak var odometer: UITextField!
+    @IBOutlet weak var toEmpty: UITextField!
     @IBOutlet weak var cost: UITextField!
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var date: UIDatePicker!
+    @IBOutlet weak var costLabel: UILabel!
     
     // set by segue to GasListTableViewController.gasList[0]
     var gasListSection : Int = 0
@@ -25,16 +27,19 @@ class EnterFuelPurchaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         resetFields()
+        let currencySymbol = NSLocale.current.currencyCode!
+        costLabel.text = "Cost \(currencySymbol))"
     }
 
     private func resetFields() {
         // reset fields to empty
         brand.text = ""
         odometer.text = ""
+        toEmpty.text = ""
         cost.text = ""
         amount.text = ""
         Errors.text = ""
-        
+        print("fields reset")
     }
 
     @IBOutlet weak var Errors: UILabel!
@@ -59,6 +64,15 @@ class EnterFuelPurchaseViewController: UIViewController {
         } else {
             errors = true
             Errors.text?.append("Bad Odometer value\n")
+        }
+
+        var milesLeft : NSDecimalNumber = 0
+        if let tmp = formatter.number(from: toEmpty.text!) as! NSDecimalNumber? {
+            milesLeft = tmp
+        } else {
+            // missing milesLeft is not an error
+            //errors = true
+            //Errors.text?.append("Bad Odometer value\n")
         }
 
         var theCost: NSDecimalNumber = -1
@@ -98,6 +112,7 @@ class EnterFuelPurchaseViewController: UIViewController {
             print("created Brand Entity link")
             gasEntry.date = theDate
             gasEntry.odometer = theOdo
+            gasEntry.toEmpty = milesLeft
             gasEntry.cost = theCost
             gasEntry.amount = theAmount
  
@@ -108,13 +123,10 @@ class EnterFuelPurchaseViewController: UIViewController {
             }
             resetFields()
             print("gasentry Entity saved")
+            Errors.text? = "Purchase saved."
         } else {
             print ("gasEntry not set")
         }
-
-        resetFields()
-        Errors.text? = "Purchase saved."
-        // segue back?
     }
 
     

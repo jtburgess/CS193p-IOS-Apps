@@ -15,7 +15,7 @@ public class Brand: NSManagedObject {
     // New should probably be an init()
     fileprivate class func New (theBrand:String, context:NSManagedObjectContext) -> Brand {
         let brand = NSEntityDescription.insertNewObject(forEntityName: "Brand", into: context) as? Brand
-        print("create new Brand Entity")
+        print("create new Brand Entity: \(theBrand)")
         brand!.brandName = theBrand
         return brand!
     }
