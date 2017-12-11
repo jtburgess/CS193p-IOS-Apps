@@ -22,28 +22,43 @@ class GasEntryCellTableViewCell: UITableViewCell {
     
     var myData: GasEntry? {didSet { updateUI() }}
     
+    // constant formatters
+    let dateFormatter = DateFormatter()
+    let currFormatter = NumberFormatter()
+
     fileprivate func updateUI()
     {
-        // update the display fields in the UI
-        let dateFormatter = DateFormatter()
+        // where can I do these ONCE?
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.timeZone = TimeZone (abbreviation:"EST5EDT")
-        let dateString = dateFormatter.string(from: Date(timeIntervalSince1970: (myData?.date)!))
-        date.text  = dateString
-        // print ("date = \(dateString)")
+        currFormatter.numberStyle = NumberFormatter.Style.currency
+
+        // update the display fields in the UI
+        date.text  = dateFormatter.string(from: Date(timeIntervalSince1970: (myData?.date)!))
+        note.text = myData?.note
         brand.text  = myData?.brand?.brandName ?? "unknown"
         odometer.text = "\(myData?.odometer ?? 0)"
         toEmpty.text = "\(myData?.toEmpty ?? 0)"
-
-        let formatter = NumberFormatter()
-        formatter.numberStyle = NumberFormatter.Style.currency
-        cost.text    = formatter.string(from:(myData?.cost)!)
-        amount.text = "\(myData?.amount ?? 0.0)"
+        cost.text    = currFormatter.string(from:(myData?.cost)!)
+        amount.text = String(format:"%.1f", ((myData?.amount)! as Double) )
 
         if let costD  = myData?.cost as Double?,
-           let amountD = myData?.amount as Double? {
+        let amountD = myData?.amount as Double? {
             if (costD > 0.0) && (amountD > 0.0) {
-                mpg.text = String(format:"%.01f", (costD / amountD))
+                costPerUnit.text = currFormatter.string(from: ((costD / amountD) as NSNumber) )
+                //costPerUnit.text = String(format:"%.03f", (costD / amountD))
+            } else {
+                costPerUnit.text = ""
+            }
+        }
+        // mpg needs miles since last fill-up; fetched save() in the Entry View
+        if let distD = myData?.distance as Double?,
+           let amountD = myData?.amount as Double? {
+            let toEmptyD = myData?.toEmpty as Double? ?? 0.0
+            if (distD > 0.0) && (amountD > 0.0) {
+                mpg.text = String(format:"%.1f", ((distD-toEmptyD) / amountD))
+            } else {
+                mpg.text = ""
             }
         }
     }

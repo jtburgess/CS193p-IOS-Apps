@@ -23,8 +23,8 @@ class GasTitleCellTableViewCell: UITableViewCell {
         sortUp: false,
         button: nil
     )
-    var normAttr = [UIFontDescriptor.description() : UIFont.systemFont(ofSize: 14)]
-    let boldAttr = [UIFontDescriptor.description() : UIFont.boldSystemFont(ofSize: 14)]
+    //var normAttr: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+    //let boldAttr: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)]
 
     override func didAddSubview(_ subview: UIView) {
         print("didAddSubView Gas TITLE CellView")
@@ -41,10 +41,12 @@ class GasTitleCellTableViewCell: UITableViewCell {
         if sortField.fieldName == fieldName.string {
             // same field, just switch sort order
             sortField.sortUp = !sortField.sortUp
+            print("switch \(fieldName.string) sort order to: \(sortField.sortUp)")
         } else {
             // change previous field label back to normal and make this field BOLD
-            sortField.button?.setAttributedTitle(NSAttributedString(string: sortField.fieldName, attributes:normAttr), for: .normal)
-            sender.setAttributedTitle(NSAttributedString(string: sortField.fieldName, attributes:boldAttr), for: .normal)
+            print("switch sort field from \(sortField.fieldName) to \(fieldName.string)")
+            //sortField.button?.setAttributedTitle(NSAttributedString(string: sortField.fieldName, attributes:normAttr), for: .normal)
+            //sender.setAttributedTitle(NSAttributedString(string: sortField.fieldName, attributes:boldAttr), for: .normal)
             sortField.button = sender
             sortField.fieldName = fieldName.string
         }

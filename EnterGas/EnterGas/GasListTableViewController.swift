@@ -29,13 +29,15 @@ class GasListTableViewController: UITableViewController {
         let initList = (GasEntry.RequestAll(context:myContext) as? Array<GasEntry>)!
         if initList.count == 0 {
             initializeHistory()
-        } else if initList.last!.brand?.brandName != "initialize" {
+        /*****
+         } else if initList.last!.brand?.brandName != "initialize" {
             print("brand.last=\(String(describing: initList.last!.brand?.brandName)), count=\(initList.count)")
             for entry in initList {
                 print("delete!")
                 myContext.delete (entry)
             }
             initializeHistory()
+         *****/
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -51,22 +53,9 @@ class GasListTableViewController: UITableViewController {
     // load initial row
     func initializeHistory() {
         print ("Insert Initial Row")
-        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
-        if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
-            print("create Test gasentry Entity")
-            let brandEntry = Brand.Request(theBrand:"initialize", context:gasEntry.managedObjectContext!)
-            gasEntry.brand = brandEntry
-            print("created Brand Entity link")
-
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            gasEntry.date = (dateFormatter.date(from: "2010-01-01"))!.timeIntervalSince1970
-            print ("set date 2017-01-01 = \(gasEntry.date)")
-            gasEntry.odometer = 0
-            gasEntry.cost = 0
-            gasEntry.amount = 0
-            
-            do {
+        if let _ = GasEntry.defaultEntry() {
+           do {
+                let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
                 try myContext.save()
             } catch let error {
                 print("Core Data Save Error: \(error)")
@@ -81,23 +70,27 @@ class GasListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // num rows is just the size of the gasList
-        return gasList.count
+        return gasList.count + 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let dqCell = tableView.dequeueReusableCell(withIdentifier: "gasEntryCell", for: indexPath)
-        if let gasEntryCell = dqCell as? GasEntryCellTableViewCell {
-            if false { // indexPath.section == 0 {
-                // gasTitleCell.updateHeader()
+
+        if indexPath.row == 0 {
+            if let gasTitleCell = dqCell as? GasTitleCellTableViewCell {
+                gasTitleCell.updateHeader()
             } else {
-                let data = gasList[indexPath.row]
+                print("ERROR casting dqCell to GasTitleCellTableViewCell")
+            }
+        } else {
+            if let gasEntryCell = dqCell as? GasEntryCellTableViewCell {
+                let data = gasList[indexPath.row-1]
                 gasEntryCell.myData = data
+            } else {
+                print("ERROR casting dqCell to GasEntryCellTableViewCell")
             }
             
         }
-        // Configure the cell...
-
         return dqCell
     }
 

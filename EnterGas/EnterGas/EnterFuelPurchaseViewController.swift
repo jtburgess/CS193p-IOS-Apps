@@ -4,31 +4,48 @@
 //
 //  Created by John Burgess on 10/27/17.
 //  Copyright © 2017 JTBURGESS. All rights reserved.
-//
+
+// nextField logic from https://stackoverflow.com/questions/9540500/ios-app-next-key-wont-go-to-the-next-text-field
+// ACEAutocompleteBar from https://stackoverflow.com/questions/31167416/customizing-quicktype-suggestions-in-ios/35511249#35511249
 
 import UIKit
 import CoreData
+//import ACEAutocompleteBar
 
-class EnterFuelPurchaseViewController: UIViewController {
+class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, ACEAutocompleteDataSource, ACEAutocompleteDelegate {
+    
+    let currencySymbol = NSLocale.current.currencyCode!
 
     // MARK - data
     @IBOutlet weak var brand: UITextField!
     @IBOutlet weak var odometer: UITextField!
     @IBOutlet weak var toEmpty: UITextField!
+    @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var cost: UITextField!
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var date: UIDatePicker!
-    @IBOutlet weak var costLabel: UILabel!
-    
-    // set by segue to GasListTableViewController.gasList[0]
-    var gasListSection : Int = 0
+    @IBOutlet weak var note: UITextField!
+    @IBOutlet weak var Errors: UILabel!
+
+    let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
 
     // MARK - user interface
     override func viewDidLoad() {
         super.viewDidLoad()
         resetFields()
-        let currencySymbol = NSLocale.current.currencyCode!
+        assignNextActions()
         costLabel.text = "Cost \(currencySymbol))"
+        
+       /*
+        self.brand.setAutocompleteWith(self, delegate: self, customize: { inputView in
+             // customize the view (optional)
+             //inputView.font = UIFont.systemFontOfSize(20)
+             //inputView.textColor = UIColor.whiteColor()
+             //inputView.backgroundColor = UIColor.blueColor()
+            inputView?.isHidden = false
+        })
+        */
+
     }
 
     private func resetFields() {
@@ -37,12 +54,68 @@ class EnterFuelPurchaseViewController: UIViewController {
         odometer.text = ""
         toEmpty.text = ""
         cost.text = ""
+        note.text = ""
         amount.text = ""
         Errors.text = ""
         print("fields reset")
     }
 
-    @IBOutlet weak var Errors: UILabel!
+    // MARK - UITextFieldDelegate
+    private var nextField: [ UITextField : UITextField ] = [:]
+    func assignNextActions() {
+        brand.delegate = self
+        odometer.delegate = self
+        cost.delegate = self
+        amount.delegate = self
+        toEmpty.delegate = self
+        note.delegate = self
+        
+        nextField[brand] = odometer
+        nextField[odometer] = cost
+        nextField[cost] = amount
+        nextField[amount] = toEmpty
+        nextField[toEmpty] = note
+        print("next field actions assigned")
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        if let moveTo = nextField[textField] {
+            print("Return entered in \(textField.description) goes to \(moveTo.description)")
+            moveTo.becomeFirstResponder()
+        } else {
+            print("Return entered in \(textField.description) no next defined")
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    // MARK - ACEAutocompleteBar delegate
+    func minimumCharacters(toTrigger inputView: ACEAutocompleteInputView!) -> UInt {
+        return 1
+    }
+    func inputView(_ inputView: ACEAutocompleteInputView!, itemsFor query: String!, result resultBlock: (([Any]?) -> Void)!) {        
+        inputView.isHidden = false
+        inputView.alpha = 0.75
+        print("inputView called")
+        if resultBlock != nil {
+            print("inputView nonNil")
+            DispatchQueue.global(qos:DispatchQoS.QoSClass.default).async() {
+                var data:NSMutableArray = []
+                
+                if(self.brand.isFirstResponder){
+                    let myContext: NSManagedObjectContext = self.container.viewContext
+                    data = Brand.RequestAll(context: myContext) as! NSMutableArray
+                    print("got Brand list \(data.count)")
+                }
+                DispatchQueue.main.async() { resultBlock(data as [AnyObject]) }
+            }
+        }
+    }
+    func textField(_ textField: UITextField!, didSelect object: Any!, in inputView: ACEAutocompleteInputView!) {
+        textField.text = String(describing: object)
+    }
+
+    // MARK: SAVE button saves the data to CoreData
     @IBAction func saveThisEntry(_ sender: UIButton) {
         // add validations here so I can eliminate the '!' in the gasEntry() call
         print("Enter SaveThisEntry")
@@ -58,8 +131,8 @@ class EnterFuelPurchaseViewController: UIViewController {
             Errors.text?.append ("Please fill in the Brand purchased\n")
         }
 
-        var theOdo : NSDecimalNumber = -1
-        if let tmp = formatter.number(from: odometer.text!) as! NSDecimalNumber? {
+        var theOdo : Double = -1
+        if let tmp = formatter.number(from: odometer.text!) as! Double? {
             theOdo = tmp
         } else {
             errors = true
@@ -91,7 +164,7 @@ class EnterFuelPurchaseViewController: UIViewController {
             Errors.text?.append("Bad Amount value\n")
         }
 
-        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost)")
+        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount)")
 
         if errors {
             print ("There are errors")
@@ -100,22 +173,28 @@ class EnterFuelPurchaseViewController: UIViewController {
         
         var theDate : TimeInterval
         theDate = date.date.timeIntervalSince1970
-
-        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
         let myContext: NSManagedObjectContext = container.viewContext
-        
+
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
             print("create gasentry Entity")
-            let brandEntry = Brand.Request(theBrand:theBrand, context:gasEntry.managedObjectContext!)
+            let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:gasEntry.managedObjectContext!)
             gasEntry.brand = brandEntry
             
             print("created Brand Entity link")
             gasEntry.date = theDate
-            gasEntry.odometer = theOdo
+            gasEntry.odometer = NSDecimalNumber(value:theOdo)
             gasEntry.toEmpty = milesLeft
             gasEntry.cost = theCost
             gasEntry.amount = theAmount
- 
+            gasEntry.note = note.text ?? ""
+            
+            // calculate dist from last fillup; needed to calc MPG
+            if let prevGasEntry = GasEntry.getPrevious(context: myContext, theDate: theDate) {
+                let prevOdo = prevGasEntry.odometer! as Double
+                gasEntry.distance = NSDecimalNumber(value:(theOdo - prevOdo))
+            } else {
+                gasEntry.distance = (theOdo as! NSDecimalNumber)
+            }
             do {
                 try myContext.save()
             } catch let error {
@@ -124,6 +203,7 @@ class EnterFuelPurchaseViewController: UIViewController {
             resetFields()
             print("gasentry Entity saved")
             Errors.text? = "Purchase saved."
+            
         } else {
             print ("gasEntry not set")
         }
@@ -144,3 +224,4 @@ class EnterFuelPurchaseViewController: UIViewController {
     */
 
 }
+

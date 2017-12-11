@@ -1,0 +1,67 @@
+2017-12-01 22:58:53.256805-0500 EnterGas[73879:15789644] [MC] Lazy loading NSBundle MobileCoreServices.framework
+2017-12-01 22:58:53.257801-0500 EnterGas[73879:15789644] [MC] Loaded MobileCoreServices.framework
+2017-12-01 22:58:53.274766-0500 EnterGas[73879:15789644] [MC] System group container for systemgroup.com.apple.configurationprofiles path is /Users/jburgess/Library/Developer/CoreSimulator/Devices/2F5F5A65-4045-4743-BC57-8B7C6A98EE28/data/Containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles
+fields reset
+next field actions assigned
+2017-12-01 22:58:53.394437-0500 EnterGas[73879:15789644] -[UITextField setAutocompleteWithDataSource:delegate:customize:]: unrecognized selector sent to instance 0x7fc8628f8000
+2017-12-01 22:58:53.491266-0500 EnterGas[73879:15789644] *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[UITextField setAutocompleteWithDataSource:delegate:customize:]: unrecognized selector sent to instance 0x7fc8628f8000'
+*** First throw call stack:
+(
+	0   CoreFoundation                      0x000000010b6e31ab __exceptionPreprocess + 171
+	1   libobjc.A.dylib                     0x000000010a831f41 objc_exception_throw + 48
+	2   CoreFoundation                      0x000000010b763a34 -[NSObject(NSObject) doesNotRecognizeSelector:] + 132
+	3   UIKit                               0x000000010bd8e761 -[UIResponder doesNotRecognizeSelector:] + 295
+	4   CoreFoundation                      0x000000010b6660a8 ___forwarding___ + 1432
+	5   CoreFoundation                      0x000000010b665a88 _CF_forwarding_prep_0 + 120
+	6   EnterGas                            0x0000000109ef1832 _T08EnterGas0A26FuelPurchaseViewControllerC11viewDidLoadyyF + 1202
+	7   EnterGas                            0x0000000109ef1954 _T08EnterGas0A26FuelPurchaseViewControllerC11viewDidLoadyyFTo + 36
+	8   UIKit                               0x000000010bd038a5 -[UIViewController loadViewIfRequired] + 1235
+	9   UIKit                               0x000000010bd03cf2 -[UIViewController view] + 27
+	10  UIKit                               0x000000010bd72094 -[UITabBarController transitionFromViewController:toViewController:transition:shouldSetSelected:] + 466
+	11  UIKit                               0x000000010bd71417 -[UITabBarController transitionFromViewController:toViewController:] + 59
+	12  UIKit                               0x000000010bd6d404 -[UITabBarController _setSelectedViewController:] + 410
+	13  UIKit                               0x000000010bd6d1d3 -[UITabBarController setSelectedViewController:] + 109
+	14  UIKit                               0x000000010bc208f0 +[UIView(Animation) performWithoutAnimation:] + 90
+	15  UIKit                               0x000000010bd676dc -[UITabBarController _selectDefaultViewControllerIfNecessaryWithAppearanceTransitions:] + 512
+	16  UIKit                               0x000000010bd68727 -[UITabBarController viewWillAppear:] + 211
+	17  UIKit                               0x000000010bd0959c -[UIViewController _setViewAppearState:isAnimating:] + 444
+	18  UIKit                               0x000000010bd09e31 -[UIViewController __viewWillAppear:] + 147
+	19  UIKit                               0x000000010bd0b68e -[UIViewController viewWillMoveToWindow:] + 757
+	20  UIKit                               0x000000010bc16c68 -[UIView(Hierarchy) _willMoveToWindow:withAncestorView:] + 657
+	21  UIKit                               0x000000010bc2835d -[UIView(Internal) _addSubview:positioned:relativeTo:] + 453
+	22  UIKit                               0x000000010bbd1e56 -[UIWindow addRootViewControllerViewIfPossible] + 845
+	23  UIKit                               0x000000010bbd228b -[UIWindow _setHidden:forced:] + 294
+	24  UIKit                               0x000000010bbe5208 -[UIWindow makeKeyAndVisible] + 42
+	25  UIKit                               0x000000010bb578cd -[UIApplication _callInitializationDelegatesForMainScene:transitionContext:] + 4711
+	26  UIKit                               0x000000010bb5cafd -[UIApplication _runWithMainScene:transitionContext:completion:] + 1720
+	27  UIKit                               0x000000010bf222e0 __111-[__UICanvasLifecycleMonitor_Compatability _scheduleFirstCommitForScene:transition:firstActivation:completion:]_block_invoke + 924
+	28  UIKit                               0x000000010c2f4be0 +[_UICanvas _enqueuePostSettingUpdateTransactionBlock:] + 153
+	29  UIKit                               0x000000010bf21ed9 -[__UICanvasLifecycleMonitor_Compatability _scheduleFirstCommitForScene:transition:firstActivation:completion:] + 249
+	30  UIKit                               0x000000010bf22737 -[__UICanvasLifecycleMonitor_Compatability activateEventsOnly:withContext:completion:] + 668
+	31  UIKit                               0x000000010c896c4d __82-[_UIApplicationCanvas _transitionLifecycleStateWithTransitionContext:completion:]_block_invoke + 262
+	32  UIKit                               0x000000010c896b06 -[_UIApplicationCanvas _transitionLifecycleStateWithTransitionContext:completion:] + 444
+	33  UIKit                               0x000000010c577d52 __125-[_UICanvasLifecycleSettingsDiffAction performActionsForCanvas:withUpdatedScene:settingsDiff:fromSettings:transitionContext:]_block_invoke + 420
+	34  UIKit                               0x000000010c774a7e _performActionsWithDelayForTransitionContext + 100
+	35  UIKit                               0x000000010c577b4e -[_UICanvasLifecycleSettingsDiffAction performActionsForCanvas:withUpdatedScene:settingsDiff:fromSettings:transitionContext:] + 231
+	36  UIKit                               0x000000010c2f423d -[_UICanvas scene:didUpdateWithDiff:transitionContext:completion:] + 392
+	37  UIKit                               0x000000010bb5b37e -[UIApplication workspace:didCreateScene:withTransitionContext:completion:] + 523
+	38  UIKit                               0x000000010c12fc1b -[UIApplicationSceneClientAgent scene:didInitializeWithEvent:completion:] + 369
+	39  FrontBoardServices                  0x00000001108c0158 -[FBSSceneImpl _didCreateWithTransitionContext:completion:] + 338
+	40  FrontBoardServices                  0x00000001108c8c4d __56-[FBSWorkspace client:handleCreateScene:withCompletion:]_block_invoke_2 + 235
+	41  libdispatch.dylib                   0x000000010fb1343c _dispatch_client_callout + 8
+	42  libdispatch.dylib                   0x000000010fb18af4 _dispatch_block_invoke_direct + 592
+	43  FrontBoardServices                  0x00000001108f4672 __FBSSERIALQUEUE_IS_CALLING_OUT_TO_A_BLOCK__ + 24
+	44  FrontBoardServices                  0x00000001108f4328 -[FBSSerialQueue _performNext] + 464
+	45  FrontBoardServices                  0x00000001108f4897 -[FBSSerialQueue _performNextFromRunLoopSource] + 45
+	46  CoreFoundation                      0x000000010b686231 __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__ + 17
+	47  CoreFoundation                      0x000000010b725e41 __CFRunLoopDoSource0 + 81
+	48  CoreFoundation                      0x000000010b66ab49 __CFRunLoopDoSources0 + 185
+	49  CoreFoundation                      0x000000010b66a12f __CFRunLoopRun + 1279
+	50  CoreFoundation                      0x000000010b6699b9 CFRunLoopRunSpecific + 409
+	51  GraphicsServices                    0x00000001111ed9c6 GSEventRunModal + 62
+	52  UIKit                               0x000000010bb5e5e8 UIApplicationMain + 159
+	53  EnterGas                            0x0000000109eeeed7 main + 55
+	54  libdyld.dylib                       0x000000010fb8fd81 start + 1
+)
+libc++abi.dylib: terminating with uncaught exception of type NSException
+(lldb) 
