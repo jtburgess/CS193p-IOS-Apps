@@ -26,7 +26,8 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
     @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var note: UITextField!
     @IBOutlet weak var Errors: UILabel!
-
+    @IBOutlet weak var vehicleName: UITextField!
+    
     let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
 
     // MARK - user interface
@@ -57,6 +58,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         note.text = ""
         amount.text = ""
         Errors.text = ""
+        vehicleName.text = currentVehicle
         print("fields reset")
     }
 
@@ -164,7 +166,17 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
             Errors.text?.append("Bad Amount value\n")
         }
 
-        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount)")
+        let theVehicle = vehicleName.text ?? ""
+        if theVehicle == "" {
+            errors = true
+            Errors.text?.append ("Please fill in a vehicle name\n")
+        } else {
+            // set the current and default Vehicles
+            currentVehicle = theVehicle
+            defaults.setValue(theVehicle, forKey: vehicleNameKey)
+        }
+
+        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicle)")
 
         if errors {
             print ("There are errors")
@@ -176,11 +188,14 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         let myContext: NSManagedObjectContext = container.viewContext
 
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
-            print("create gasentry Entity")
+            //print("create gasentry Entity")
             let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:gasEntry.managedObjectContext!)
             gasEntry.brand = brandEntry
             
-            print("created Brand Entity link")
+            let vehicleEntry = Vehicle.FindOrAdd(theVehicle:theVehicle, context:gasEntry.managedObjectContext!)
+            gasEntry.vehicle = vehicleEntry
+            print("created Brand and Vehicle Entity links")
+
             gasEntry.date = theDate
             gasEntry.odometer = NSDecimalNumber(value:theOdo)
             gasEntry.toEmpty = milesLeft

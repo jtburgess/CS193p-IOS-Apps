@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D0766DF1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0766DD1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift */; };
+		8D0766E01FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0766DE1FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift */; };
+		8D0766E21FE595A2004D03B1 /* TabBarDefaultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0766E11FE595A2004D03B1 /* TabBarDefaultsViewController.swift */; };
 		8D6305CA1FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */; };
 		8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */; };
 		8DB5D0331FA6492B0084D519 /* gasEntryDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5D0311FA6492B0084D519 /* gasEntryDB.xcdatamodeld */; };
@@ -42,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8D0766DD1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Vehicle+CoreDataClass.swift"; path = "/Users/jburgess/IOS Apps/Stanford-CS193P-IOS10-swift/EnterGas/CoreData/Vehicle+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		8D0766DE1FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Vehicle+CoreDataProperties.swift"; path = "/Users/jburgess/IOS Apps/Stanford-CS193P-IOS10-swift/EnterGas/CoreData/Vehicle+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		8D0766E11FE595A2004D03B1 /* TabBarDefaultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarDefaultsViewController.swift; sourceTree = "<group>"; };
 		8D3543141FD228630092D7E3 /* EnterGas-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EnterGas-BridgingHeader.h"; sourceTree = "<group>"; };
 		8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterFuelPurchaseViewController.swift; sourceTree = "<group>"; };
 		8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasEntryCellTableViewCell.swift; sourceTree = "<group>"; };
@@ -94,11 +100,13 @@
 		8D9ADC541FAA65CA00714209 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				8DB5D0311FA6492B0084D519 /* gasEntryDB.xcdatamodeld */,
 				8DED1C091FB607DD009943CB /* Brand+CoreDataClass.swift */,
 				8DED1C0A1FB607DD009943CB /* Brand+CoreDataProperties.swift */,
 				8DED1C0B1FB607DD009943CB /* GasEntry+CoreDataClass.swift */,
 				8DED1C0C1FB607DD009943CB /* GasEntry+CoreDataProperties.swift */,
-				8DB5D0311FA6492B0084D519 /* gasEntryDB.xcdatamodeld */,
+				8D0766DD1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift */,
+				8D0766DE1FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -128,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				8DE2D0881F9D23EF00921302 /* Main.storyboard */,
+				8D0766E11FE595A2004D03B1 /* TabBarDefaultsViewController.swift */,
 				8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */,
 				8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */,
 				8DE640001FBE0B0100B0A166 /* GasTitleCellTableViewCell.swift */,
@@ -304,10 +313,13 @@
 				8DED1C101FB607DD009943CB /* GasEntry+CoreDataProperties.swift in Sources */,
 				8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */,
 				8DB5D0331FA6492B0084D519 /* gasEntryDB.xcdatamodeld in Sources */,
+				8D0766DF1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift in Sources */,
 				8DED1C0E1FB607DD009943CB /* Brand+CoreDataProperties.swift in Sources */,
+				8D0766E21FE595A2004D03B1 /* TabBarDefaultsViewController.swift in Sources */,
 				8DED1C0F1FB607DD009943CB /* GasEntry+CoreDataClass.swift in Sources */,
 				8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */,
 				8DED1C0D1FB607DD009943CB /* Brand+CoreDataClass.swift in Sources */,
+				8D0766E01FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift in Sources */,
 				8DE640011FBE0B0100B0A166 /* GasTitleCellTableViewCell.swift in Sources */,
 				8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */,
 				8D6305CA1FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift in Sources */,

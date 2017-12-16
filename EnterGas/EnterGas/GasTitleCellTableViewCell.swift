@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 
+// future TBD -- enable click on title labels to sort
 struct SortField {
     var fieldName: String
     var sortUp: Bool
@@ -16,24 +17,26 @@ struct SortField {
 }
 class GasTitleCellTableViewCell: UITableViewCell {
     @IBOutlet weak var brand: UILabel!
-    @IBOutlet weak var dateButton: UIButton!
+    //@IBOutlet weak var dateButton: UIButton!
     
     var sortField: SortField = SortField (
         fieldName: "Date",
         sortUp: false,
         button: nil
     )
-    //var normAttr: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
+    //let normAttr: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
     //let boldAttr: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)]
 
     override func didAddSubview(_ subview: UIView) {
         print("didAddSubView Gas TITLE CellView")
         super.didAddSubview(subview)
+        /*
         sortField = SortField (
             fieldName: "Date",
             sortUp: false,
             button: dateButton
         )
+        */
     }
 
     @IBAction func sortAction(_ sender: UIButton) {
@@ -53,9 +56,9 @@ class GasTitleCellTableViewCell: UITableViewCell {
     }
     func updateHeader() {
         // update the display fields in the UI
-        
+        print("update Header / Title row")
         //date.text = "Date    "
-        //brand.text = "Brand"
+        brand.text = currentVehicle
         //odometer.text = "Odometer"
         //cost.text = "Cost"
         //gallons.text = "Amt"

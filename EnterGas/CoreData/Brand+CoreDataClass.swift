@@ -12,7 +12,7 @@ import CoreData
 
 
 public class Brand: NSManagedObject {
-    // New should probably be an init()
+    // New() probably be an init()?
     fileprivate class func New (theBrand:String, context:NSManagedObjectContext) -> Brand {
         let brand = NSEntityDescription.insertNewObject(forEntityName: "Brand", into: context) as? Brand
         print("create new Brand Entity: \(theBrand)")
@@ -21,7 +21,7 @@ public class Brand: NSManagedObject {
     }
 
     // request a single brand. If it doesnt exist, add it
-    class func Request(theBrand: String, context: NSManagedObjectContext) -> Brand {
+    class func FindOrAdd(theBrand: String, context: NSManagedObjectContext) -> Brand {
         let request: NSFetchRequest<Brand> = Brand.fetchRequest()
         request.predicate = NSPredicate(format: "brandName = %@", theBrand)
         request.sortDescriptors = [NSSortDescriptor(key: "brandName", ascending: true)]
@@ -49,7 +49,9 @@ public class Brand: NSManagedObject {
     class func RequestAll( context: NSManagedObjectContext) -> NSArray? {
         let request: NSFetchRequest<Brand> = Brand.fetchRequest()
         request.predicate = NSPredicate(format: "all")
-        request.sortDescriptors = [NSSortDescriptor(key: "brandName", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "brandName", ascending: true,
+            selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
+            )]
         
         do {
             let allBrands = try context.fetch(request) as NSArray

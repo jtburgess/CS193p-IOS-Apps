@@ -26,7 +26,7 @@ class GasListTableViewController: UITableViewController {
         super.viewDidLoad()
         // if the list is empty or doesn't have a proper initialze entry, then initialize it!
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
-        let initList = (GasEntry.RequestAll(context:myContext) as? Array<GasEntry>)!
+        let initList = (GasEntry.RequestAll(vehicleName:currentVehicle, context:myContext) as? Array<GasEntry>)!
         if initList.count == 0 {
             initializeHistory()
         /*****
@@ -47,7 +47,7 @@ class GasListTableViewController: UITableViewController {
     }
     func loadFromCoreData () {
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
-        gasList = (GasEntry.RequestAll(context:myContext) as? Array<GasEntry>)!
+        gasList = (GasEntry.RequestAll(vehicleName: currentVehicle, context:myContext) as? Array<GasEntry>)!
         print("loaded \(gasList.count) entries")
     }
     // load initial row
@@ -77,21 +77,23 @@ class GasListTableViewController: UITableViewController {
         let dqCell = tableView.dequeueReusableCell(withIdentifier: "gasEntryCell", for: indexPath)
 
         if indexPath.row == 0 {
+            let dqCell = tableView.dequeueReusableCell(withIdentifier: "gasTitleCell", for: indexPath)
             if let gasTitleCell = dqCell as? GasTitleCellTableViewCell {
                 gasTitleCell.updateHeader()
             } else {
                 print("ERROR casting dqCell to GasTitleCellTableViewCell")
             }
+            return dqCell
         } else {
+            let dqCell = tableView.dequeueReusableCell(withIdentifier: "gasEntryCell", for: indexPath)
             if let gasEntryCell = dqCell as? GasEntryCellTableViewCell {
                 let data = gasList[indexPath.row-1]
                 gasEntryCell.myData = data
             } else {
                 print("ERROR casting dqCell to GasEntryCellTableViewCell")
             }
-            
+            return dqCell
         }
-        return dqCell
     }
 
     /*
