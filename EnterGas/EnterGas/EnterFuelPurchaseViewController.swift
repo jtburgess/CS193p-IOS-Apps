@@ -30,7 +30,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
     
     let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
 
-    // MARK - user interface
+    // MARK: user interface
     override func viewDidLoad() {
         super.viewDidLoad()
         resetFields()
@@ -65,7 +65,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         print("fields reset")
     }
 
-    // MARK - UITextFieldDelegate
+    // MARK: UITextFieldDelegate
     private var nextField: [ UITextField : UITextField ] = [:]
     func assignNextActions() {
         brand.delegate = self
@@ -97,7 +97,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         return true
     }
     
-    // MARK - ACEAutocompleteBar delegate
+    // MARK: (notused) ACEAutocompleteBar delegate
     func minimumCharacters(toTrigger inputView: ACEAutocompleteInputView!) -> UInt {
         return 1
     }
@@ -123,7 +123,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         textField.text = String(describing: object)
     }
 
-    // MARK date picker popup
+    // MARK: date picker popup
     @IBAction func datePickerPopup(_ sender: Any) {
         let theDate = dateFromString(dateString: date.text!)
         DatePickerDialog().show("DatePicker",
@@ -200,7 +200,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicle)")
 
         // force the keyboard to go away so we can see the error messages
-        self.resignFirstResponder()
+        view.endEditing(true)
 
         if errors {
             print ("There are errors")
@@ -253,7 +253,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         }
     }
 
-    // MARK - date conversion helpers toString and fromString
+    // MARK: date conversion helpers toString and fromString
     private func dateToString (date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
