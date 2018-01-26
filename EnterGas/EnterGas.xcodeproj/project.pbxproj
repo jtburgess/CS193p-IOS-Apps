@@ -10,9 +10,13 @@
 		8D0766DF1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0766DD1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift */; };
 		8D0766E01FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0766DE1FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift */; };
 		8D0766E21FE595A2004D03B1 /* TabBarDefaultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0766E11FE595A2004D03B1 /* TabBarDefaultsViewController.swift */; };
+		8D15C044201A4A2700DACB8D /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D15C043201A4A2700DACB8D /* DatePickerDialog.swift */; };
+		8D1F99091FFAEF140092151B /* SharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1F99081FFAEF140092151B /* SharingViewController.swift */; };
 		8D6305CA1FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */; };
 		8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */; };
 		8DB5D0331FA6492B0084D519 /* gasEntryDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8DB5D0311FA6492B0084D519 /* gasEntryDB.xcdatamodeld */; };
+		8DCFB64320081B8F002BE428 /* sendMailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCFB64220081B8F002BE428 /* sendMailViewController.swift */; };
+		8DCFB64520084047002BE428 /* FuelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCFB64420084047002BE428 /* FuelType.swift */; };
 		8DE2D0851F9D23EF00921302 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE2D0841F9D23EF00921302 /* AppDelegate.swift */; };
 		8DE2D08A1F9D23EF00921302 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D0881F9D23EF00921302 /* Main.storyboard */; };
 		8DE2D08C1F9D23EF00921302 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DE2D08B1F9D23EF00921302 /* Assets.xcassets */; };
@@ -48,10 +52,14 @@
 		8D0766DD1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Vehicle+CoreDataClass.swift"; path = "/Users/jburgess/IOS Apps/Stanford-CS193P-IOS10-swift/EnterGas/CoreData/Vehicle+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8D0766DE1FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Vehicle+CoreDataProperties.swift"; path = "/Users/jburgess/IOS Apps/Stanford-CS193P-IOS10-swift/EnterGas/CoreData/Vehicle+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8D0766E11FE595A2004D03B1 /* TabBarDefaultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarDefaultsViewController.swift; sourceTree = "<group>"; };
+		8D15C043201A4A2700DACB8D /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerDialog.swift; path = ../../../TestHiddenPickerViews/TestHiddenPickerViews/DatePickerDialog.swift; sourceTree = "<group>"; };
+		8D1F99081FFAEF140092151B /* SharingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingViewController.swift; sourceTree = "<group>"; };
 		8D3543141FD228630092D7E3 /* EnterGas-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EnterGas-BridgingHeader.h"; sourceTree = "<group>"; };
 		8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterFuelPurchaseViewController.swift; sourceTree = "<group>"; };
 		8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasEntryCellTableViewCell.swift; sourceTree = "<group>"; };
 		8DB5D0321FA6492B0084D519 /* gasEntryDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = gasEntryDB.xcdatamodel; sourceTree = "<group>"; };
+		8DCFB64220081B8F002BE428 /* sendMailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sendMailViewController.swift; sourceTree = "<group>"; };
+		8DCFB64420084047002BE428 /* FuelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelType.swift; sourceTree = "<group>"; };
 		8DE2D0811F9D23EF00921302 /* EnterGas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnterGas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DE2D0841F9D23EF00921302 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DE2D0891F9D23EF00921302 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -136,6 +144,9 @@
 			isa = PBXGroup;
 			children = (
 				8DE2D0881F9D23EF00921302 /* Main.storyboard */,
+				8DCFB64420084047002BE428 /* FuelType.swift */,
+				8DCFB64220081B8F002BE428 /* sendMailViewController.swift */,
+				8D1F99081FFAEF140092151B /* SharingViewController.swift */,
 				8D0766E11FE595A2004D03B1 /* TabBarDefaultsViewController.swift */,
 				8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */,
 				8D8B6DB21FA26CEB00182208 /* GasEntryCellTableViewCell.swift */,
@@ -170,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				8DE2D08B1F9D23EF00921302 /* Assets.xcassets */,
+				8D15C043201A4A2700DACB8D /* DatePickerDialog.swift */,
 				8DE2D0841F9D23EF00921302 /* AppDelegate.swift */,
 				8DE2D08D1F9D23EF00921302 /* LaunchScreen.storyboard */,
 			);
@@ -311,13 +323,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DED1C101FB607DD009943CB /* GasEntry+CoreDataProperties.swift in Sources */,
+				8D1F99091FFAEF140092151B /* SharingViewController.swift in Sources */,
 				8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */,
 				8DB5D0331FA6492B0084D519 /* gasEntryDB.xcdatamodeld in Sources */,
 				8D0766DF1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift in Sources */,
 				8DED1C0E1FB607DD009943CB /* Brand+CoreDataProperties.swift in Sources */,
 				8D0766E21FE595A2004D03B1 /* TabBarDefaultsViewController.swift in Sources */,
+				8D15C044201A4A2700DACB8D /* DatePickerDialog.swift in Sources */,
+				8DCFB64520084047002BE428 /* FuelType.swift in Sources */,
 				8DED1C0F1FB607DD009943CB /* GasEntry+CoreDataClass.swift in Sources */,
 				8D8B6DB31FA26CEB00182208 /* GasEntryCellTableViewCell.swift in Sources */,
+				8DCFB64320081B8F002BE428 /* sendMailViewController.swift in Sources */,
 				8DED1C0D1FB607DD009943CB /* Brand+CoreDataClass.swift in Sources */,
 				8D0766E01FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift in Sources */,
 				8DE640011FBE0B0100B0A166 /* GasTitleCellTableViewCell.swift in Sources */,
@@ -489,13 +505,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LAA8RG57M2;
 				INFOPLIST_FILE = EnterGas/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGas";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "EnterGas/EnterGas-BridgingHeader.h";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -504,13 +521,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LAA8RG57M2;
 				INFOPLIST_FILE = EnterGas/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.burgess-john.EnterGas";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "EnterGas/EnterGas-BridgingHeader.h";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

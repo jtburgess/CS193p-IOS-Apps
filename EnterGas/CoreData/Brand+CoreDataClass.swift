@@ -15,7 +15,7 @@ public class Brand: NSManagedObject {
     // New() probably be an init()?
     fileprivate class func New (theBrand:String, context:NSManagedObjectContext) -> Brand {
         let brand = NSEntityDescription.insertNewObject(forEntityName: "Brand", into: context) as? Brand
-        print("create new Brand Entity: \(theBrand)")
+        print("create new Brand Entity: \(theBrand).")
         brand!.brandName = theBrand
         return brand!
     }
@@ -38,9 +38,9 @@ public class Brand: NSManagedObject {
                     print("Warn: More than one (\(result.count)) Brand returned for \(theBrand)")
                     return result[0] as Brand
             }
-        } catch {
+        } catch let error as NSError {
             // ToDo - add brand here
-            print("Brand Fetch error: \(error)")
+            print("Brand Fetch error: \(error.domain), userInfo: \(error.userInfo)")
             return New (theBrand:theBrand, context:context)
         }
     }
@@ -48,7 +48,7 @@ public class Brand: NSManagedObject {
     // get list of brand names, sorted by name (not Brand Entries, just the names)
     class func RequestAll( context: NSManagedObjectContext) -> NSArray? {
         let request: NSFetchRequest<Brand> = Brand.fetchRequest()
-        request.predicate = NSPredicate(format: "all")
+        // request.predicate = NSPredicate(format: "all")
         request.sortDescriptors = [NSSortDescriptor(key: "brandName", ascending: true,
             selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
             )]
@@ -63,9 +63,8 @@ public class Brand: NSManagedObject {
                 }
             }
             return brandList as NSArray
-        } catch {
-            let nserror = error as NSError
-            print("brand RequestAll error \(nserror), \(nserror.userInfo)")
+        } catch let error as NSError {
+            print("brand RequestAll error \(error.code), \(error.userInfo)")
             return []
         }
     }

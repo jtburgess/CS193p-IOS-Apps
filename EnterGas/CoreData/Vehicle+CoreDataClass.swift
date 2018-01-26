@@ -14,7 +14,7 @@ public class Vehicle: NSManagedObject {
 
     fileprivate class func New (theVehicle:String, context:NSManagedObjectContext) -> Vehicle {
         let vehicle = NSEntityDescription.insertNewObject(forEntityName: "Vehicle", into: context) as? Vehicle
-        print("create new Vehicle Entity: \(theVehicle)")
+        print("create new Vehicle Entity: \(theVehicle).")
         vehicle!.vehicleName = theVehicle
         return vehicle!
     }
@@ -34,15 +34,15 @@ public class Vehicle: NSManagedObject {
             case 0:
                 let newVehicle = New (theVehicle:theVehicle, context:context)
                 // initialize the gas entry list for this vehicle.
-                _ = GasEntry.defaultEntry()
+                // could cause recursion // _ = GasEntry.defaultEntry()
                 return newVehicle
             default:
                 print("Warn: More than one (\(result.count)) Vehicle returned for \(theVehicle)")
                 return result[0] as Vehicle
             }
-        } catch {
+        } catch let error as NSError {
             // ToDo - add Vehicle here
-            print("Vehicle Fetch error: \(error)")
+            print("Vehicle Fetch error: \(error.code)")
             return New (theVehicle:theVehicle, context:context)
         }
     }
@@ -50,7 +50,7 @@ public class Vehicle: NSManagedObject {
     // get list of Vehicle names, sorted by name (not Vehicle Entries, just the names)
     class func RequestAll( context: NSManagedObjectContext) -> NSArray? {
         let request: NSFetchRequest<Vehicle> = Vehicle.fetchRequest()
-        request.predicate = NSPredicate(format: "all")
+        //request.predicate = NSPredicate(format: "all")
         request.sortDescriptors = [NSSortDescriptor(key: "vehicleName", ascending: true,
                                                     selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
             )]
@@ -65,9 +65,8 @@ public class Vehicle: NSManagedObject {
                 }
             }
             return vehicleList as NSArray
-        } catch {
-            let nserror = error as NSError
-            print("Vehicle RequestAll error \(nserror), \(nserror.userInfo)")
+        } catch let error as NSError {
+            print("Vehicle RequestAll error \(error.code), \(error.userInfo)")
             return []
         }
     }

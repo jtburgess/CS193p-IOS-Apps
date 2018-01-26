@@ -23,7 +23,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var cost: UITextField!
     @IBOutlet weak var amount: UITextField!
-    @IBOutlet weak var date: UIDatePicker!
+    @IBOutlet weak var date: UITextField!
     @IBOutlet weak var note: UITextField!
     @IBOutlet weak var Errors: UILabel!
     @IBOutlet weak var vehicleName: UITextField!
@@ -35,7 +35,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         super.viewDidLoad()
         resetFields()
         assignNextActions()
-        costLabel.text = "Cost \(currencySymbol))"
+        costLabel.text = "Cost (\(currencySymbol))"
         
        /*
         self.brand.setAutocompleteWith(self, delegate: self, customize: { inputView in
@@ -58,6 +58,9 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         note.text = ""
         amount.text = ""
         Errors.text = ""
+        if date.text == "" || date.text == "theDate" {
+            self.date.text = dateToString(date: Date.init())
+        }
         vehicleName.text = currentVehicle
         print("fields reset")
     }
@@ -71,6 +74,9 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         amount.delegate = self
         toEmpty.delegate = self
         note.delegate = self
+        
+        // start off the cursor in the brand field
+        brand.becomeFirstResponder()
         
         nextField[brand] = odometer
         nextField[odometer] = cost
@@ -117,6 +123,21 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         textField.text = String(describing: object)
     }
 
+    // MARK date picker popup
+    @IBAction func datePickerPopup(_ sender: Any) {
+        let theDate = dateFromString(dateString: date.text!)
+        DatePickerDialog().show("DatePicker",
+                                doneButtonTitle: "Done",
+                                cancelButtonTitle: "Cancel",
+                                defaultDate: theDate,
+                                datePickerMode: .date) {
+            (date) -> Void in
+            if let dt = date {
+                self.date.text = self.dateToString(date: dt)
+            }
+        }
+    }
+    
     // MARK: SAVE button saves the data to CoreData
     @IBAction func saveThisEntry(_ sender: UIButton) {
         // add validations here so I can eliminate the '!' in the gasEntry() call
@@ -127,7 +148,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         formatter.generatesDecimalNumbers = true
 
         // brand list validataions
-        let theBrand = brand.text ?? ""
+        let theBrand = (brand.text ?? "").trimmingCharacters(in: [" "])
         if theBrand == "" {
             errors = true
             Errors.text?.append ("Please fill in the Brand purchased\n")
@@ -166,7 +187,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
             Errors.text?.append("Bad Amount value\n")
         }
 
-        let theVehicle = vehicleName.text ?? ""
+        let theVehicle = (vehicleName.text ?? "").trimmingCharacters(in: [" "])
         if theVehicle == "" {
             errors = true
             Errors.text?.append ("Please fill in a vehicle name\n")
@@ -178,13 +199,21 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
 
         print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicle)")
 
+        // force the keyboard to go away so we can see the error messages
+        self.resignFirstResponder()
+
         if errors {
             print ("There are errors")
             return
         }
         
         var theDate : TimeInterval
-        theDate = date.date.timeIntervalSince1970
+        if let tmpDate = date?.text {
+            theDate = dateFromString(dateString: tmpDate).timeIntervalSince1970
+        } else {
+            // now()
+            theDate = Date.init().timeIntervalSince1970
+        }
         let myContext: NSManagedObjectContext = container.viewContext
 
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
@@ -208,12 +237,12 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
                 let prevOdo = prevGasEntry.odometer! as Double
                 gasEntry.distance = NSDecimalNumber(value:(theOdo - prevOdo))
             } else {
-                gasEntry.distance = (theOdo as! NSDecimalNumber)
+                gasEntry.distance =  gasEntry.odometer
             }
             do {
                 try myContext.save()
-            } catch let error {
-                print("Core Data Save Error: \(error)")
+            } catch let error as NSError  {
+                print("Core Data Save Error: \(error.code)")
             }
             resetFields()
             print("gasentry Entity saved")
@@ -224,6 +253,17 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         }
     }
 
+    // MARK - date conversion helpers toString and fromString
+    private func dateToString (date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: date)
+    }
+    private func dateFromString (dateString: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.date(from: dateString)!
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

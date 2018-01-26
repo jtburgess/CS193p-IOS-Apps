@@ -59,6 +59,7 @@ class GasTitleCellTableViewCell: UITableViewCell {
         print("update Header / Title row")
         //date.text = "Date    "
         brand.text = currentVehicle
+        brand.textColor = UIColor.blue
         //odometer.text = "Odometer"
         //cost.text = "Cost"
         //gallons.text = "Amt"

@@ -24,12 +24,12 @@ class GasListTableViewController: UITableViewController {
     override func viewDidLoad() {
         print("TableView DidLoad")
         super.viewDidLoad()
-        // if the list is empty or doesn't have a proper initialze entry, then initialize it!
-        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
-        let initList = (GasEntry.RequestAll(vehicleName:currentVehicle, context:myContext) as? Array<GasEntry>)!
-        if initList.count == 0 {
-            initializeHistory()
         /*****
+         // if the list is empty or doesn't have a proper initialze entry, then initialize it!
+         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
+         let initList = (GasEntry.RequestAll(vehicleName:currentVehicle, context:myContext) as? Array<GasEntry>)!
+         if initList.count == 0 {
+         initializeHistory()
          } else if initList.last!.brand?.brandName != "initialize" {
             print("brand.last=\(String(describing: initList.last!.brand?.brandName)), count=\(initList.count)")
             for entry in initList {
@@ -37,8 +37,8 @@ class GasListTableViewController: UITableViewController {
                 myContext.delete (entry)
             }
             initializeHistory()
+         }
          *****/
-        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -57,8 +57,8 @@ class GasListTableViewController: UITableViewController {
            do {
                 let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
                 try myContext.save()
-            } catch let error {
-                print("Core Data Save Error: \(error)")
+            } catch let error as NSError {
+                print("Core Data Save Error: \(error.code)")
             }
         }
     }
@@ -74,7 +74,6 @@ class GasListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dqCell = tableView.dequeueReusableCell(withIdentifier: "gasEntryCell", for: indexPath)
 
         if indexPath.row == 0 {
             let dqCell = tableView.dequeueReusableCell(withIdentifier: "gasTitleCell", for: indexPath)
