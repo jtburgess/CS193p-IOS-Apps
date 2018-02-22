@@ -11,37 +11,47 @@ import UIKit
 
 // user preferences aka UserDefaults
 let defaults = UserDefaults.standard
+
+// all of the "current" values are not optional. I supply real defaults
 let vehicleNameKey = "vehicleName"
-var currentVehicle : String? = nil
+var currentVehicle : String = "none"
+
+// fuelTypeID is used as the index into fuelTypePickerValues for display purposes
+var fuelTypeKey = "fuelType"
+var currentFuelTypeID : Int = 0
+
 let emailAddressKey = "emailAddress"
-var currentEmailAddress : String? = nil
+var currentEmailAddress : String = "none"
 
 class TabBarDefaultsViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("TabBarDefaults did load!")
 
-        if let tmp = defaults.string(forKey: vehicleNameKey) {
+        if  let anyValue = defaults.object(forKey: vehicleNameKey),
+            let tmp = anyValue as? String {
             currentVehicle = tmp
         } else {
             // need to assign a default vehicle - segue to that screen
+            print("no default vehicle")
         }
-    }
 
-    /*
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: - Navigation
+        if  let anyValue = defaults.object(forKey: fuelTypeKey),
+            let tmp = anyValue as? Int {
+            currentFuelTypeID = tmp
+        } else {
+            // need to assign a default fuel type - segue to that screen
+            // for now default to regular
+            currentFuelTypeID = 0
+            print ("no default fuel type")
+        }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if  let anyValue = defaults.object(forKey: emailAddressKey),
+            let tmp = anyValue as? String {
+            currentEmailAddress = tmp
+        } else {
+            // need to assign a default email address - segue to that screen
+        }
+        print("TabBarDefaults did load: vehicle=\(currentVehicle), currentFuelID=\(currentFuelTypeID)")
     }
-    */
-
 }

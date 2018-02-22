@@ -25,6 +25,7 @@ extension GasEntry {
     @NSManaged public var distance: NSDecimalNumber? // distance since prior fillup
     @NSManaged public var toEmpty: NSDecimalNumber?  // optional miles until totally empty
     @NSManaged public var note: String?
+    @NSManaged public var fuelTypeID: NSNumber?  // id of the fuelType in fuelTypePickerValues
 
     @NSManaged public var brand: Brand?         // link to Brand entry
     @NSManaged public var vehicle: Vehicle?     // link to vehicleName entry

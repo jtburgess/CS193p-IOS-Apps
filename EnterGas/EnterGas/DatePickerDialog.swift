@@ -214,6 +214,7 @@ open class DatePickerDialog: UIView {
 
         self.datePicker = configuredDatePicker()
         container.addSubview(self.datePicker)
+        print ("DatePicker add subview \(self.datePicker)")
 
         // Add the buttons
         addButtonsToView(container: container)

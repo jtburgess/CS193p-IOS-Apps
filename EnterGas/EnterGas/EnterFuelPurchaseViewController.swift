@@ -27,6 +27,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
     @IBOutlet weak var note: UITextField!
     @IBOutlet weak var Errors: UILabel!
     @IBOutlet weak var vehicleName: UITextField!
+    @IBOutlet weak var fuelType: UITextField!
     
     let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
 
@@ -58,6 +59,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         note.text = ""
         amount.text = ""
         Errors.text = ""
+        fuelType.text = fuelTypePickerValues [currentFuelTypeID]
         if date.text == "" || date.text == "theDate" {
             self.date.text = dateToString(date: Date.init())
         }
@@ -123,10 +125,10 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         textField.text = String(describing: object)
     }
 
-    // MARK: date picker popup
+    // MARK: date picker and fuel type popups
     @IBAction func datePickerPopup(_ sender: Any) {
         let theDate = dateFromString(dateString: date.text!)
-        DatePickerDialog().show("DatePicker",
+        DatePickerDialog().show("Date Picker",
                                 doneButtonTitle: "Done",
                                 cancelButtonTitle: "Cancel",
                                 defaultDate: theDate,
@@ -138,6 +140,17 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
         }
     }
     
+    @IBAction func FuelTypePickerPopup(_ sender: Any) {
+        FuelTypePickerDialog().show(fuelTypeID: currentFuelTypeID) {
+            (returnValue) -> Void in
+            if let theFuelTypeID = returnValue {
+                self.fuelType.text = fuelTypePickerValues [theFuelTypeID]
+                currentFuelTypeID = theFuelTypeID
+                defaults.setValue(theFuelTypeID, forKey: fuelTypeKey)
+            }
+        }
+    }
+
     // MARK: SAVE button saves the data to CoreData
     @IBAction func saveThisEntry(_ sender: UIButton) {
         // add validations here so I can eliminate the '!' in the gasEntry() call
@@ -231,6 +244,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate, AC
             gasEntry.cost = theCost
             gasEntry.amount = theAmount
             gasEntry.note = note.text ?? ""
+            gasEntry.fuelTypeID = currentFuelTypeID as NSNumber
             
             // calculate dist from last fillup; needed to calc MPG
             if let prevGasEntry = GasEntry.getPrevious(context: myContext, theDate: theDate) {

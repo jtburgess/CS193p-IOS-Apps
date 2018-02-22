@@ -60,7 +60,7 @@ class SharingViewController: UIViewController {
         // get the entire table, ALL vehicles
 
         // harded coded header; can't use reduce since I need to get linked values, and format the date
-        var csvString: String = "Vehicle,Brand,date,cost,odometer,toEmpty,amount,note\n"
+        var csvString: String = "Vehicle,Brand,date,cost,odometer,toEmpty,amount,fuelType,note\n"
 
         let objects = (GasEntry.RequestAll( vehicleName: "all", context: myContext) as? Array<GasEntry>)!
         /* shouldn't need this
@@ -77,14 +77,16 @@ class SharingViewController: UIViewController {
         for myData in objects {
             let vehicle = myData.vehicle?.vehicleName ?? "error"
             let brand  = myData.brand?.brandName ?? "error"
-            let date   = dateFormatter.string(from: Date(timeIntervalSince1970: (myData.date)))
+
+            let amount = String(format:"%.1f", ((myData.amount)! as Double) )
             let cost   = String(format:"%.2f", ((myData.cost)! as Double) )
+            let date   = dateFormatter.string(from: Date(timeIntervalSince1970: (myData.date)))
             let odometer = String(format:"%d", (myData.odometer)! as Int)
             let toEmpty  = String(format:"%d", (myData.toEmpty)! as Int)
-            let amount = String(format:"%.1f", ((myData.amount)! as Double) )
             let note   = myData.note ?? ""
+            let fuelType = fuelTypePickerValues[ myData.fuelTypeID as? Int ?? 0 ]
             
-            csvString += "\(vehicle),\(brand),\(date),\(cost),\(odometer),\(toEmpty),\(amount),\(note)\n"
+            csvString += "\(vehicle),\(brand),\(date),\(cost),\(odometer),\(toEmpty),\(amount),\(fuelType!),\(note),\\n"
         }
         return csvString
     }

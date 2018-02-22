@@ -35,7 +35,7 @@ public class GasEntry: NSManagedObject {
     class func getPrevious(context: NSManagedObjectContext, theDate: TimeInterval) -> GasEntry? {
         let request: NSFetchRequest<GasEntry> = GasEntry.fetchRequest()
         print("getPrevious to date=\(theDate)")
-        request.predicate = NSPredicate(format: "date.timeIntervalSince1970 <= %f and vehicle.vehicleName = %@", theDate, currentVehicle!)
+        request.predicate = NSPredicate(format: "date.timeIntervalSince1970 <= %f and vehicle.vehicleName = %@", theDate, currentVehicle)
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         request.fetchLimit = 1
         do {
@@ -55,18 +55,18 @@ public class GasEntry: NSManagedObject {
     }
     
     class func defaultEntry () -> GasEntry? {
-        if currentVehicle == nil {
+        if currentVehicle == "none" {
             // can't do anything until we have an assigned vehicle for this session
             return nil
         }
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
-            print("create Test gasentry Entity for \(currentVehicle!)")
+            print("create Test gasentry Entity for \(currentVehicle)")
             let brandEntry = Brand.FindOrAdd(theBrand:"initialize", context:gasEntry.managedObjectContext!)
             gasEntry.brand = brandEntry
             print("created Brand Entity link")
             
-            let vehicleEntry = Vehicle.FindOrAdd(theVehicle: currentVehicle!, context: gasEntry.managedObjectContext!)
+            let vehicleEntry = Vehicle.FindOrAdd(theVehicle: currentVehicle, context: gasEntry.managedObjectContext!)
             gasEntry.vehicle = vehicleEntry
             print("created Vehicle Entity link")
 

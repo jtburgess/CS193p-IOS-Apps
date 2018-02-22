@@ -19,6 +19,7 @@ class GasEntryCellTableViewCell: UITableViewCell {
     @IBOutlet weak var costPerUnit: UILabel!
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var mpg: UILabel!
+    @IBOutlet weak var fuelType: UILabel!
     
     var myData: GasEntry? {didSet { updateUI() }}
     
@@ -41,7 +42,10 @@ class GasEntryCellTableViewCell: UITableViewCell {
         toEmpty.text = "\(myData?.toEmpty ?? 0)"
         cost.text    = currFormatter.string(from:(myData?.cost)!)
         amount.text = String(format:"%.1f", ((myData?.amount)! as Double) )
-
+        fuelType.text = fuelTypePickerValues[ (myData?.fuelTypeID as? Int)! ]
+        // retain only the first char as string
+        fuelType.text = fuelType.text?[fuelType.text?.startIndex...fuelType.text?.startIndex]
+        
         if let costD  = myData?.cost as Double?,
         let amountD = myData?.amount as Double? {
             if (costD > 0.0) && (amountD > 0.0) {
