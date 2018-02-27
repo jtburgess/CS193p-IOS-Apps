@@ -78,5 +78,9 @@ class OptInt: NSObject {
         }
         return nil
     }
+
+    class func int (from: NSDecimalNumber) -> Int {
+        return from.intValue
+    }
 }
 

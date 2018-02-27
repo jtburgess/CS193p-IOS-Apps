@@ -148,7 +148,7 @@ public class GasEntry: NSManagedObject {
             
             // calculate dist from last fillup; needed to calc MPG
             if let prevGasEntry = GasEntry.getPrevious(context: myContext, theDate: theDate) {
-                let prevOdo = prevGasEntry.odometer! as Int
+                let prevOdo = OptInt.int(from: prevGasEntry.odometer!)
                 gasEntry.distance = NSDecimalNumber(value:(theOdo - prevOdo))
             } else {
                 gasEntry.distance =  gasEntry.odometer

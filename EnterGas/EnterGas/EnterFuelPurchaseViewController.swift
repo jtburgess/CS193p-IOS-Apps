@@ -179,6 +179,4 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
         print ("segue to Entry screen. NOt used with tab view controller")
     }
     */
-
 }
-
