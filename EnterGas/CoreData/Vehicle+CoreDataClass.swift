@@ -33,8 +33,6 @@ public class Vehicle: NSManagedObject {
                 return result[0] as Vehicle
             case 0:
                 let newVehicle = New (theVehicle:theVehicle, context:context)
-                // initialize the gas entry list for this vehicle.
-                // could cause recursion // _ = GasEntry.defaultEntry()
                 return newVehicle
             default:
                 print("Warn: More than one (\(result.count)) Vehicle returned for \(theVehicle)")

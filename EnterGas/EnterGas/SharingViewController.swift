@@ -19,7 +19,7 @@ class SharingViewController: UIViewController {
     }
     
     @IBAction func SharingPopUp(_ sender: Any) {
-        let csvText = createCSVfromDB()
+        let csvText = GasEntry.createCSVfromDB()
         print("CSV: \(csvText)")
         
         let tmpDir = FileManager.default.temporaryDirectory
@@ -53,42 +53,6 @@ class SharingViewController: UIViewController {
  
         // this activates the popup view controller
         self.present(activityViewController, animated: true, completion: {})
-    }
-    
-    func createCSVfromDB() -> String {
-        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
-        // get the entire table, ALL vehicles
-
-        // harded coded header; can't use reduce since I need to get linked values, and format the date
-        var csvString: String = "Vehicle,Brand,date,cost,odometer,toEmpty,amount,fuelType,note\n"
-
-        let objects = (GasEntry.RequestAll( vehicleName: "all", context: myContext) as? Array<GasEntry>)!
-        /* shouldn't need this
-         guard objects.count > 0 else {
-             return ""
-         }
-         */
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone (abbreviation:"EST5EDT")
-
-        // combine all rows into \n separated lines, with ',' between items -- no comma escaping with ".. , .."
-        for myData in objects {
-            let vehicle = myData.vehicle?.vehicleName ?? "error"
-            let brand  = myData.brand?.brandName ?? "error"
-
-            let amount = String(format:"%.1f", ((myData.amount)! as Double) )
-            let cost   = String(format:"%.2f", ((myData.cost)! as Double) )
-            let date   = dateFormatter.string(from: Date(timeIntervalSince1970: (myData.date)))
-            let odometer = String(format:"%d", (myData.odometer)! as Int)
-            let toEmpty  = String(format:"%d", (myData.toEmpty)! as Int)
-            let note   = myData.note ?? ""
-            let fuelType = fuelTypePickerValues[ myData.fuelTypeID as? Int ?? 0 ]
-            
-            csvString += "\(vehicle),\(brand),\(date),\(cost),\(odometer),\(toEmpty),\(amount),\(fuelType!),\(note),\\n"
-        }
-        return csvString
     }
 }
 

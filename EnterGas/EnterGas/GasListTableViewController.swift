@@ -24,21 +24,6 @@ class GasListTableViewController: UITableViewController {
     override func viewDidLoad() {
         print("TableView DidLoad")
         super.viewDidLoad()
-        /*****
-         // if the list is empty or doesn't have a proper initialze entry, then initialize it!
-         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
-         let initList = (GasEntry.RequestAll(vehicleName:currentVehicle, context:myContext) as? Array<GasEntry>)!
-         if initList.count == 0 {
-         initializeHistory()
-         } else if initList.last!.brand?.brandName != "initialize" {
-            print("brand.last=\(String(describing: initList.last!.brand?.brandName)), count=\(initList.count)")
-            for entry in initList {
-                print("delete!")
-                myContext.delete (entry)
-            }
-            initializeHistory()
-         }
-         *****/
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -50,19 +35,8 @@ class GasListTableViewController: UITableViewController {
         gasList = (GasEntry.RequestAll(vehicleName: currentVehicle, context:myContext) as? Array<GasEntry>)!
         print("loaded \(gasList.count) entries")
     }
-    // load initial row
-    func initializeHistory() {
-        print ("Insert Initial Row")
-        if let _ = GasEntry.defaultEntry() {
-           do {
-                let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
-                try myContext.save()
-            } catch let error as NSError {
-                print("Core Data Save Error: \(error.code)")
-            }
-        }
-    }
 
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // multiple sections aren't implemented
         return 1

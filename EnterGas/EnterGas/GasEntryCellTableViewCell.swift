@@ -24,27 +24,24 @@ class GasEntryCellTableViewCell: UITableViewCell {
     var myData: GasEntry? {didSet { updateUI() }}
     
     // constant formatters
-    let dateFormatter = DateFormatter()
     let currFormatter = NumberFormatter()
 
     fileprivate func updateUI()
     {
         // where can I do these ONCE?
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone (abbreviation:"EST5EDT")
         currFormatter.numberStyle = NumberFormatter.Style.currency
 
         // update the display fields in the UI
-        date.text  = dateFormatter.string(from: Date(timeIntervalSince1970: (myData?.date)!))
+        date.text  = myDate.string(fromInterval: (myData?.date)!)
         note.text = myData?.note
         brand.text  = myData?.brand?.brandName ?? "unknown"
-        odometer.text = "\(myData?.odometer ?? 0)"
-        toEmpty.text = "\(myData?.toEmpty ?? 0)"
+        odometer.text = OptInt.string (from: myData?.odometer)
+        toEmpty.text = OptInt.string (from: myData?.toEmpty)
         cost.text    = currFormatter.string(from:(myData?.cost)!)
         amount.text = String(format:"%.1f", ((myData?.amount)! as Double) )
-        fuelType.text = fuelTypePickerValues[ (myData?.fuelTypeID as? Int)! ]
+        let tmpStr = fuelTypePickerValues[ (myData?.fuelTypeID as? Int)! ]!
         // retain only the first char as string
-        fuelType.text = fuelType.text?[fuelType.text?.startIndex...fuelType.text?.startIndex]
+        fuelType.text = tmpStr[tmpStr.startIndex...tmpStr.startIndex]
         
         if let costD  = myData?.cost as Double?,
         let amountD = myData?.amount as Double? {
@@ -68,3 +65,4 @@ class GasEntryCellTableViewCell: UITableViewCell {
     }
 
 }
+

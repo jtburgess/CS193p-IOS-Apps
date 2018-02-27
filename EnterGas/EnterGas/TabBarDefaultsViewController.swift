@@ -8,13 +8,14 @@
 
 import UIKit
 
+let myDate: MyDate = MyDate()
 
 // user preferences aka UserDefaults
 let defaults = UserDefaults.standard
 
 // all of the "current" values are not optional. I supply real defaults
 let vehicleNameKey = "vehicleName"
-var currentVehicle : String = "none"
+var currentVehicle : String = ""
 
 // fuelTypeID is used as the index into fuelTypePickerValues for display purposes
 var fuelTypeKey = "fuelType"

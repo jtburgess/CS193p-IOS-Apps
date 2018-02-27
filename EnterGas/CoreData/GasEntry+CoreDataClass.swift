@@ -32,6 +32,7 @@ public class GasEntry: NSManagedObject {
         return []
     }
 
+    // gets the most recent earlier entry BY DATE. doesn't check if the odometer is less as it should be
     class func getPrevious(context: NSManagedObjectContext, theDate: TimeInterval) -> GasEntry? {
         let request: NSFetchRequest<GasEntry> = GasEntry.fetchRequest()
         print("getPrevious to date=\(theDate)")
@@ -53,32 +54,147 @@ public class GasEntry: NSManagedObject {
         }
         return nil
     }
-    
-    class func defaultEntry () -> GasEntry? {
-        if currentVehicle == "none" {
-            // can't do anything until we have an assigned vehicle for this session
-            return nil
+ 
+    // called from new (or update) GasEntry
+    class func save(brand: String?, odometer: String?, toEmpty: String?,
+              cost: String?, amount: String?, vehicleName: String?,
+              note: String?, fuelType: String?, date: String?) -> String {
+        let formatter = NumberFormatter()
+        formatter.generatesDecimalNumbers = true
+        var errors = ""
+        
+        // brand list validataions
+        let theBrand = (brand ?? "").trimmingCharacters(in: [" "])
+        if theBrand == "" {
+            errors.append ("Please fill in the Brand purchased\n")
         }
-        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
+        
+        var theOdo : Int = -1
+        if odometer!.range(of: ".") == nil {
+            if let tmp = formatter.number(from: odometer!) as! NSInteger? {
+                theOdo = tmp
+            }
+        } else {
+            errors.append("Bad Odometer value, must be an integer\n")
+        }
+        
+        var milesLeft : Int = 0
+        if toEmpty!.range(of: ".") == nil {
+            if let tmp = formatter.number(from: toEmpty!) as! NSInteger? {
+                milesLeft = tmp
+            }
+        } else {
+            // missing milesLeft is not an error
+            errors.append("Bad miles left value, must be an integer\n")
+        }
+        
+        var theCost: NSDecimalNumber = -1
+        if let tmp = formatter.number(from: cost!) as! NSDecimalNumber? {
+            theCost = tmp
+        } else {
+            errors.append("Bad Cost value\n")
+        }
+        
+        var theAmount: NSDecimalNumber = -1
+        if let tmp = formatter.number(from: amount!) as! NSDecimalNumber? {
+            theAmount = tmp
+        } else {
+            errors.append("Bad Amount value\n")
+        }
+        
+        let theVehicle = (vehicleName ?? "").trimmingCharacters(in: [" "])
+        if theVehicle == "" {
+            errors.append ("Please fill in a vehicle name\n")
+        } else {
+            // set the current and default Vehicles
+            currentVehicle = theVehicle
+            defaults.setValue(theVehicle, forKey: vehicleNameKey)
+        }
+        
+        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicle)")
+        
+        if errors != "" {
+            print ("There are errors")
+            return errors
+        }
+        
+        var theDate : TimeInterval
+        if let tmpDate = date {
+            //theDate = dateFromString(dateString: tmpDate).timeIntervalSince1970
+            theDate = myDate.timeInterval(from:tmpDate)
+        } else {
+            // now()
+            theDate = Date.init().timeIntervalSince1970
+        }
+        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+        let myContext: NSManagedObjectContext = container.viewContext
+        
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
-            print("create Test gasentry Entity for \(currentVehicle)")
-            let brandEntry = Brand.FindOrAdd(theBrand:"initialize", context:gasEntry.managedObjectContext!)
+            //print("create gasentry Entity")
+            let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:gasEntry.managedObjectContext!)
             gasEntry.brand = brandEntry
-            print("created Brand Entity link")
             
-            let vehicleEntry = Vehicle.FindOrAdd(theVehicle: currentVehicle, context: gasEntry.managedObjectContext!)
+            let vehicleEntry = Vehicle.FindOrAdd(theVehicle:theVehicle, context:gasEntry.managedObjectContext!)
             gasEntry.vehicle = vehicleEntry
-            print("created Vehicle Entity link")
+            print("created Brand and Vehicle Entity links")
+            
+            gasEntry.date = theDate
+            gasEntry.odometer = NSDecimalNumber(value:theOdo)
+            gasEntry.toEmpty  = NSDecimalNumber(value:milesLeft)
+            gasEntry.cost    = theCost
+            gasEntry.amount  = theAmount
+            gasEntry.note    = note ?? ""
+            gasEntry.fuelTypeID = currentFuelTypeID as NSNumber
+            
+            // calculate dist from last fillup; needed to calc MPG
+            if let prevGasEntry = GasEntry.getPrevious(context: myContext, theDate: theDate) {
+                let prevOdo = prevGasEntry.odometer! as Int
+                gasEntry.distance = NSDecimalNumber(value:(theOdo - prevOdo))
+            } else {
+                gasEntry.distance =  gasEntry.odometer
+            }
+            do {
+                try myContext.save()
+            } catch let error as NSError  {
+                print("Core Data Save Error: \(error.code)")
+            }
 
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            gasEntry.date = (dateFormatter.date(from: "2010-01-01"))!.timeIntervalSince1970
-            print ("set date 2017-01-01 = \(gasEntry.date)")
-            gasEntry.odometer = 0
-            gasEntry.cost = 0
-            gasEntry.amount = 0
-            return gasEntry
+            print("gasentry Entity saved")
+        } else {
+            print ("gasEntry not set")
         }
-        return nil
+        return errors
+    }
+
+    class func createCSVfromDB() -> String {
+        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
+        // get the entire table, ALL vehicles
+        
+        // harded coded header; can't use reduce since I need to get linked values, and format the date
+        var csvString: String = "Vehicle,Brand,date,cost,odometer,toEmpty,amount,fuelType,note\n"
+        
+        let objects = (GasEntry.RequestAll( vehicleName: "all", context: myContext) as? Array<GasEntry>)!
+        /* shouldn't need this
+         guard objects.count > 0 else {
+         return ""
+         }
+         */
+        
+        // combine all rows into \n separated lines, with ',' between items -- no comma escaping with ".. , .."
+        for myData in objects {
+            let vehicle = myData.vehicle?.vehicleName ?? "error"
+            let brand  = myData.brand?.brandName ?? "error"
+            
+            let amount = String(format:"%.1f", ((myData.amount)! as Double) )
+            let cost   = String(format:"%.2f", ((myData.cost)! as Double) )
+            let date   = myDate.string (fromInterval: (myData.date))
+            let odometer = OptInt.string (from: myData.odometer)
+            let toEmpty  = OptInt.string (from: myData.toEmpty)
+            let note   = myData.note ?? ""
+            let fuelType = fuelTypePickerValues[ myData.fuelTypeID as? Int ?? 0 ]
+            
+            csvString += "\(vehicle),\(brand),\(date),\(cost),\(odometer),\(toEmpty),\(amount),\(fuelType!),\(note),\\n"
+        }
+        return csvString
     }
 }

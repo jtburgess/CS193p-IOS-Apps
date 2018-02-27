@@ -8,7 +8,6 @@ import UIKit
 
 private extension Selector {
     static let buttonTapped = #selector(DatePickerDialog.buttonTapped)
-    static let deviceOrientationDidChange = #selector(DatePickerDialog.deviceOrientationDidChange)
 }
 
 open class DatePickerDialog: UIView {
@@ -31,7 +30,6 @@ open class DatePickerDialog: UIView {
     private var defaultDate: Date?
     private var datePickerMode: UIDatePickerMode?
     private var callback: DatePickerCallback?
-    var showCancelButton: Bool = false
     var locale: Locale?
 
     private var textColor: UIColor!
@@ -49,7 +47,6 @@ open class DatePickerDialog: UIView {
         self.textColor = textColor
         self.buttonColor = buttonColor
         self.font = font
-        self.showCancelButton = showCancelButton
         self.locale = locale
         setupView()
     }
@@ -75,16 +72,6 @@ open class DatePickerDialog: UIView {
         self.addSubview(self.dialogView!)
     }
 
-    /// Handle device orientation changes
-    @objc func deviceOrientationDidChange(_ notification: Notification) {
-        self.frame = UIScreen.main.bounds
-        let dialogSize = CGSize(width: 300, height: 230 + kDefaultButtonHeight + kDefaultButtonSpacerHeight)
-        dialogView.frame = CGRect(x: (UIScreen.main.bounds.size.width - dialogSize.width) / 2,
-                                  y: (UIScreen.main.bounds.size.height - dialogSize.height) / 2,
-                                  width: dialogSize.width,
-                                  height: dialogSize.height)
-    }
-
     /// Create the dialog view, and animate opening the dialog
     open func show(_ title: String,
                    doneButtonTitle: String = "Done",
@@ -95,9 +82,7 @@ open class DatePickerDialog: UIView {
                    callback: @escaping DatePickerCallback) {
         self.titleLabel.text = title
         self.doneButton.setTitle(doneButtonTitle, for: .normal)
-        if showCancelButton {
-            self.cancelButton.setTitle(cancelButtonTitle, for: .normal)
-        }
+        self.cancelButton.setTitle(cancelButtonTitle, for: .normal)
         self.datePickerMode = datePickerMode
         self.callback = callback
         self.defaultDate = defaultDate
@@ -114,10 +99,6 @@ open class DatePickerDialog: UIView {
         window?.addSubview(self)
         window?.bringSubview(toFront: self)
         window?.endEditing(true)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: .deviceOrientationDidChange,
-                                               name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
 
         /* Anim */
         UIView.animate(
@@ -247,29 +228,20 @@ open class DatePickerDialog: UIView {
             width: buttonWidth,
             height: kDefaultButtonHeight
         )
-        if showCancelButton == false {
-            buttonWidth = container.bounds.size.width
-            leftButtonFrame = CGRect()
-            rightButtonFrame = CGRect(
-                x: 0,
-                y: container.bounds.size.height - kDefaultButtonHeight,
-                width: buttonWidth,
-                height: kDefaultButtonHeight
-            )
-        }
+
         let interfaceLayoutDirection = UIApplication.shared.userInterfaceLayoutDirection
         let isLeftToRightDirection = interfaceLayoutDirection == .leftToRight
 
-        if showCancelButton {
-            self.cancelButton = UIButton(type: .custom) as UIButton
-            self.cancelButton.frame = isLeftToRightDirection ? leftButtonFrame : rightButtonFrame
-            self.cancelButton.setTitleColor(self.buttonColor, for: .normal)
-            self.cancelButton.setTitleColor(self.buttonColor, for: .highlighted)
-            self.cancelButton.titleLabel!.font = self.font.withSize(14)
-            self.cancelButton.layer.cornerRadius = kCornerRadius
-            self.cancelButton.addTarget(self, action: .buttonTapped, for: .touchUpInside)
-            container.addSubview(self.cancelButton)
-        }
+
+        self.cancelButton = UIButton(type: .custom) as UIButton
+        self.cancelButton.frame = isLeftToRightDirection ? leftButtonFrame : rightButtonFrame
+        self.cancelButton.setTitleColor(self.buttonColor, for: .normal)
+        self.cancelButton.setTitleColor(self.buttonColor, for: .highlighted)
+        self.cancelButton.titleLabel!.font = self.font.withSize(14)
+        self.cancelButton.layer.cornerRadius = kCornerRadius
+        self.cancelButton.addTarget(self, action: .buttonTapped, for: .touchUpInside)
+        container.addSubview(self.cancelButton)
+
         self.doneButton = UIButton(type: .custom) as UIButton
         self.doneButton.frame = isLeftToRightDirection ? rightButtonFrame : leftButtonFrame
         self.doneButton.tag = kDoneButtonTag
