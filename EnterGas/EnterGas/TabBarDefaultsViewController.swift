@@ -8,8 +8,6 @@
 
 import UIKit
 
-let myDate: MyDate = MyDate()
-
 // user preferences aka UserDefaults
 let defaults = UserDefaults.standard
 

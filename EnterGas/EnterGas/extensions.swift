@@ -8,8 +8,11 @@
 
 import UIKit
 
+let myDate: MyDate = MyDate()
+let myCurrency: MyCurrency = MyCurrency()
+
 // my date is either a string: yyyy-mm-dd, or a time-interval-since-1970
-// this subclass enforces those rules
+// this subclass enforces those conversion formats / rules
 // it is instantiated in the tabBar view controller
 class MyDate: DateFormatter {
     let dateFormatter = DateFormatter()
@@ -23,6 +26,7 @@ class MyDate: DateFormatter {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+
     // MARK: date conversion helpers toString and fromString
     override func string (from: Date) -> String {
         return dateFormatter.string(from: from)
@@ -84,3 +88,18 @@ class OptInt: NSObject {
     }
 }
 
+class MyCurrency : NSObject {
+    let currFormatter = NumberFormatter()
+    override init () {
+        currFormatter.numberStyle = NumberFormatter.Style.currency
+    }
+
+    func string (fromDec: NSDecimalNumber) -> String {
+        return currFormatter.string(from: fromDec)!
+    }
+
+    func string (fromDbl: Double) -> String {
+        return String(format: "%f",  fromDbl)
+    }
+
+}

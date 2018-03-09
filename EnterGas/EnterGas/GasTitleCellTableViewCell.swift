@@ -27,18 +27,6 @@ class GasTitleCellTableViewCell: UITableViewCell {
     //let normAttr: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14)]
     //let boldAttr: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)]
 
-    override func didAddSubview(_ subview: UIView) {
-        print("didAddSubView Gas TITLE CellView")
-        super.didAddSubview(subview)
-        /*
-        sortField = SortField (
-            fieldName: "Date",
-            sortUp: false,
-            button: dateButton
-        )
-        */
-    }
-
     @IBAction func sortAction(_ sender: UIButton) {
         let fieldName = sender.currentAttributedTitle!
         if sortField.fieldName == fieldName.string {
@@ -59,10 +47,8 @@ class GasTitleCellTableViewCell: UITableViewCell {
         print("update Header / Title row")
         //date.text = "Date    "
         brand.text = currentVehicle
-        brand.textColor = UIColor.blue
         //odometer.text = "Odometer"
         //cost.text = "Cost"
         //gallons.text = "Amt"
     }
-
 }

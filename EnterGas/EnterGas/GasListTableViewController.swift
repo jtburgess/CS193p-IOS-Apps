@@ -1,5 +1,5 @@
 //
-//  GasListTableViewController.swift
+//  GasListTableViewController.swift?
 //  EnterGas
 //
 //  Created by John Burgess on 10/22/17.
@@ -21,10 +21,6 @@ class GasListTableViewController: UITableViewController {
     }
 
     // load gasList from the DB
-    override func viewDidLoad() {
-        print("TableView DidLoad")
-        super.viewDidLoad()
-    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("TableView WillAppear")
@@ -69,45 +65,50 @@ class GasListTableViewController: UITableViewController {
         }
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        let row = indexPath.row
+        print("did select Row: \(row)")
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    // MARK: - Navigation
- 
+    
+    // MARK: - Navigation - segue from the table to the Edit view controller
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print ("segue to Entry screen; not used with Tab View Controller")
+        print ("Table VC segue to id=\(segue.identifier!)")
+        var destVC = segue.destination
+        if let navigationVC = destVC as? UINavigationController {
+            destVC = navigationVC.visibleViewController ?? destVC
+        }
+        if let editVC = destVC as? EditFuelPurchaseViewController {
+            if let cell = sender as? GasEntryCellTableViewCell,
+                let indexPath = tableView.indexPath(for: cell) {
+                let selectedRow = indexPath.row
+                print("Edit segue, row \(selectedRow)")
+                editVC.myData = gasList[selectedRow-1]
+            } else {
+                print ("sender was not a GasEntryCellTableViewCell")
+            }
+        } else {
+            print ("Error: segue NOT with target EditFuelPurchaseViewController")
+        }
     }
+
+    /*
+     // Override to support conditional editing of the table view.
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
+    /*
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+     // Delete the row from the data source
+     tableView.deleteRows(at: [indexPath], with: .fade)
+     } else if editingStyle == .insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
 
 }

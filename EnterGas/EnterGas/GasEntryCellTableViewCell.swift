@@ -22,23 +22,18 @@ class GasEntryCellTableViewCell: UITableViewCell {
     @IBOutlet weak var fuelType: UILabel!
     
     var myData: GasEntry? {didSet { updateUI() }}
-    
-    // constant formatters
-    let currFormatter = NumberFormatter()
 
     fileprivate func updateUI()
     {
-        // where can I do these ONCE?
-        currFormatter.numberStyle = NumberFormatter.Style.currency
-
         // update the display fields in the UI
-        date.text  = myDate.string(fromInterval: (myData?.date)!)
-        note.text = myData?.note
         brand.text  = myData?.brand?.brandName ?? "unknown"
         odometer.text = OptInt.string (from: myData?.odometer)
         toEmpty.text = OptInt.string (from: myData?.toEmpty)
-        cost.text    = currFormatter.string(from:(myData?.cost)!)
+        cost.text    = myCurrency.string(fromDec:(myData?.cost)!)
         amount.text = String(format:"%.1f", ((myData?.amount)! as Double) )
+        date.text  = myDate.string(fromInterval: (myData?.date)!)
+        note.text = myData?.note
+
         let tmpStr = fuelTypePickerValues[ (myData?.fuelTypeID as? Int)! ]!
         // retain only the first char as string
         fuelType.text = tmpStr[tmpStr.startIndex...tmpStr.startIndex]
@@ -46,7 +41,7 @@ class GasEntryCellTableViewCell: UITableViewCell {
         if let costD  = myData?.cost as Double?,
         let amountD = myData?.amount as Double? {
             if (costD > 0.0) && (amountD > 0.0) {
-                costPerUnit.text = currFormatter.string(from: ((costD / amountD) as NSNumber) )
+                costPerUnit.text = myCurrency.string(fromDbl: (costD / amountD) )
                 //costPerUnit.text = String(format:"%.03f", (costD / amountD))
             } else {
                 costPerUnit.text = ""
@@ -65,4 +60,3 @@ class GasEntryCellTableViewCell: UITableViewCell {
     }
 
 }
-

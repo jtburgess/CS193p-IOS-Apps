@@ -55,10 +55,29 @@ public class GasEntry: NSManagedObject {
         return nil
     }
  
-    // called from new (or update) GasEntry
+    // MARK: called from new (or update) GasEntry
     class func save(brand: String?, odometer: String?, toEmpty: String?,
               cost: String?, amount: String?, vehicleName: String?,
               note: String?, fuelType: String?, date: String?) -> String {
+
+        //print ("GasEntry SAVE")
+        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+        let myContext: NSManagedObjectContext = container.viewContext
+        if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
+            return update(gasEntry: gasEntry, brand: brand, odometer: odometer, toEmpty: toEmpty,
+                   cost: cost, amount: amount, vehicleName: vehicleName,
+                   note: note, fuelType: fuelType, date: date)
+        } else {
+            print ("Error creating new gasEntry")
+            return "Error creating new gasEntry"
+        }
+    }
+    
+    class func update (gasEntry: GasEntry, brand: String?, odometer: String?, toEmpty: String?,
+                       cost: String?, amount: String?, vehicleName: String?,
+                       note: String?, fuelType: String?, date: String?) -> String {
+
+        //print("GasEntry UPDATE")
         let formatter = NumberFormatter()
         formatter.generatesDecimalNumbers = true
         var errors = ""
@@ -129,40 +148,37 @@ public class GasEntry: NSManagedObject {
         let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
         let myContext: NSManagedObjectContext = container.viewContext
         
-        if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
-            //print("create gasentry Entity")
-            let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:gasEntry.managedObjectContext!)
-            gasEntry.brand = brandEntry
-            
-            let vehicleEntry = Vehicle.FindOrAdd(theVehicle:theVehicle, context:gasEntry.managedObjectContext!)
-            gasEntry.vehicle = vehicleEntry
-            print("created Brand and Vehicle Entity links")
-            
-            gasEntry.date = theDate
-            gasEntry.odometer = NSDecimalNumber(value:theOdo)
-            gasEntry.toEmpty  = NSDecimalNumber(value:milesLeft)
-            gasEntry.cost    = theCost
-            gasEntry.amount  = theAmount
-            gasEntry.note    = note ?? ""
-            gasEntry.fuelTypeID = currentFuelTypeID as NSNumber
-            
-            // calculate dist from last fillup; needed to calc MPG
-            if let prevGasEntry = GasEntry.getPrevious(context: myContext, theDate: theDate) {
-                let prevOdo = OptInt.int(from: prevGasEntry.odometer!)
-                gasEntry.distance = NSDecimalNumber(value:(theOdo - prevOdo))
-            } else {
-                gasEntry.distance =  gasEntry.odometer
-            }
-            do {
-                try myContext.save()
-            } catch let error as NSError  {
-                print("Core Data Save Error: \(error.code)")
-            }
-
-            print("gasentry Entity saved")
+        //print("create gasentry Entity")
+        let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:gasEntry.managedObjectContext!)
+        gasEntry.brand = brandEntry
+        
+        let vehicleEntry = Vehicle.FindOrAdd(theVehicle:theVehicle, context:gasEntry.managedObjectContext!)
+        gasEntry.vehicle = vehicleEntry
+        print("created Brand and Vehicle Entity links")
+        
+        gasEntry.date = theDate
+        gasEntry.odometer = NSDecimalNumber(value:theOdo)
+        gasEntry.toEmpty  = NSDecimalNumber(value:milesLeft)
+        gasEntry.cost    = theCost
+        gasEntry.amount  = theAmount
+        gasEntry.note    = note ?? ""
+        gasEntry.fuelTypeID = currentFuelTypeID as NSNumber
+        
+        // calculate dist from last fillup; needed to calc MPG
+        if let prevGasEntry = GasEntry.getPrevious(context: myContext, theDate: theDate) {
+            let prevOdo = OptInt.int(from: prevGasEntry.odometer!)
+            gasEntry.distance = NSDecimalNumber(value:(theOdo - prevOdo))
         } else {
-            print ("gasEntry not set")
+            gasEntry.distance =  gasEntry.odometer
         }
+        do {
+            try myContext.save()
+        } catch let error as NSError  {
+            print("Core Data Save Error: \(error.code)")
+        }
+
+        print("gasentry Entity saved")
+
         return errors
     }
 
