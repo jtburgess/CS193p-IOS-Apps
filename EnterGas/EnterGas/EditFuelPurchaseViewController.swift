@@ -10,8 +10,6 @@ import UIKit
 import CoreData
 
 class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
-    let currencySymbol = NSLocale.current.currencyCode!
-    
     // MARK - data
     @IBOutlet weak var brand: UITextField!
     @IBOutlet weak var odometer: UITextField!
@@ -26,7 +24,7 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Errors: UILabel!
     
     // the cell being edited
-    var myData: GasEntry? { didSet { resetFields() } }
+    var myData: GasEntry? // { didSet { resetFields() } }
 
     // MARK: user interface
     override func viewDidLoad() {
@@ -40,9 +38,10 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     private func resetFields() {
         // set field values from the record that caused the segue
         brand.text  = myData?.brand?.brandName ?? "unknown"
-        odometer.text = OptInt.string (from: myData?.odometer)
-        toEmpty.text = OptInt.string (from: myData?.toEmpty)
-        cost.text    = myCurrency.string(fromDec:(myData?.cost)!)
+        // here we want the actual numbers, not the formatted values, so they can be edited
+        odometer.text = "\(myData!.odometer ?? 0.0)"
+        toEmpty.text = "\(myData!.toEmpty ?? 0.0)"
+        cost.text    = "\(myData?.cost ?? 0.0)"
         amount.text = String(format:"%.1f", ((myData?.amount)! as Double) )
         date.text  = myDate.string(fromInterval: (myData?.date)!)
         note.text = myData?.note
@@ -105,7 +104,12 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func FuelTypePickerPopup (_ sender: UIButton) {
-        FuelTypePickerDialog().show(fuelTypeID: currentFuelTypeID) {
+        GenericPickerDialog(
+            pickerView: FuelTypePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
+            ).show(
+                startValue: fuelTypePickerValues [currentFuelTypeID]!,
+                title: "Fuel Type Picker"
+            ) {
             (returnValue) -> Void in
             if let theFuelTypeID = returnValue {
                 self.fuelType.text = fuelTypePickerValues [theFuelTypeID]
@@ -116,16 +120,16 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: SAVE/Delete/Cancel buttons
-    @IBAction func cancelEdit(_ sender: UIButton) {
-    }
-    
     @IBAction func deleteThisEntry(_ sender: UIButton) {
+        print("DELETE Edit Entry")
+        myData?.delete()
+        Errors.text = "Entry Deleted. (Go Back)"
     }
 
     @IBAction func saveThisEntry(_ sender: UIButton) {
         // add validations here so I can eliminate the '!' in the gasEntry() call
-        print("Enter SaveThisEntry")
-        Errors.text = GasEntry.update(gasEntry: myData!, brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
+        print("Save Edit Entry")
+        Errors.text = myData!.update( brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                                     cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
                                     note: note.text, fuelType: fuelType.text, date: date.text)
         

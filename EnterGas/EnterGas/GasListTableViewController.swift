@@ -24,8 +24,10 @@ class GasListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("TableView WillAppear")
+        getDefaults()
         loadFromCoreData()
     }
+    
     func loadFromCoreData () {
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
         gasList = (GasEntry.RequestAll(vehicleName: currentVehicle, context:myContext) as? Array<GasEntry>)!

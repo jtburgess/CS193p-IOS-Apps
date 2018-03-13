@@ -21,20 +21,3 @@ extension Brand {
     @NSManaged public var fillups: NSSet?
 }
 
-// MARK: Generated accessors for fillups
-/* extension Brand {
-
-    @objc(addFillupsObject:)
-    @NSManaged public func addToFillups(_ value: GasEntry)
-
-    @objc(removeFillupsObject:)
-    @NSManaged public func removeFromFillups(_ value: GasEntry)
-
-    @objc(addFillups:)
-    @NSManaged public func addToFillups(_ values: NSSet)
-
-    @objc(removeFillups:)
-    @NSManaged public func removeFromFillups(_ values: NSSet)
-
-}
-*/

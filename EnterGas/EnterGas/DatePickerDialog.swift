@@ -214,15 +214,15 @@ open class DatePickerDialog: UIView {
 
     /// Add buttons to container
     private func addButtonsToView(container: UIView) {
-        var buttonWidth = container.bounds.size.width / 2
+        let buttonWidth = container.bounds.size.width / 2
 
-        var leftButtonFrame = CGRect(
+        let leftButtonFrame = CGRect(
             x: 0,
             y: container.bounds.size.height - kDefaultButtonHeight,
             width: buttonWidth,
             height: kDefaultButtonHeight
         )
-        var rightButtonFrame = CGRect(
+        let rightButtonFrame = CGRect(
             x: buttonWidth,
             y: container.bounds.size.height - kDefaultButtonHeight,
             width: buttonWidth,

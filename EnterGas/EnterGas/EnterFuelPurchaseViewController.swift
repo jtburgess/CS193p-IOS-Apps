@@ -13,8 +13,6 @@ import CoreData
 //import ACEAutocompleteBar
 
 class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { // , ACEAutocompleteDataSource, ACEAutocompleteDelegate
-    
-    let currencySymbol = NSLocale.current.currencyCode!
 
     // MARK - data
     @IBOutlet weak var brand: UITextField!
@@ -32,6 +30,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
     // MARK: user interface
     override func viewDidLoad() {
         super.viewDidLoad()
+        getDefaults()
         resetFields()
         assignNextActions()
         costLabel.text = "Cost (\(currencySymbol))"
@@ -141,7 +140,12 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
     }
     
     @IBAction func FuelTypePickerPopup(_ sender: Any) {
-        FuelTypePickerDialog().show(fuelTypeID: currentFuelTypeID) {
+        GenericPickerDialog(
+            pickerView: FuelTypePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
+            ).show(
+                startValue: fuelTypePickerValues [currentFuelTypeID]!,
+                title: "Fuel Type Picker"
+            ) {
             (returnValue) -> Void in
             if let theFuelTypeID = returnValue {
                 self.fuelType.text = fuelTypePickerValues [theFuelTypeID]

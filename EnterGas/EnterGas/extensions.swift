@@ -8,8 +8,52 @@
 
 import UIKit
 
+// MARK: user preferences aka UserDefaults
+let defaults = UserDefaults.standard
+
+// all of the "current" values are not optional. I supply real defaults
+let vehicleNameKey = "vehicleName"
+var currentVehicle : String = ""
+
+// fuelTypeID is used as the index into fuelTypePickerValues for display purposes
+var fuelTypeKey = "fuelType"
+var currentFuelTypeID : Int = 0
+
+let emailAddressKey = "emailAddress"
+var currentEmailAddress : String = "none"
+
+func getDefaults() {    
+    if  let anyValue = defaults.object(forKey: vehicleNameKey),
+        let tmp = anyValue as? String {
+        currentVehicle = tmp
+    } else {
+        // need to assign a default vehicle - segue to that screen
+        print("no default vehicle")
+    }
+    
+    if  let anyValue = defaults.object(forKey: fuelTypeKey),
+        let tmp = anyValue as? Int {
+        currentFuelTypeID = tmp
+    } else {
+        // need to assign a default fuel type - segue to that screen
+        // for now default to regular
+        currentFuelTypeID = 0
+        print ("no default fuel type")
+    }
+    
+    if  let anyValue = defaults.object(forKey: emailAddressKey),
+        let tmp = anyValue as? String {
+        currentEmailAddress = tmp
+    } else {
+        // need to assign a default email address - segue to that screen
+    }
+    print("TabBarDefaults did load: vehicle=\(currentVehicle), currentFuelID=\(currentFuelTypeID)")
+}
+
+// MARK: my custom format classes and global vars
 let myDate: MyDate = MyDate()
 let myCurrency: MyCurrency = MyCurrency()
+let currencySymbol = NSLocale.current.currencyCode!
 
 // my date is either a string: yyyy-mm-dd, or a time-interval-since-1970
 // this subclass enforces those conversion formats / rules

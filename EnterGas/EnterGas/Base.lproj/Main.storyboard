@@ -16,7 +16,7 @@
         <scene sceneID="2Ye-rH-cyo">
             <objects>
                 <tableViewController title="History Table View" id="pce-Xv-GIH" customClass="GasListTableViewController" customModule="EnterGas" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="O0n-O0-ilf">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="O0n-O0-ilf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -160,7 +160,7 @@
                                     <outlet property="brand" destination="Vlb-XH-Fzj" id="Gue-Xz-ddj"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="4" reuseIdentifier="gasEntryCell" rowHeight="57" id="WnL-ec-OZS" customClass="GasEntryCellTableViewCell" customModule="EnterGas" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="3" reuseIdentifier="gasEntryCell" rowHeight="57" id="WnL-ec-OZS" customClass="GasEntryCellTableViewCell" customModule="EnterGas" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="85" width="375" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WnL-ec-OZS" id="wp4-Wa-nfL">
@@ -328,6 +328,7 @@
                                     <outlet property="odometer" destination="K4u-wc-JgP" id="UF8-hv-clS"/>
                                     <outlet property="toEmpty" destination="JQn-2L-ar6" id="pKB-Bm-oN5"/>
                                     <segue destination="0QV-c4-iQk" kind="show" identifier="EditGasEntryCell" trigger="accessoryAction" id="Whh-HG-ngR"/>
+                                    <segue destination="0QV-c4-iQk" kind="show" identifier="EditGasEntryCell" id="r14-TV-DaQ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -349,12 +350,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Ie-uv-hk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16.800000000000001" y="-469.1154422788606"/>
+            <point key="canvasLocation" x="-10" y="-553"/>
         </scene>
-        <!--Tab Bar Defaults View Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="zMW-BT-Z3x">
             <objects>
-                <tabBarController id="lR5-M3-HjQ" customClass="TabBarDefaultsViewController" customModule="EnterGas" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="lR5-M3-HjQ" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="APx-nC-hxg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -362,8 +363,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="J1D-Ep-xp2" kind="relationship" relationship="viewControllers" id="tkS-50-Mo5"/>
-                        <segue destination="8BD-xs-znc" kind="relationship" relationship="viewControllers" id="a9l-5t-VAQ"/>
                         <segue destination="fae-Rz-INx" kind="relationship" relationship="viewControllers" id="GVl-b7-q1N"/>
+                        <segue destination="8BD-xs-znc" kind="relationship" relationship="viewControllers" id="2IU-dz-p3J"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JFV-qW-ZqV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -378,24 +379,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGb-Nu-xUm">
-                                <rect key="frame" x="144" y="316" width="87" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGb-Nu-xUm">
+                                <rect key="frame" x="144" y="506" width="87" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Share CSV"/>
                                 <connections>
                                     <action selector="SharingPopUp:" destination="fae-Rz-INx" eventType="touchUpInside" id="g4p-0h-4DQ"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Set Default Values" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gGW-Jk-byk">
+                                <rect key="frame" x="106" y="95" width="162" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="h3q-ZP-z2Y">
+                                <rect key="frame" x="53" y="142" width="294" height="130"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="EYE-w2-yhN">
+                                        <rect key="frame" x="0.0" y="0.0" width="114" height="130"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djq-ZT-sY9">
+                                                <rect key="frame" x="17" y="0.0" width="97" height="30"/>
+                                                <state key="normal" title="Select Vehicle"/>
+                                                <connections>
+                                                    <action selector="SelectVehiclePopup:" destination="fae-Rz-INx" eventType="touchUpInside" id="kG4-w5-a5G"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zl9-MP-y6X">
+                                                <rect key="frame" x="0.0" y="50" width="114" height="30"/>
+                                                <state key="normal" title="Select Fuel Type"/>
+                                                <connections>
+                                                    <action selector="FuelTypePickerPopup:" destination="fae-Rz-INx" eventType="touchUpInside" id="CnL-eK-NAy"/>
+                                                </connections>
+                                            </button>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email Address" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dTl-d1-lOz">
+                                                <rect key="frame" x="1" y="100" width="113" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RkP-Pz-orL">
+                                        <rect key="frame" x="134" y="0.0" width="160" height="130"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="default vehicle" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WA0-2l-mjb">
+                                                <rect key="frame" x="0.0" y="0.0" width="116" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="default fuel" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AI4-lQ-Sr3">
+                                                <rect key="frame" x="0.0" y="50" width="94" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="default email address" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QC8-0t-fAO">
+                                                <rect key="frame" x="0.0" y="100" width="160" height="30"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="h3q-ZP-z2Y" firstAttribute="leading" secondItem="QMk-cH-9AH" secondAttribute="leading" constant="53" id="1cc-6J-TxV"/>
+                            <constraint firstItem="gGW-Jk-byk" firstAttribute="top" secondItem="QMk-cH-9AH" secondAttribute="top" constant="75" id="9tM-3G-7Vl"/>
+                            <constraint firstItem="h3q-ZP-z2Y" firstAttribute="top" secondItem="gGW-Jk-byk" secondAttribute="bottom" constant="17" id="IaV-12-8cT"/>
+                            <constraint firstItem="gGW-Jk-byk" firstAttribute="leading" secondItem="QMk-cH-9AH" secondAttribute="leading" constant="106" id="M7G-fc-V98"/>
+                            <constraint firstItem="gGW-Jk-byk" firstAttribute="centerX" secondItem="wTW-lg-M5J" secondAttribute="centerX" id="N9Q-Zd-Q1n"/>
+                            <constraint firstItem="gGW-Jk-byk" firstAttribute="centerX" secondItem="jGb-Nu-xUm" secondAttribute="centerX" id="Yxb-B5-qht"/>
+                            <constraint firstItem="QMk-cH-9AH" firstAttribute="bottom" secondItem="jGb-Nu-xUm" secondAttribute="bottom" constant="78" id="bcU-iI-jOO"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="QMk-cH-9AH"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="TvE-A5-u2u"/>
+                    <connections>
+                        <outlet property="defEmailAddr" destination="QC8-0t-fAO" id="eG4-0A-Vxu"/>
+                        <outlet property="defFuel" destination="AI4-lQ-Sr3" id="cbY-Pk-vXC"/>
+                        <outlet property="defVehicle" destination="WA0-2l-mjb" id="E1p-1W-l2J"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pmp-sU-Pde" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1078" y="630"/>
+            <point key="canvasLocation" x="-927.20000000000005" y="489.80509745127438"/>
         </scene>
         <!--Enter Fuel-->
         <scene sceneID="pzN-gh-bOo">
@@ -507,7 +580,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Ytv-6A-fjY">
                                 <rect key="frame" x="249" y="57.5" width="110" height="256"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="brand" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1AO-OT-ohs">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="brand" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1AO-OT-ohs">
                                         <rect key="frame" x="0.0" y="0.0" width="110" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="110" id="GoO-hD-NjL"/>
@@ -517,7 +590,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="odometer" borderStyle="roundedRect" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yaz-kP-E7y">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="odometer" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yaz-kP-E7y">
                                         <rect key="frame" x="10" y="32" width="100" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="evh-Pf-W37"/>
@@ -527,7 +600,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="toEmpty" borderStyle="roundedRect" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="Qtq-IO-uOw">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="toEmpty" borderStyle="roundedRect" textAlignment="right" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="Qtq-IO-uOw">
                                         <rect key="frame" x="10" y="64" width="100" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="Hnl-rz-DGt"/>
@@ -537,7 +610,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="cost" borderStyle="roundedRect" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GX1-ld-zm9">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="cost" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GX1-ld-zm9">
                                         <rect key="frame" x="10" y="90" width="100" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="nMN-NH-G4I"/>
@@ -682,7 +755,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VRo-56-c9n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-322" y="206"/>
+            <point key="canvasLocation" x="-10" y="116"/>
         </scene>
         <!--Edit Fuel Purchase-->
         <scene sceneID="H5S-vG-T1r">
@@ -805,32 +878,10 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iL4-l0-UGw">
-                                <rect key="frame" x="13" y="183" width="90" height="121"/>
+                                <rect key="frame" x="13" y="226" width="90" height="78"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f2p-61-cYj">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="35"/>
-                                        <color key="backgroundColor" red="0.40000000600000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="49t-MI-wkI"/>
-                                            <constraint firstAttribute="width" constant="90" id="ASE-mX-Bcb"/>
-                                        </constraints>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="CANCEL">
-                                                    <attributes>
-                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <font key="NSFont" size="22" name="Skia-Regular_Bold"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="cancelEdit:" destination="0QV-c4-iQk" eventType="touchUpInside" id="IuP-Qq-qM9"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="33k-Yw-x6t">
-                                        <rect key="frame" x="0.0" y="43" width="90" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="35"/>
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="90" id="RnP-D1-XwJ"/>
@@ -848,12 +899,11 @@
                                             </attributedString>
                                         </state>
                                         <connections>
-                                            <action selector="cancelEdit:" destination="0QV-c4-iQk" eventType="touchUpInside" id="Afo-si-ewJ"/>
                                             <action selector="deleteThisEntry:" destination="0QV-c4-iQk" eventType="touchUpInside" id="im1-Ms-ljC"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5tA-hF-QYb">
-                                        <rect key="frame" x="0.0" y="86" width="90" height="35"/>
+                                        <rect key="frame" x="0.0" y="43" width="90" height="35"/>
                                         <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="Xz3-Qk-ABK"/>
@@ -878,7 +928,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="MRX-Xw-Ea1">
                                 <rect key="frame" x="249" y="74" width="110" height="256"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="brand" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Foh-en-TbJ">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="brand" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Foh-en-TbJ">
                                         <rect key="frame" x="0.0" y="0.0" width="110" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="KBz-Rk-nJr"/>
@@ -888,7 +938,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="odometer" borderStyle="roundedRect" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i87-IB-9ub">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="odometer" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i87-IB-9ub">
                                         <rect key="frame" x="10" y="32" width="100" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="HAK-KR-JQK"/>
@@ -898,7 +948,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="toEmpty" borderStyle="roundedRect" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="hhp-vh-mjw">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="toEmpty" borderStyle="roundedRect" textAlignment="right" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="hhp-vh-mjw">
                                         <rect key="frame" x="10" y="64" width="100" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="PLH-vO-hqY"/>
@@ -908,7 +958,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="cost" borderStyle="roundedRect" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bu7-Yu-rxB">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="cost" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bu7-Yu-rxB">
                                         <rect key="frame" x="10" y="90" width="100" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="SEP-wt-VVF"/>
@@ -1003,13 +1053,12 @@
                         <outlet property="note" destination="bXI-Kb-eUm" id="ofO-QB-cIJ"/>
                         <outlet property="odometer" destination="i87-IB-9ub" id="PV0-0a-3xz"/>
                         <outlet property="toEmpty" destination="hhp-vh-mjw" id="JUk-ab-Y0O"/>
-                        <outlet property="vehicle" destination="X27-rD-D4s" id="CpU-e2-sJo"/>
                         <outlet property="vehicleName" destination="X27-rD-D4s" id="0HK-RD-P5R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k6h-D8-ksT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="808.79999999999995" y="-469.1154422788606"/>
+            <point key="canvasLocation" x="762" y="-554"/>
         </scene>
         <!--History-->
         <scene sceneID="sjg-45-2ry">
@@ -1036,4 +1085,7 @@
         <image name="Enter" width="29" height="29"/>
         <image name="history_icon" width="29" height="29"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="r14-TV-DaQ"/>
+    </inferredMetricsTieBreakers>
 </document>

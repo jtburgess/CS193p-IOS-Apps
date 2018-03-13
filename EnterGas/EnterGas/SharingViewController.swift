@@ -12,12 +12,41 @@ import MessageUI
 
 class SharingViewController: UIViewController {
 
+    @IBOutlet weak var defVehicle: UITextField!
+    @IBOutlet weak var defFuel: UITextField!
+    @IBOutlet weak var defEmailAddr: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        loadDefaults()
         // Do any additional setup after loading the view.
     }
     
+    private func loadDefaults() {
+        defVehicle.text = currentVehicle
+        defFuel.text    = fuelTypePickerValues [currentFuelTypeID]
+        defEmailAddr.text = currentEmailAddress
+    }
+
+    @IBAction func SelectVehiclePopup(_ sender: Any) {
+        print ("set default vehicle popup")
+    }
+    @IBAction func FuelTypePickerPopup(_ sender: Any) {
+        print ("set default fuel type popup")
+        GenericPickerDialog(
+                pickerView: FuelTypePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
+            ).show(
+                startValue: fuelTypePickerValues [currentFuelTypeID]!,
+                title: "Default Fuel Type Picker"
+            ) {
+            (returnValue) -> Void in
+            if let theFuelTypeID = returnValue {
+                self.defFuel.text = fuelTypePickerValues [theFuelTypeID]
+                currentFuelTypeID = theFuelTypeID
+                defaults.setValue(theFuelTypeID, forKey: fuelTypeKey)
+            }
+        }
+    }
+
     @IBAction func SharingPopUp(_ sender: Any) {
         let csvText = GasEntry.createCSVfromDB()
         print("CSV: \(csvText)")

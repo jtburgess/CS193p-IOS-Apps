@@ -64,7 +64,7 @@ public class GasEntry: NSManagedObject {
         let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
         let myContext: NSManagedObjectContext = container.viewContext
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
-            return update(gasEntry: gasEntry, brand: brand, odometer: odometer, toEmpty: toEmpty,
+            return gasEntry.update(brand: brand, odometer: odometer, toEmpty: toEmpty,
                    cost: cost, amount: amount, vehicleName: vehicleName,
                    note: note, fuelType: fuelType, date: date)
         } else {
@@ -73,7 +73,7 @@ public class GasEntry: NSManagedObject {
         }
     }
     
-    class func update (gasEntry: GasEntry, brand: String?, odometer: String?, toEmpty: String?,
+    func update (brand: String?, odometer: String?, toEmpty: String?,
                        cost: String?, amount: String?, vehicleName: String?,
                        note: String?, fuelType: String?, date: String?) -> String {
 
@@ -149,27 +149,27 @@ public class GasEntry: NSManagedObject {
         let myContext: NSManagedObjectContext = container.viewContext
         
         //print("create gasentry Entity")
-        let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:gasEntry.managedObjectContext!)
-        gasEntry.brand = brandEntry
+        let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:self.managedObjectContext!)
+        self.brand = brandEntry
         
-        let vehicleEntry = Vehicle.FindOrAdd(theVehicle:theVehicle, context:gasEntry.managedObjectContext!)
-        gasEntry.vehicle = vehicleEntry
+        let vehicleEntry = Vehicle.FindOrAdd(theVehicle:theVehicle, context:self.managedObjectContext!)
+        vehicle = vehicleEntry
         print("created Brand and Vehicle Entity links")
         
-        gasEntry.date = theDate
-        gasEntry.odometer = NSDecimalNumber(value:theOdo)
-        gasEntry.toEmpty  = NSDecimalNumber(value:milesLeft)
-        gasEntry.cost    = theCost
-        gasEntry.amount  = theAmount
-        gasEntry.note    = note ?? ""
-        gasEntry.fuelTypeID = currentFuelTypeID as NSNumber
+        self.date = theDate
+        self.odometer = NSDecimalNumber(value:theOdo)
+        self.toEmpty  = NSDecimalNumber(value:milesLeft)
+        self.cost    = theCost
+        self.amount  = theAmount
+        self.note    = note ?? ""
+        self.fuelTypeID = currentFuelTypeID as NSNumber
         
         // calculate dist from last fillup; needed to calc MPG
         if let prevGasEntry = GasEntry.getPrevious(context: myContext, theDate: theDate) {
             let prevOdo = OptInt.int(from: prevGasEntry.odometer!)
-            gasEntry.distance = NSDecimalNumber(value:(theOdo - prevOdo))
+            self.distance = NSDecimalNumber(value:(theOdo - prevOdo))
         } else {
-            gasEntry.distance =  gasEntry.odometer
+            self.distance =  self.odometer
         }
         do {
             try myContext.save()
@@ -182,6 +182,18 @@ public class GasEntry: NSManagedObject {
         return errors
     }
 
+    func delete () {
+        print ("GasEntry Delete called: \(String(describing: self.vehicle?.vehicleName)), \(String(describing: self.odometer))")
+        let context = self.managedObjectContext!
+        context.delete(self)
+        do {
+            try context.save()
+            // OK
+        } catch let error as NSError  {
+            print("Core Data Save Error: \(error.code)")
+        }
+    }
+    
     class func createCSVfromDB() -> String {
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
         // get the entire table, ALL vehicles
