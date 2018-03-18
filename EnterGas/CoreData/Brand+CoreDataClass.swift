@@ -46,8 +46,11 @@ public class Brand: NSManagedObject {
     }
         
     // get list of brand names, sorted by name (not Brand Entries, just the names)
-    class func RequestAll( context: NSManagedObjectContext) -> NSArray? {
+    class func RequestAll( ) -> NSArray? {
         let request: NSFetchRequest<Brand> = Brand.fetchRequest()
+        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+        let context: NSManagedObjectContext = container.viewContext
+
         // request.predicate = NSPredicate(format: "all")
         request.sortDescriptors = [NSSortDescriptor(key: "brandName", ascending: true,
             selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
@@ -58,8 +61,12 @@ public class Brand: NSManagedObject {
             var brandList: [String] = []
             for entry in allBrands {
                 if let brand = entry as? Brand {
-                    brandList.append(brand.brandName)
-                    print("append brand: \(brand.brandName)")
+                    if brand.fillups!.count > 0 {
+                        brandList.append(brand.brandName)
+                        print("append brand: \(brand.brandName)")
+                    } else {
+                        print("skip unused brand: \(brand.brandName)")
+                    }
                 }
             }
             return brandList as NSArray

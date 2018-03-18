@@ -23,10 +23,10 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var date: UITextField!
     @IBOutlet weak var note: UITextField!
-    @IBOutlet weak var Errors: UILabel!
     @IBOutlet weak var vehicleName: UITextField!
-    @IBOutlet weak var fuelType: UITextField!
-    
+    @IBOutlet weak var fuelType: UILabel!
+    @IBOutlet weak var Errors: UILabel!
+
     // MARK: user interface
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,11 +139,41 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
         }
     }
     
+    @IBAction func brandPickerPopup(_ sender: UIButton) {
+        GenericPickerDialog(
+            pickerView: BrandPickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
+            ).show(
+                startValue: brand.text!,
+                title: "Brandname Picker"
+            ) {
+                (returnValue) -> Void in
+                if let i = returnValue {
+                    self.brand.text = BrandPickerValues[i]
+                }
+        }
+    }
+    @IBAction func vehiclePickerPopup(_ sender: UIButton) {
+        GenericPickerDialog(
+            pickerView: VehiclePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
+            ).show(
+                startValue: currentVehicle,
+                title: "Vehicle Name Picker"
+            ) {
+                (returnValue) -> Void in
+                if let i = returnValue {
+                    let theVehicle = VehiclePickerValues[i]
+                    self.vehicleName.text = theVehicle
+                    currentVehicle = theVehicle
+                    defaults.setValue(theVehicle, forKey: vehicleNameKey)
+                }
+        }
+    }
+
     @IBAction func FuelTypePickerPopup(_ sender: Any) {
         GenericPickerDialog(
             pickerView: FuelTypePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
             ).show(
-                startValue: fuelTypePickerValues [currentFuelTypeID]!,
+                startValue: fuelTypePickerValues [currentFuelTypeID],
                 title: "Fuel Type Picker"
             ) {
             (returnValue) -> Void in

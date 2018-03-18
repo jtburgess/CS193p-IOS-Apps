@@ -34,15 +34,15 @@ class GasEntryCellTableViewCell: UITableViewCell {
         date.text  = myDate.string(fromInterval: (myData?.date)!)
         note.text = myData?.note
 
-        let tmpStr = fuelTypePickerValues[ (myData?.fuelTypeID as? Int)! ]!
+        let tmpStr = fuelTypePickerValues[ (myData?.fuelTypeID as? Int)! ]
         // retain only the first char as string
         fuelType.text = tmpStr[tmpStr.startIndex...tmpStr.startIndex]
         
         if let costD  = myData?.cost as Double?,
         let amountD = myData?.amount as Double? {
             if (costD > 0.0) && (amountD > 0.0) {
-                costPerUnit.text = myCurrency.string(fromDbl: (costD / amountD) )
-                //costPerUnit.text = String(format:"%.03f", (costD / amountD))
+                //costPerUnit.text = myCurrency.string(fromDbl: (costD / amountD) )
+                costPerUnit.text = String(format:"%.03f", (costD / amountD))
             } else {
                 costPerUnit.text = ""
             }

@@ -46,11 +46,14 @@ public class Vehicle: NSManagedObject {
     }
     
     // get list of Vehicle names, sorted by name (not Vehicle Entries, just the names)
-    class func RequestAll( context: NSManagedObjectContext) -> NSArray? {
+    class func RequestAll( ) -> NSArray? {
         let request: NSFetchRequest<Vehicle> = Vehicle.fetchRequest()
+        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+        let context: NSManagedObjectContext = container.viewContext
+
         //request.predicate = NSPredicate(format: "all")
         request.sortDescriptors = [NSSortDescriptor(key: "vehicleName", ascending: true,
-                                                    selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
+                    selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
             )]
         
         do {
@@ -58,8 +61,12 @@ public class Vehicle: NSManagedObject {
             var vehicleList: [String] = []
             for entry in allVehicles {
                 if let vehicle = entry as? Vehicle {
-                    vehicleList.append(vehicle.vehicleName)
-                    print("append Vehicle: \(vehicle.vehicleName)")
+                    if vehicle.fillups!.count > 0 {
+                        vehicleList.append(vehicle.vehicleName)
+                        print("append Vehicle: \(vehicle.vehicleName)")
+                    } else {
+                        print("skip unused vehicle: \(vehicle.vehicleName)")
+                    }
                 }
             }
             return vehicleList as NSArray

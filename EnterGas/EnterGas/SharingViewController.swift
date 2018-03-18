@@ -13,7 +13,7 @@ import MessageUI
 class SharingViewController: UIViewController {
 
     @IBOutlet weak var defVehicle: UITextField!
-    @IBOutlet weak var defFuel: UITextField!
+    @IBOutlet weak var defFuel: UILabel!
     @IBOutlet weak var defEmailAddr: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +29,31 @@ class SharingViewController: UIViewController {
 
     @IBAction func SelectVehiclePopup(_ sender: Any) {
         print ("set default vehicle popup")
+        GenericPickerDialog(
+            pickerView: VehiclePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
+            ).show(
+                startValue: currentVehicle,
+                title: "Vehicle Name Picker"
+            ) {
+                (returnValue) -> Void in
+                if let i = returnValue {
+                    let theVehicle = VehiclePickerValues[i]
+                    self.defVehicle.text = theVehicle
+                    currentVehicle = theVehicle
+                    defaults.setValue(theVehicle, forKey: vehicleNameKey)
+                    let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+                    let context: NSManagedObjectContext = container.viewContext
+                    _ = Vehicle.FindOrAdd(theVehicle: theVehicle, context: context)
+                }
+            }
     }
+
     @IBAction func FuelTypePickerPopup(_ sender: Any) {
         print ("set default fuel type popup")
         GenericPickerDialog(
                 pickerView: FuelTypePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
             ).show(
-                startValue: fuelTypePickerValues [currentFuelTypeID]!,
+                startValue: fuelTypePickerValues [currentFuelTypeID],
                 title: "Default Fuel Type Picker"
             ) {
             (returnValue) -> Void in

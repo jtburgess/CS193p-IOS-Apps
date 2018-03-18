@@ -20,7 +20,7 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var note: UITextField!
     @IBOutlet weak var date: UITextField!
     @IBOutlet weak var vehicleName: UITextField!
-    @IBOutlet weak var fuelType: UITextField!
+    @IBOutlet weak var fuelType: UILabel!
     @IBOutlet weak var Errors: UILabel!
     
     // the cell being edited
@@ -46,7 +46,7 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         date.text  = myDate.string(fromInterval: (myData?.date)!)
         note.text = myData?.note
         vehicleName.text = myData?.vehicle?.vehicleName
-        let tmpStr = fuelTypePickerValues[ (myData?.fuelTypeID as? Int)! ]!
+        let tmpStr = fuelTypePickerValues[ (myData?.fuelTypeID as? Int)! ]
         // retain only the first char as string
         fuelType.text = tmpStr[tmpStr.startIndex...tmpStr.startIndex]
 
@@ -103,11 +103,41 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func brandPickerPopup(_ sender: UIButton) {
+        GenericPickerDialog(
+            pickerView: BrandPickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
+            ).show(
+                startValue: brand.text!,
+                title: "Brandname Picker"
+            ) {
+                (returnValue) -> Void in
+                if let i = returnValue {
+                    self.brand.text = BrandPickerValues[i]
+                }
+        }
+    }
+    @IBAction func VehiclePickerPopup(_ sender: UIButton) {
+        GenericPickerDialog(
+            pickerView: VehiclePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
+            ).show(
+                startValue: currentVehicle,
+                title: "Vehicle Name Picker"
+            ) {
+                (returnValue) -> Void in
+                if let i = returnValue {
+                    let theVehicle = VehiclePickerValues[i]
+                    self.vehicleName.text = theVehicle
+                    currentVehicle = theVehicle
+                    defaults.setValue(theVehicle, forKey: vehicleNameKey)
+                }
+        }
+    }
+
     @IBAction func FuelTypePickerPopup (_ sender: UIButton) {
         GenericPickerDialog(
             pickerView: FuelTypePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
             ).show(
-                startValue: fuelTypePickerValues [currentFuelTypeID]!,
+                startValue: fuelTypePickerValues [currentFuelTypeID],
                 title: "Fuel Type Picker"
             ) {
             (returnValue) -> Void in

@@ -145,8 +145,8 @@ public class GasEntry: NSManagedObject {
             // now()
             theDate = Date.init().timeIntervalSince1970
         }
-        let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
-        let myContext: NSManagedObjectContext = container.viewContext
+        //let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+        //let myContext: NSManagedObjectContext = container.viewContext
         
         //print("create gasentry Entity")
         let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:self.managedObjectContext!)
@@ -165,14 +165,14 @@ public class GasEntry: NSManagedObject {
         self.fuelTypeID = currentFuelTypeID as NSNumber
         
         // calculate dist from last fillup; needed to calc MPG
-        if let prevGasEntry = GasEntry.getPrevious(context: myContext, theDate: theDate) {
+        if let prevGasEntry = GasEntry.getPrevious(context: self.managedObjectContext!, theDate: theDate) {
             let prevOdo = OptInt.int(from: prevGasEntry.odometer!)
             self.distance = NSDecimalNumber(value:(theOdo - prevOdo))
         } else {
             self.distance =  self.odometer
         }
         do {
-            try myContext.save()
+            try self.managedObjectContext?.save()
         } catch let error as NSError  {
             print("Core Data Save Error: \(error.code)")
         }
@@ -221,7 +221,7 @@ public class GasEntry: NSManagedObject {
             let note   = myData.note ?? ""
             let fuelType = fuelTypePickerValues[ myData.fuelTypeID as? Int ?? 0 ]
             
-            csvString += "\(vehicle),\(brand),\(date),\(cost),\(odometer),\(toEmpty),\(amount),\(fuelType!),\(note),\\n"
+            csvString += "\(vehicle),\(brand),\(date),\(cost),\(odometer),\(toEmpty),\(amount),\(fuelType),\(note),\\n"
         }
         return csvString
     }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D05A539205D93D700EE1116 /* VehiclePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05A538205D93D700EE1116 /* VehiclePickerView.swift */; };
+		8D05A53B205DAACA00EE1116 /* BrandPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D05A53A205DAACA00EE1116 /* BrandPickerView.swift */; };
 		8D0766DF1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0766DD1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift */; };
 		8D0766E01FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0766DE1FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift */; };
 		8D1222DA20474F9900CA7D7A /* EditFuelPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1222D920474F9900CA7D7A /* EditFuelPurchaseViewController.swift */; };
@@ -50,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8D05A538205D93D700EE1116 /* VehiclePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehiclePickerView.swift; sourceTree = "<group>"; };
+		8D05A53A205DAACA00EE1116 /* BrandPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrandPickerView.swift; sourceTree = "<group>"; };
 		8D0766DD1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Vehicle+CoreDataClass.swift"; path = "/Users/jburgess/IOS Apps/Stanford-CS193P-IOS10-swift/EnterGas/CoreData/Vehicle+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		8D0766DE1FE591BD004D03B1 /* Vehicle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Vehicle+CoreDataProperties.swift"; path = "/Users/jburgess/IOS Apps/Stanford-CS193P-IOS10-swift/EnterGas/CoreData/Vehicle+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8D1222D920474F9900CA7D7A /* EditFuelPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFuelPurchaseViewController.swift; sourceTree = "<group>"; };
@@ -148,7 +152,9 @@
 				8DE2D0881F9D23EF00921302 /* Main.storyboard */,
 				8D15C045201B8DD100DACB8D /* DatePickerDialog.swift */,
 				8D4D371520438127007653D1 /* extensions.swift */,
+				8D05A53A205DAACA00EE1116 /* BrandPickerView.swift */,
 				8DCFB64420084047002BE428 /* FuelTypePickerView.swift */,
+				8D05A538205D93D700EE1116 /* VehiclePickerView.swift */,
 				8D7CD23D2058732600615558 /* GenericPickerDialog.swift */,
 				8D1F99081FFAEF140092151B /* SharingViewController.swift */,
 				8D6305C91FA393A9006DAC7F /* EnterFuelPurchaseViewController.swift */,
@@ -325,11 +331,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D05A53B205DAACA00EE1116 /* BrandPickerView.swift in Sources */,
 				8DED1C101FB607DD009943CB /* GasEntry+CoreDataProperties.swift in Sources */,
 				8D1F99091FFAEF140092151B /* SharingViewController.swift in Sources */,
 				8DE2D0B51F9D280100921302 /* GasListTableViewController.swift in Sources */,
 				8DB5D0331FA6492B0084D519 /* gasEntryDB.xcdatamodeld in Sources */,
 				8D0766DF1FE591BD004D03B1 /* Vehicle+CoreDataClass.swift in Sources */,
+				8D05A539205D93D700EE1116 /* VehiclePickerView.swift in Sources */,
 				8DED1C0E1FB607DD009943CB /* Brand+CoreDataProperties.swift in Sources */,
 				8D7CD23E2058732600615558 /* GenericPickerDialog.swift in Sources */,
 				8D4D371620438127007653D1 /* extensions.swift in Sources */,
