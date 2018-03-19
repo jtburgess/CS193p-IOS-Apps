@@ -35,7 +35,6 @@ class FuelTypePickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSo
 
     // MARK: PickerViewDataSource
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        print("FuelPickerDS (number of components == 1)")
         return 1
     }
     

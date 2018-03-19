@@ -23,7 +23,7 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var fuelType: UILabel!
     @IBOutlet weak var Errors: UILabel!
     
-    // the cell being edited
+    // the cell being edited - set by segue
     var myData: GasEntry? // { didSet { resetFields() } }
 
     // MARK: user interface
@@ -42,7 +42,7 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         odometer.text = "\(myData!.odometer ?? 0.0)"
         toEmpty.text = "\(myData!.toEmpty ?? 0.0)"
         cost.text    = "\(myData?.cost ?? 0.0)"
-        amount.text = String(format:"%.1f", ((myData?.amount)! as Double) )
+        amount.text = String(format:"%.2f", ((myData?.amount)! as Double) )
         date.text  = myDate.string(fromInterval: (myData?.date)!)
         note.text = myData?.note
         vehicleName.text = myData?.vehicle?.vehicleName
@@ -96,10 +96,10 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
                                 cancelButtonTitle: "Cancel",
                                 defaultDate: theDate,
                                 datePickerMode: .date) {
-                                    (date) -> Void in
-                                    if let dt = date {
-                                        self.date.text = myDate.string(from: dt)
-                                    }
+            (date) -> Void in
+            if let dt = date {
+                self.date.text = myDate.string(from: dt)
+            }
         }
     }
     
@@ -179,15 +179,4 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -6,13 +6,12 @@
 //  Copyright © 2017 JTBURGESS. All rights reserved.
 
 // nextField logic from https://stackoverflow.com/questions/9540500/ios-app-next-key-wont-go-to-the-next-text-field
-// ACEAutocompleteBar from https://stackoverflow.com/questions/31167416/customizing-quicktype-suggestions-in-ios/35511249#35511249
 
 import UIKit
 import CoreData
 //import ACEAutocompleteBar
 
-class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { // , ACEAutocompleteDataSource, ACEAutocompleteDelegate
+class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
 
     // MARK - data
     @IBOutlet weak var brand: UITextField!
@@ -34,17 +33,6 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
         resetFields()
         assignNextActions()
         costLabel.text = "Cost (\(currencySymbol))"
-        
-       /*
-        self.brand.setAutocompleteWith(self, delegate: self, customize: { inputView in
-             // customize the view (optional)
-             //inputView.font = UIFont.systemFontOfSize(20)
-             //inputView.textColor = UIColor.whiteColor()
-             //inputView.backgroundColor = UIColor.blueColor()
-            inputView?.isHidden = false
-        })
-        */
-
     }
 
     private func resetFields() {
@@ -86,6 +74,10 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        if textField == cost || textField == amount {
+            // auto add decimal point if appropriate
+            textField.text = addOptionalDecimalPoint(value: textField.text!)
+        }
         if let moveTo = nextField[textField] {
             print("Return entered in \(textField.description) goes to \(moveTo.description)")
             moveTo.becomeFirstResponder()
@@ -95,35 +87,17 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
         }
         return true
     }
-    
-    // MARK: (notused) ACEAutocompleteBar delegate
-    /*
-    func minimumCharacters(toTrigger inputView: ACEAutocompleteInputView!) -> UInt {
-        return 1
-    }
-    func inputView(_ inputView: ACEAutocompleteInputView!, itemsFor query: String!, result resultBlock: (([Any]?) -> Void)!) {        
-        inputView.isHidden = false
-        inputView.alpha = 0.75
-        print("inputView called")
-        if resultBlock != nil {
-            print("inputView nonNil")
-            DispatchQueue.global(qos:DispatchQoS.QoSClass.default).async() {
-                var data:NSMutableArray = []
-                
-                if(self.brand.isFirstResponder){
-                    let myContext: NSManagedObjectContext = self.container.viewContext
-                    data = Brand.RequestAll(context: myContext) as! NSMutableArray
-                    print("got Brand list \(data.count)")
-                }
-                DispatchQueue.main.async() { resultBlock(data as [AnyObject]) }
-            }
+
+    // add a decimal point if there is none, and the string is 3 digits or more (e.g., make 999 => 9.99
+    private func addOptionalDecimalPoint (value: String) -> String {
+        if value.range(of: ".") == nil && value.count >= 3 {
+            var mutatedValue = value
+            mutatedValue.insert(".", at: value.index(value.endIndex, offsetBy: -2))
+            return mutatedValue
+        } else {
+            return value
         }
     }
-    func textField(_ textField: UITextField!, didSelect object: Any!, in inputView: ACEAutocompleteInputView!) {
-        textField.text = String(describing: object)
-    }
-    */
-    
     // MARK: date picker and fuel type popups
     @IBAction func datePickerPopup(_ sender: Any) {
         let theDate = myDate.date(from: date.text!)
@@ -206,11 +180,4 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate { /
         // Dispose of any resources that can be recreated.
         print("did receive Memory Warning")
     }
-    
-    /*
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print ("segue to Entry screen. NOt used with tab view controller")
-    }
-    */
 }

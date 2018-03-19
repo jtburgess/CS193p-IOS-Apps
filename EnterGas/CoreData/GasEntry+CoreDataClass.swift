@@ -108,15 +108,23 @@ public class GasEntry: NSManagedObject {
         }
         
         var theCost: NSDecimalNumber = -1
-        if let tmp = formatter.number(from: cost!) as! NSDecimalNumber? {
-            theCost = tmp
+        if let tmp = formatter.number(from: cost!) as! Double? {
+            if tmp < 1.0 || tmp > 999.9 {
+                errors.append("cost outside expected range (1 - 1000)")
+            } else {
+                theCost = formatter.number(from: cost!) as! NSDecimalNumber
+            }
         } else {
             errors.append("Bad Cost value\n")
         }
         
         var theAmount: NSDecimalNumber = -1
-        if let tmp = formatter.number(from: amount!) as! NSDecimalNumber? {
-            theAmount = tmp
+        if let tmp = formatter.number(from: amount!) as! Double? {
+            if tmp < 1.0 || tmp > 999.9 {
+                errors.append("amount outside expected range (1 - 1000)")
+            } else {
+                theAmount = formatter.number(from: amount!) as! NSDecimalNumber
+            }
         } else {
             errors.append("Bad Amount value\n")
         }
@@ -130,13 +138,6 @@ public class GasEntry: NSManagedObject {
             defaults.setValue(theVehicle, forKey: vehicleNameKey)
         }
         
-        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicle)")
-        
-        if errors != "" {
-            print ("There are errors")
-            return errors
-        }
-        
         var theDate : TimeInterval
         if let tmpDate = date {
             //theDate = dateFromString(dateString: tmpDate).timeIntervalSince1970
@@ -148,6 +149,26 @@ public class GasEntry: NSManagedObject {
         //let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
         //let myContext: NSManagedObjectContext = container.viewContext
         
+        // calculate dist from last fillup; needed to calc MPG
+        if let prevGasEntry = GasEntry.getPrevious(context: self.managedObjectContext!, theDate: theDate) {
+            let prevOdo = OptInt.int(from: prevGasEntry.odometer!)
+            let distance = (theOdo - prevOdo)
+            if distance < 1 || distance > 999 {
+                errors.append ("distance from last fill up (\(distance)) is outside expected range (1 - 1000). Check the odometer value")
+            } else {
+                self.distance = NSDecimalNumber(value:distance)
+            }
+        } else {
+            self.distance =  self.odometer
+        }
+        
+        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicle)")
+        
+        if errors != "" {
+            print ("There are errors")
+            return errors
+        }
+
         //print("create gasentry Entity")
         let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:self.managedObjectContext!)
         self.brand = brandEntry
@@ -163,14 +184,7 @@ public class GasEntry: NSManagedObject {
         self.amount  = theAmount
         self.note    = note ?? ""
         self.fuelTypeID = currentFuelTypeID as NSNumber
-        
-        // calculate dist from last fillup; needed to calc MPG
-        if let prevGasEntry = GasEntry.getPrevious(context: self.managedObjectContext!, theDate: theDate) {
-            let prevOdo = OptInt.int(from: prevGasEntry.odometer!)
-            self.distance = NSDecimalNumber(value:(theOdo - prevOdo))
-        } else {
-            self.distance =  self.odometer
-        }
+
         do {
             try self.managedObjectContext?.save()
         } catch let error as NSError  {

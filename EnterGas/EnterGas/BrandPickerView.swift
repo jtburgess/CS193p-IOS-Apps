@@ -36,7 +36,6 @@ class BrandPickerView: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSourc
     
     // MARK: PickerViewDataSource
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        print("BrandPicker (number of components == 1)")
         return 1
     }
     

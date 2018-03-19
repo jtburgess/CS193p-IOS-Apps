@@ -14,7 +14,7 @@ class GasEntryCellTableViewCell: UITableViewCell {
     @IBOutlet weak var note: UILabel!
     @IBOutlet weak var brand: UILabel!
     @IBOutlet weak var odometer: UILabel!
-    @IBOutlet weak var toEmpty: UILabel!
+    @IBOutlet weak var distance: UILabel!
     @IBOutlet weak var cost: UILabel!
     @IBOutlet weak var costPerUnit: UILabel!
     @IBOutlet weak var amount: UILabel!
@@ -26,11 +26,11 @@ class GasEntryCellTableViewCell: UITableViewCell {
     fileprivate func updateUI()
     {
         // update the display fields in the UI
-        brand.text  = myData?.brand?.brandName ?? "unknown"
+        brand.text   = myData?.brand?.brandName ?? "unknown"
         odometer.text = OptInt.string (from: myData?.odometer)
-        toEmpty.text = OptInt.string (from: myData?.toEmpty)
-        cost.text    = myCurrency.string(fromDec:(myData?.cost)!)
-        amount.text = String(format:"%.1f", ((myData?.amount)! as Double) )
+        distance.text = OptInt.string (from: myData?.distance)
+        cost.text     = myCurrency.string(fromDec:(myData?.cost)!)
+        amount.text   = String(format:"%.2f", ((myData?.amount)! as Double) )
         date.text  = myDate.string(fromInterval: (myData?.date)!)
         note.text = myData?.note
 
@@ -52,7 +52,7 @@ class GasEntryCellTableViewCell: UITableViewCell {
            let amountD = myData?.amount as Double? {
             let toEmptyD = myData?.toEmpty as Double? ?? 0.0
             if (distD > 0.0) && (amountD > 0.0) {
-                mpg.text = String(format:"%.1f", ((distD-toEmptyD) / amountD))
+                mpg.text = String(format:"%.1f", ((distD+toEmptyD) / amountD))
             } else {
                 mpg.text = ""
             }

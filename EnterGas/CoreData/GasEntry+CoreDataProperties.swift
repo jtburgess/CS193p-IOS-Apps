@@ -22,7 +22,7 @@ extension GasEntry {
     @NSManaged public var cost: NSDecimalNumber?   // $$
     @NSManaged public var date: TimeInterval      // todays date in sec-since-1970
     @NSManaged public var odometer: NSDecimalNumber?
-    @NSManaged public var distance: NSDecimalNumber? // distance since prior fillup
+    @NSManaged public var distance: NSDecimalNumber? // CALCULATED distance since prior fillup
     @NSManaged public var toEmpty: NSDecimalNumber?  // optional miles until totally empty
     @NSManaged public var note: String?
     @NSManaged public var fuelTypeID: NSNumber?  // id of the fuelType in fuelTypePickerValues

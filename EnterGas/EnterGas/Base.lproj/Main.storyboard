@@ -59,28 +59,33 @@
                                                         <constraint firstItem="2ss-nA-4Wd" firstAttribute="leading" secondItem="Dim-ZN-0JO" secondAttribute="leading" id="gVT-WX-Doc"/>
                                                     </constraints>
                                                 </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vlb-XH-Fzj">
-                                                    <rect key="frame" x="101.5" y="0.0" width="70" height="25"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="70" id="IRM-Ri-02g"/>
-                                                        <constraint firstAttribute="height" constant="25" id="mU5-Jb-uf0"/>
-                                                    </constraints>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Brand">
-                                                            <attributes>
-                                                                <color key="NSColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <font key="NSFont" metaFont="system" size="14"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="haf-Rh-lSo">
+                                                    <rect key="frame" x="101" y="0.0" width="70" height="25"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vlb-XH-Fzj">
+                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="25"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="70" id="IRM-Ri-02g"/>
+                                                                <constraint firstAttribute="height" constant="25" id="mU5-Jb-uf0"/>
+                                                            </constraints>
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="Brand">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <font key="NSFont" metaFont="system" size="14"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="4cC-DN-Dho">
-                                                    <rect key="frame" x="192.5" y="0.0" width="44" height="38.5"/>
+                                                    <rect key="frame" x="192" y="0.0" width="45" height="39"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Odo" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40q-5f-4sW">
-                                                            <rect key="frame" x="4" y="0.0" width="40" height="25"/>
+                                                            <rect key="frame" x="5" y="0.0" width="40" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" priority="800" constant="40" placeholder="YES" id="AIc-zb-sts"/>
                                                                 <constraint firstAttribute="height" constant="25" id="OQV-29-UOK"/>
@@ -89,8 +94,8 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="toEmpty" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Vu-Ji-EHB">
-                                                            <rect key="frame" x="0.0" y="25" width="44" height="13.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="distance" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Vu-Ji-EHB">
+                                                            <rect key="frame" x="0.0" y="25" width="45" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="14" id="Pum-jY-Sk9"/>
                                                             </constraints>
@@ -198,28 +203,33 @@
                                                         <constraint firstItem="qR8-oB-nXv" firstAttribute="leading" secondItem="30z-ZS-dcL" secondAttribute="leading" id="Jmi-jK-2FW"/>
                                                     </constraints>
                                                 </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-Be-heK">
-                                                    <rect key="frame" x="104.5" y="0.0" width="70" height="25"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="70" id="OPI-y6-dN3"/>
-                                                        <constraint firstAttribute="height" constant="25" id="it5-bz-JIi"/>
-                                                    </constraints>
-                                                    <attributedString key="attributedText">
-                                                        <fragment content="Brand">
-                                                            <attributes>
-                                                                <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
-                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                            </attributes>
-                                                        </fragment>
-                                                    </attributedString>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8Mf-uF-6JC">
-                                                    <rect key="frame" x="198.5" y="0.0" width="40" height="39"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wJJ-BQ-aNa">
+                                                    <rect key="frame" x="103" y="0.0" width="70" height="25"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-Be-heK">
+                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="25"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="70" id="OPI-y6-dN3"/>
+                                                                <constraint firstAttribute="height" constant="25" id="it5-bz-JIi"/>
+                                                            </constraints>
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="Brand">
+                                                                    <attributes>
+                                                                        <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="8Mf-uF-6JC">
+                                                    <rect key="frame" x="196" y="0.0" width="45" height="38.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Odo" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K4u-wc-JgP">
-                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="25"/>
+                                                            <rect key="frame" x="5" y="0.0" width="40" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="5jm-1h-eWN"/>
                                                                 <constraint firstAttribute="width" priority="800" constant="40" placeholder="YES" id="EU4-e6-Nbp"/>
@@ -228,22 +238,19 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="toEmpty" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQn-2L-ar6">
-                                                            <rect key="frame" x="0.0" y="25" width="40" height="14"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="distance" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubQ-NH-uXO">
+                                                            <rect key="frame" x="0.0" y="25" width="45" height="13.5"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="14" id="lLh-E9-VdB"/>
+                                                                <constraint firstAttribute="height" constant="14" id="89U-ve-jpx"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="JQn-2L-ar6" firstAttribute="trailing" secondItem="K4u-wc-JgP" secondAttribute="trailing" id="8nk-8T-9DC"/>
-                                                    </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3bd-yv-0ni">
-                                                    <rect key="frame" x="263" y="0.0" width="40" height="39"/>
+                                                    <rect key="frame" x="264" y="0.0" width="40" height="39"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cost" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pRJ-6u-DaP">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="25"/>
@@ -323,11 +330,11 @@
                                     <outlet property="cost" destination="pRJ-6u-DaP" id="Yhk-6t-FVi"/>
                                     <outlet property="costPerUnit" destination="pFR-eX-0a9" id="TZ3-pt-p1k"/>
                                     <outlet property="date" destination="30z-ZS-dcL" id="UHc-Jo-CsK"/>
+                                    <outlet property="distance" destination="ubQ-NH-uXO" id="YYK-4j-Ryq"/>
                                     <outlet property="fuelType" destination="pvD-2H-wmQ" id="pFV-dD-IMS"/>
                                     <outlet property="mpg" destination="YDe-zR-9Uj" id="nuX-8V-reN"/>
                                     <outlet property="note" destination="qR8-oB-nXv" id="UOc-IT-L8d"/>
                                     <outlet property="odometer" destination="K4u-wc-JgP" id="UF8-hv-clS"/>
-                                    <outlet property="toEmpty" destination="JQn-2L-ar6" id="pKB-Bm-oN5"/>
                                     <segue destination="0QV-c4-iQk" kind="show" identifier="EditGasEntryCell" id="r14-TV-DaQ"/>
                                 </connections>
                             </tableViewCell>
