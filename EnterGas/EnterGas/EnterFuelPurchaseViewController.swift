@@ -25,10 +25,12 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var vehicleName: UITextField!
     @IBOutlet weak var fuelType: UILabel!
     @IBOutlet weak var Errors: UILabel!
-
+    @IBOutlet weak var extraOKbutton: UIButton!
+    
     // MARK: user interface
     override func viewDidLoad() {
         super.viewDidLoad()
+        extraOKbutton.isHidden = true
         getDefaults()
         resetFields()
         assignNextActions()
@@ -161,18 +163,41 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: SAVE button saves the data to CoreData
     @IBAction func saveThisEntry(_ sender: UIButton) {
-        // add validations here so I can eliminate the '!' in the gasEntry() call
         print("Enter SaveThisEntry")
         Errors.text = GasEntry.save(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                            cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
-                           note: note.text, fuelType: fuelType.text, date: date.text)
+                           note: note.text, fuelType: fuelType.text, date: date.text,
+                           validate: true)
         
         // force the keyboard to go away so we can see the error messages
         view.endEditing(true)
         if Errors.text == "" {
             resetFields()
             Errors.text = "Purchase saved."
+        } else {
+            // if there are errors, enable the second-chance OK button
+            extraOKbutton.isHidden = false
         }
+    }
+
+    // called from the normally hidden OK button
+    @IBAction func SaveWithoutValidation(_ sender: Any) {
+        print("Enter Save UNVALIDATED Entry")
+        var errorMessage = GasEntry.save(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
+                                    cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
+                                    note: note.text, fuelType: fuelType.text, date: date.text,
+                                    validate: false)
+        
+        // force the keyboard to go away so we can see the error messages
+        view.endEditing(true)
+        if errorMessage == "" {
+            resetFields()
+            Errors.text = "Purchase saved."
+        } else {
+            errorMessage.append("Entry saved despite errors.")
+            Errors.text = errorMessage
+        }
+        extraOKbutton.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {

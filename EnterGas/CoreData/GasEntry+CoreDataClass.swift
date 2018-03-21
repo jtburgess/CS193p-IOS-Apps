@@ -36,7 +36,7 @@ public class GasEntry: NSManagedObject {
     class func getPrevious(context: NSManagedObjectContext, theDate: TimeInterval) -> GasEntry? {
         let request: NSFetchRequest<GasEntry> = GasEntry.fetchRequest()
         print("getPrevious to date=\(theDate)")
-        request.predicate = NSPredicate(format: "date.timeIntervalSince1970 <= %f and vehicle.vehicleName = %@", theDate, currentVehicle)
+        request.predicate = NSPredicate(format: "date.timeIntervalSince1970 < %f and vehicle.vehicleName = %@", theDate - 1, currentVehicle)
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         request.fetchLimit = 1
         do {
@@ -58,7 +58,8 @@ public class GasEntry: NSManagedObject {
     // MARK: called from new (or update) GasEntry
     class func save(brand: String?, odometer: String?, toEmpty: String?,
               cost: String?, amount: String?, vehicleName: String?,
-              note: String?, fuelType: String?, date: String?) -> String {
+              note: String?, fuelType: String?, date: String?,
+              validate: Bool = true) -> String {
 
         //print ("GasEntry SAVE")
         let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
@@ -66,7 +67,8 @@ public class GasEntry: NSManagedObject {
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
             return gasEntry.update(brand: brand, odometer: odometer, toEmpty: toEmpty,
                    cost: cost, amount: amount, vehicleName: vehicleName,
-                   note: note, fuelType: fuelType, date: date)
+                   note: note, fuelType: fuelType, date: date,
+                   validate: validate)
         } else {
             print ("Error creating new gasEntry")
             return "Error creating new gasEntry"
@@ -75,7 +77,8 @@ public class GasEntry: NSManagedObject {
     
     func update (brand: String?, odometer: String?, toEmpty: String?,
                        cost: String?, amount: String?, vehicleName: String?,
-                       note: String?, fuelType: String?, date: String?) -> String {
+                       note: String?, fuelType: String?, date: String?,
+                       validate: Bool = true) -> String {
 
         //print("GasEntry UPDATE")
         let formatter = NumberFormatter()
@@ -110,7 +113,7 @@ public class GasEntry: NSManagedObject {
         var theCost: NSDecimalNumber = -1
         if let tmp = formatter.number(from: cost!) as! Double? {
             if tmp < 1.0 || tmp > 999.9 {
-                errors.append("cost outside expected range (1 - 1000)")
+                errors.append("cost outside expected range (1 - 1000)\n")
             } else {
                 theCost = formatter.number(from: cost!) as! NSDecimalNumber
             }
@@ -121,7 +124,7 @@ public class GasEntry: NSManagedObject {
         var theAmount: NSDecimalNumber = -1
         if let tmp = formatter.number(from: amount!) as! Double? {
             if tmp < 1.0 || tmp > 999.9 {
-                errors.append("amount outside expected range (1 - 1000)")
+                errors.append("amount outside expected range (1 - 1000)\n")
             } else {
                 theAmount = formatter.number(from: amount!) as! NSDecimalNumber
             }
@@ -154,17 +157,17 @@ public class GasEntry: NSManagedObject {
             let prevOdo = OptInt.int(from: prevGasEntry.odometer!)
             let distance = (theOdo - prevOdo)
             if distance < 1 || distance > 999 {
-                errors.append ("distance from last fill up (\(distance)) is outside expected range (1 - 1000). Check the odometer value")
+                errors.append ("distance from last fill up (\(distance)) is outside expected range (1 - 1000). Check the odometer value\n")
             } else {
                 self.distance = NSDecimalNumber(value:distance)
             }
         } else {
-            self.distance =  self.odometer
+            self.distance =  NSDecimalNumber(value:theOdo)
         }
         
         print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicle)")
         
-        if errors != "" {
+        if errors != "" && validate {
             print ("There are errors")
             return errors
         }
@@ -207,7 +210,32 @@ public class GasEntry: NSManagedObject {
             print("Core Data Save Error: \(error.code)")
         }
     }
-    
+
+    class func recalcDistances() {
+        let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
+        // get the entire table, but only the current vehicles, newest first
+        // then walk the array backwards, working on the Next entry, using the odometer from the Prev entry
+        var gasEntryArray = (GasEntry.RequestAll( vehicleName: currentVehicle, context: myContext) as? Array<GasEntry>)!
+        var thisEntry = gasEntryArray[0]
+        for prevEntry in gasEntryArray {
+            let theOdo  = OptInt.int(from: thisEntry.odometer!)
+            let prevOdo = OptInt.int(from: prevEntry.odometer!)
+            let distance = OptInt.int(from: thisEntry.distance!)
+            let newDistance = (theOdo - prevOdo)
+            if distance != newDistance {
+                print ("distance changed for \(thisEntry.date); was \(distance), now \(newDistance)")
+                thisEntry.distance = NSDecimalNumber(value:newDistance)
+                do {
+                    try thisEntry.managedObjectContext?.save()
+                } catch let error as NSError  {
+                    print("Core Data Save Error: \(error.code)")
+                }
+            }
+            
+            thisEntry = prevEntry
+        }
+    }
+
     class func createCSVfromDB() -> String {
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
         // get the entire table, ALL vehicles
@@ -216,11 +244,6 @@ public class GasEntry: NSManagedObject {
         var csvString: String = "Vehicle,Brand,date,cost,odometer,toEmpty,amount,fuelType,note\n"
         
         let objects = (GasEntry.RequestAll( vehicleName: "all", context: myContext) as? Array<GasEntry>)!
-        /* shouldn't need this
-         guard objects.count > 0 else {
-         return ""
-         }
-         */
         
         // combine all rows into \n separated lines, with ',' between items -- no comma escaping with ".. , .."
         for myData in objects {

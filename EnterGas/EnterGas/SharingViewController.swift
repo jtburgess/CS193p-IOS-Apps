@@ -65,6 +65,10 @@ class SharingViewController: UIViewController {
         }
     }
 
+    @IBAction func recalcFilupDistances(_ sender: Any) {
+        GasEntry.recalcDistances()
+    }
+
     @IBAction func SharingPopUp(_ sender: Any) {
         let csvText = GasEntry.createCSVfromDB()
         print("CSV: \(csvText)")

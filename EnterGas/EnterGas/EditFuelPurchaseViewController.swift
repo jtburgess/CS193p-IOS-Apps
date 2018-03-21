@@ -22,6 +22,7 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var vehicleName: UITextField!
     @IBOutlet weak var fuelType: UILabel!
     @IBOutlet weak var Errors: UILabel!
+    @IBOutlet weak var extraOKbutton: UIButton!
     
     // the cell being edited - set by segue
     var myData: GasEntry? // { didSet { resetFields() } }
@@ -168,15 +169,35 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         if Errors.text == "" {
             resetFields()
             Errors.text = "Edits Saved."
+        } else {
+            // if there are errors, enable the second-chance OK button
+            extraOKbutton.isHidden = false
         }
-        // instead should segue back to the history screen
-        // segue back and :
-        // tableView.reloadData()
     }
-
+    
+    @IBAction func saveWithoutValidation(_ sender: Any) {
+    // called from the normally hidden OK button
+        print("Enter Save UNVALIDATED Entry")
+        var errorMessage = myData!.update(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
+                                         cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
+                                         note: note.text, fuelType: fuelType.text, date: date.text,
+                                         validate: false)
+        
+        // force the keyboard to go away so we can see the error messages
+        view.endEditing(true)
+        if errorMessage == "" {
+            resetFields()
+            Errors.text = "Edits saved."
+        } else {
+            errorMessage.append("Entry saved despite errors.")
+            Errors.text = errorMessage
+        }
+        extraOKbutton.isHidden = true
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        print("did receive Memory Warning")
     }
-    
 }
