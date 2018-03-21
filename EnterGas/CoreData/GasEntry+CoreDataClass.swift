@@ -200,7 +200,7 @@ public class GasEntry: NSManagedObject {
     }
 
     func delete () {
-        print ("GasEntry Delete called: \(String(describing: self.vehicle?.vehicleName)), \(String(describing: self.odometer))")
+        print ("GasEntry Delete called: \(String(describing: self.vehicle?.vehicleName)), \(String(describing: self.odometer)), \(String(describing: self.date))")
         let context = self.managedObjectContext!
         context.delete(self)
         do {
@@ -217,6 +217,7 @@ public class GasEntry: NSManagedObject {
         // then walk the array backwards, working on the Next entry, using the odometer from the Prev entry
         var gasEntryArray = (GasEntry.RequestAll( vehicleName: currentVehicle, context: myContext) as? Array<GasEntry>)!
         var thisEntry = gasEntryArray[0]
+        gasEntryArray.remove(at: 0)
         for prevEntry in gasEntryArray {
             let theOdo  = OptInt.int(from: thisEntry.odometer!)
             let prevOdo = OptInt.int(from: prevEntry.odometer!)
@@ -241,7 +242,7 @@ public class GasEntry: NSManagedObject {
         // get the entire table, ALL vehicles
         
         // harded coded header; can't use reduce since I need to get linked values, and format the date
-        var csvString: String = "Vehicle,Brand,date,cost,odometer,toEmpty,amount,fuelType,note\n"
+        var csvString: String = "Vehicle,Brand,date,odometer,toEmpty,cost,amount,fuelType,note\n"
         
         let objects = (GasEntry.RequestAll( vehicleName: "all", context: myContext) as? Array<GasEntry>)!
         
@@ -249,7 +250,12 @@ public class GasEntry: NSManagedObject {
         for myData in objects {
             let vehicle = myData.vehicle?.vehicleName ?? "error"
             let brand  = myData.brand?.brandName ?? "error"
-            
+            if vehicle == "error" || brand == "error" {
+                // delete bogus entry
+                myData.delete()
+                continue
+            }
+
             let amount = String(format:"%.1f", ((myData.amount)! as Double) )
             let cost   = String(format:"%.2f", ((myData.cost)! as Double) )
             let date   = myDate.string (fromInterval: (myData.date))
@@ -258,7 +264,7 @@ public class GasEntry: NSManagedObject {
             let note   = myData.note ?? ""
             let fuelType = fuelTypePickerValues[ myData.fuelTypeID as? Int ?? 0 ]
             
-            csvString += "\(vehicle),\(brand),\(date),\(cost),\(odometer),\(toEmpty),\(amount),\(fuelType),\(note),\\n"
+            csvString += "\(vehicle),\(brand),\(date),\(odometer),\(toEmpty),\(cost),\(amount),\(fuelType),\(note)\n"
         }
         return csvString
     }

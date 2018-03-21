@@ -74,7 +74,8 @@ class SharingViewController: UIViewController {
         print("CSV: \(csvText)")
         
         let tmpDir = FileManager.default.temporaryDirectory
-        let fileURL = tmpDir.appendingPathComponent("GasEntryData").appendingPathExtension("csv")
+        let today = myDate.string(from: Date.init())
+        let fileURL = tmpDir.appendingPathComponent("GasEntryData-\(today)").appendingPathExtension("csv")
         print("FilePath: \(fileURL.path)")
 
         do {
