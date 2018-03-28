@@ -15,41 +15,79 @@ let defaults = UserDefaults.standard
 let vehicleNameKey = "vehicleName"
 var currentVehicle : String = ""
 
-// fuelTypeID is used as the index into fuelTypePickerValues for display purposes
-var fuelTypeKey = "fuelType"
-var currentFuelTypeID : Int = 0
+var theVehicle = vehicleData()
 
+// keys for vehicleData
+// original set was two variables - vehicle name and fuelTypeID
+// new style is vehicle name and a dictionary by vehicle of:
+//      fuelTypeID, cash_credit:Bool, partial_fill:Bool, min/TOT(*)/max MPG, min/TOT(*)/max dist/fillup
+//      and calculated #entries (denominator to calc average)
+
+// fuelTypeID WAS used as the index into fuelTypePickerValues for display purposes
+let fuelTypeKey = "fuelType"
+let cashCreditKey = "cashOrCredit"
+let partialFillKey = "partialOrFillUp"
+let favoriteBrandKey = "favBrand"
+// add min,max, ...
+
+
+// still separate, still needed?
 let emailAddressKey = "emailAddress"
 var currentEmailAddress : String = "none"
 
-func getDefaults() {    
-    if  let anyValue = defaults.object(forKey: vehicleNameKey),
-        let tmp = anyValue as? String {
-        currentVehicle = tmp
-    } else {
-        // need to assign a default vehicle - segue to that screen
-        print("no default vehicle")
-    }
-    
-    if  let anyValue = defaults.object(forKey: fuelTypeKey),
-        let tmp = anyValue as? Int {
-        currentFuelTypeID = tmp
-    } else {
-        // need to assign a default fuel type - segue to that screen
-        // for now default to regular
-        currentFuelTypeID = 0
-        print ("no default fuel type")
-    }
-    
+func getDefaults() {
     if  let anyValue = defaults.object(forKey: emailAddressKey),
         let tmp = anyValue as? String {
         currentEmailAddress = tmp
     } else {
         // need to assign a default email address - segue to that screen
     }
-    print("TabBarDefaults did load: vehicle=\(currentVehicle), currentFuelID=\(currentFuelTypeID)")
+    print("TabBarDefaults did load")
 }
 
+class vehicleData: NSObject {
+    var vehicleData: [String:NSNumber] = [:]
+
+    override init() {
+        super.init()
+        if  let anyValue = defaults.object(forKey: vehicleNameKey),
+            let tmp = anyValue as? String {
+            currentVehicle = tmp
+        } else {
+            // need to assign a default vehicle - segue to that screen
+            print("no default vehicle")
+            return
+        }
+
+        if let tmp = defaults.object(forKey: currentVehicle) as? [String:NSNumber] {
+            vehicleData = tmp
+            print("loaded vehicle Data for \(currentVehicle): \(vehicleData)")
+        } else {
+            // get the old-style fuelID and convert
+            if  let anyValue = defaults.object(forKey: fuelTypeKey),
+                let tmp = anyValue as? NSNumber {
+                self.set(key: fuelTypeKey, value: tmp)
+                print("converted vehicle Data from \(currentVehicle): \(vehicleData)")
+            } else {
+                // need to assign a default fuel type - segue to that screen
+                // for now default to regular
+                self.set(key: fuelTypeKey, value: 0 as NSNumber)
+                print ("no default fuel type")
+            }
+        }
+        
+    }
+    func get (key:String) -> NSNumber? {
+        return vehicleData[key]
+    }
+    func set (key:String, value:NSNumber) {
+        vehicleData[key] = value
+    }
+    func save() {
+        print("saving vehicle Data for \(currentVehicle): \(vehicleData)")
+        defaults.setValue(vehicleData, forKey: currentVehicle)
+    }
+}
 // MARK: my custom format classes and global vars
 let myDate: MyDate = MyDate()
 let myCurrency: MyCurrency = MyCurrency()

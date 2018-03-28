@@ -48,6 +48,8 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var extraOKbutton: UIButton!
     
+    var myFuelTypeID: Int = 0
+    
     // MARK: user interface
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +69,8 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         note.text = ""
         amount.text = ""
         Errors.text = ""
-        fuelType.text = fuelTypePickerValues [currentFuelTypeID]
+        myFuelTypeID = theVehicle.get(key: fuelTypeKey) as! Int
+        fuelType.text = fuelTypePickerValues [myFuelTypeID]
         if date.text == "" || date.text == "theDate" {
             self.date.text = myDate.string(from: Date.init())
         }
@@ -170,14 +173,14 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         GenericPickerDialog(
             pickerView: FuelTypePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
             ).show(
-                startValue: fuelTypePickerValues [currentFuelTypeID],
+                startValue: fuelTypePickerValues [myFuelTypeID],
                 title: "Fuel Type Picker"
             ) {
             (returnValue) -> Void in
             if let theFuelTypeID = returnValue {
+                // this does not update the default fuel type
+                self.myFuelTypeID = theFuelTypeID
                 self.fuelType.text = fuelTypePickerValues [theFuelTypeID]
-                currentFuelTypeID = theFuelTypeID
-                defaults.setValue(theFuelTypeID, forKey: fuelTypeKey)
             }
         }
     }
@@ -189,7 +192,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         let partialFillBool = (partial_fill.currentTitle == "FillUp")
         Errors.text = GasEntry.save(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                            cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
-                           note: note.text, fuelType: fuelType.text, date: date.text,
+                           note: note.text, fuelTypeID: myFuelTypeID, date: date.text,
                            cash_credit: cashCreditBool, partial_fill: partialFillBool,
                            validate: true)
         
@@ -211,7 +214,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         let partialFillBool = (partial_fill.currentTitle == "FillUp")
         var errorMessage = GasEntry.save(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                                     cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
-                                    note: note.text, fuelType: fuelType.text, date: date.text,
+                                    note: note.text, fuelTypeID: myFuelTypeID, date: date.text,
                                     cash_credit: cashCreditBool, partial_fill: partialFillBool,
                                     validate: false)
         

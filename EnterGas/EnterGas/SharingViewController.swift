@@ -23,7 +23,7 @@ class SharingViewController: UIViewController {
     
     private func loadDefaults() {
         defVehicle.text = currentVehicle
-        defFuel.text    = fuelTypePickerValues [currentFuelTypeID]
+        defFuel.text    = fuelTypePickerValues [theVehicle.get(key: fuelTypeKey) as! Int]
         defEmailAddr.text = currentEmailAddress
     }
 
@@ -53,14 +53,13 @@ class SharingViewController: UIViewController {
         GenericPickerDialog(
                 pickerView: FuelTypePickerView(frame: CGRect(x: 0, y: 30, width: 300, height: 216))
             ).show(
-                startValue: fuelTypePickerValues [currentFuelTypeID],
+                startValue: fuelTypePickerValues [theVehicle.get(key: fuelTypeKey) as! Int],
                 title: "Default Fuel Type Picker"
             ) {
             (returnValue) -> Void in
             if let theFuelTypeID = returnValue {
                 self.defFuel.text = fuelTypePickerValues [theFuelTypeID]
-                currentFuelTypeID = theFuelTypeID
-                defaults.setValue(theFuelTypeID, forKey: fuelTypeKey)
+                theVehicle.set(key: fuelTypeKey, value: theFuelTypeID as NSNumber)
             }
         }
     }

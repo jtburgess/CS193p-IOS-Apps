@@ -58,7 +58,7 @@ public class GasEntry: NSManagedObject {
     // MARK: called from new (or update) GasEntry
     class func save(brand: String?, odometer: String?, toEmpty: String?,
               cost: String?, amount: String?, vehicleName: String?,
-              note: String?, fuelType: String?, date: String?,
+              note: String?, fuelTypeID: Int?, date: String?,
               cash_credit: Bool?, partial_fill: Bool?,
               validate: Bool = true) -> String {
 
@@ -68,7 +68,7 @@ public class GasEntry: NSManagedObject {
         if let gasEntry = NSEntityDescription.insertNewObject(forEntityName: "GasEntry", into: myContext) as? GasEntry {
             return gasEntry.update(brand: brand, odometer: odometer, toEmpty: toEmpty,
                    cost: cost, amount: amount, vehicleName: vehicleName,
-                   note: note, fuelType: fuelType, date: date,
+                   note: note, fuelTypeID: fuelTypeID, date: date,
                    cash_credit: cash_credit, partial_fill: partial_fill,
                    validate: validate)
         } else {
@@ -79,7 +79,7 @@ public class GasEntry: NSManagedObject {
     
     func update (brand: String?, odometer: String?, toEmpty: String?,
                        cost: String?, amount: String?, vehicleName: String?,
-                       note: String?, fuelType: String?, date: String?,
+                       note: String?, fuelTypeID: Int?, date: String?,
                        cash_credit: Bool?, partial_fill: Bool?,
                        validate: Bool = true) -> String {
 
@@ -191,7 +191,7 @@ public class GasEntry: NSManagedObject {
         self.note    = note ?? ""
         self.cash_credit = cash_credit as NSNumber?
         self.partial_fill = partial_fill as NSNumber?
-        self.fuelTypeID = currentFuelTypeID as NSNumber
+        self.fuelTypeID = fuelTypeID as NSNumber?
 
         do {
             try self.managedObjectContext?.save()
