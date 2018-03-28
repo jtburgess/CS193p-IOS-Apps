@@ -25,6 +25,27 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var vehicleName: UITextField!
     @IBOutlet weak var fuelType: UILabel!
     @IBOutlet weak var Errors: UILabel!
+    
+    // toggle buttons for Cash/Credit
+    @IBOutlet weak var cash_credit: UIButton!
+    @IBAction func CashOrCredit(_ sender: Any) {
+        if cash_credit.currentTitle == "Credit" {
+            cash_credit.setTitle("Cash", for: .normal)
+        } else {
+            cash_credit.setTitle("Credit", for: .normal)
+        }
+    }
+    
+    // ... and fill-up or partial
+    @IBOutlet weak var partial_fill: UIButton!
+    @IBAction func FillOrPartial(_ sender: Any) {
+        if partial_fill.currentTitle == "FillUp" {
+            partial_fill.setTitle("Partial", for: .normal)
+        } else {
+            partial_fill.setTitle("FillUp", for: .normal)
+        }
+    }
+
     @IBOutlet weak var extraOKbutton: UIButton!
     
     // MARK: user interface
@@ -164,9 +185,12 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     // MARK: SAVE button saves the data to CoreData
     @IBAction func saveThisEntry(_ sender: UIButton) {
         print("Enter SaveThisEntry")
+        let cashCreditBool  = (cash_credit.currentTitle == "Credit")
+        let partialFillBool = (partial_fill.currentTitle == "FillUp")
         Errors.text = GasEntry.save(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                            cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
                            note: note.text, fuelType: fuelType.text, date: date.text,
+                           cash_credit: cashCreditBool, partial_fill: partialFillBool,
                            validate: true)
         
         // force the keyboard to go away so we can see the error messages
@@ -183,9 +207,12 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     // called from the normally hidden OK button
     @IBAction func SaveWithoutValidation(_ sender: Any) {
         print("Enter Save UNVALIDATED Entry")
+        let cashCreditBool  = (cash_credit.currentTitle == "Credit")
+        let partialFillBool = (partial_fill.currentTitle == "FillUp")
         var errorMessage = GasEntry.save(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                                     cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
                                     note: note.text, fuelType: fuelType.text, date: date.text,
+                                    cash_credit: cashCreditBool, partial_fill: partialFillBool,
                                     validate: false)
         
         // force the keyboard to go away so we can see the error messages

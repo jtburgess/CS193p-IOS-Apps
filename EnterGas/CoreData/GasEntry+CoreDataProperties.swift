@@ -27,6 +27,11 @@ extension GasEntry {
     @NSManaged public var note: String?
     @NSManaged public var fuelTypeID: NSNumber?  // id of the fuelType in fuelTypePickerValues
 
+    // https://stackoverflow.com/questions/24333507/swift-coredata-can-not-set-a-bool-on-nsmanagedobject-subclass-bug
+    // coredata cant store scalars like a Bool.
+    @NSManaged public var cash_credit: NSNumber?    // true == credit
+    @NSManaged public var partial_fill: NSNumber?   // true == fillUp
+    
     @NSManaged public var brand: Brand?         // link to Brand entry
     @NSManaged public var vehicle: Vehicle?     // link to vehicleName entry
 

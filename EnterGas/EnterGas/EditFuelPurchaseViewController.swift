@@ -22,6 +22,27 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var vehicleName: UITextField!
     @IBOutlet weak var fuelType: UILabel!
     @IBOutlet weak var Errors: UILabel!
+    
+    // toggle buttons for Cash/Credit
+    @IBOutlet weak var cash_credit: UIButton!
+    @IBAction func CashOrCredit(_ sender: Any) {
+        if cash_credit.currentTitle == "Credit" {
+            cash_credit.setTitle("Cash", for: .normal)
+        } else {
+            cash_credit.setTitle("Credit", for: .normal)
+        }
+    }
+    
+    // ... and fill-up or partial
+    @IBOutlet weak var partial_fill: UIButton!
+    @IBAction func FillOrPartial(_ sender: Any) {
+        if partial_fill.currentTitle == "FillUp" {
+            partial_fill.setTitle("Partial", for: .normal)
+        } else {
+            partial_fill.setTitle("FillUp", for: .normal)
+        }
+    }
+
     @IBOutlet weak var extraOKbutton: UIButton!
     
     // the cell being edited - set by segue
@@ -51,6 +72,17 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         // retain only the first char as string
         fuelType.text = tmpStr[tmpStr.startIndex...tmpStr.startIndex]
 
+        // handle older records by assuming true for the new Bools
+        if myData?.cash_credit == nil || myData?.cash_credit as! Bool {
+            cash_credit.setTitle("Credit", for: .normal)
+        } else {
+            cash_credit.setTitle("Cash", for: .normal)
+        }
+        if myData?.partial_fill == nil || myData?.partial_fill as! Bool {
+            partial_fill.setTitle("FillUp", for: .normal)
+        } else {
+            partial_fill.setTitle("Partial", for: .normal)
+        }
         print("Edit fields initialized")
         
         Errors.text = ""
@@ -160,9 +192,13 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveThisEntry(_ sender: UIButton) {
         // add validations here so I can eliminate the '!' in the gasEntry() call
         print("Save Edit Entry")
+        let cashCreditBool  = (cash_credit.currentTitle == "Credit")
+        let partialFillBool = (partial_fill.currentTitle == "FillUp")
         Errors.text = myData!.update( brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                                     cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
-                                    note: note.text, fuelType: fuelType.text, date: date.text)
+                                    note: note.text, fuelType: fuelType.text, date: date.text,
+                                    cash_credit: cashCreditBool, partial_fill: partialFillBool,
+                                    validate: true)
         
         // force the keyboard to go away so we can see the error messages
         view.endEditing(true)
@@ -178,9 +214,12 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveWithoutValidation(_ sender: Any) {
     // called from the normally hidden OK button
         print("Enter Save UNVALIDATED Entry")
+        let cashCreditBool  = (cash_credit.currentTitle == "Credit")
+        let partialFillBool = (partial_fill.currentTitle == "FillUp")
         var errorMessage = myData!.update(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                                          cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
                                          note: note.text, fuelType: fuelType.text, date: date.text,
+                                         cash_credit: cashCreditBool, partial_fill: partialFillBool,
                                          validate: false)
         
         // force the keyboard to go away so we can see the error messages

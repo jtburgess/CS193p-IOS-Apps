@@ -59,6 +59,7 @@ public class GasEntry: NSManagedObject {
     class func save(brand: String?, odometer: String?, toEmpty: String?,
               cost: String?, amount: String?, vehicleName: String?,
               note: String?, fuelType: String?, date: String?,
+              cash_credit: Bool?, partial_fill: Bool?,
               validate: Bool = true) -> String {
 
         //print ("GasEntry SAVE")
@@ -68,6 +69,7 @@ public class GasEntry: NSManagedObject {
             return gasEntry.update(brand: brand, odometer: odometer, toEmpty: toEmpty,
                    cost: cost, amount: amount, vehicleName: vehicleName,
                    note: note, fuelType: fuelType, date: date,
+                   cash_credit: cash_credit, partial_fill: partial_fill,
                    validate: validate)
         } else {
             print ("Error creating new gasEntry")
@@ -78,6 +80,7 @@ public class GasEntry: NSManagedObject {
     func update (brand: String?, odometer: String?, toEmpty: String?,
                        cost: String?, amount: String?, vehicleName: String?,
                        note: String?, fuelType: String?, date: String?,
+                       cash_credit: Bool?, partial_fill: Bool?,
                        validate: Bool = true) -> String {
 
         //print("GasEntry UPDATE")
@@ -186,6 +189,8 @@ public class GasEntry: NSManagedObject {
         self.cost    = theCost
         self.amount  = theAmount
         self.note    = note ?? ""
+        self.cash_credit = cash_credit as NSNumber?
+        self.partial_fill = partial_fill as NSNumber?
         self.fuelTypeID = currentFuelTypeID as NSNumber
 
         do {
