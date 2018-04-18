@@ -27,8 +27,11 @@ var theVehicle = vehicleData()
 let fuelTypeKey = "fuelType"
 let cashCreditKey = "cashOrCredit"
 let partialFillKey = "partialOrFillUp"
-let favoriteBrandKey = "favBrand"
-// add min,max, ...
+let brandKey = "brand"
+// prefix min,max,tot ...
+let amtKey = "amount"
+let distKey  = "distance"
+let countKey = "count"
 
 
 // still separate, still needed?

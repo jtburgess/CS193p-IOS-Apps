@@ -161,10 +161,10 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
             ) {
                 (returnValue) -> Void in
                 if let i = returnValue {
-                    let theVehicle = VehiclePickerValues[i]
-                    self.vehicleName.text = theVehicle
-                    currentVehicle = theVehicle
-                    defaults.setValue(theVehicle, forKey: vehicleNameKey)
+                    let theVehicleName = VehiclePickerValues[i]
+                    self.vehicleName.text = theVehicleName
+                    currentVehicle = theVehicleName
+                    defaults.setValue(theVehicleName, forKey: vehicleNameKey)
                 }
         }
     }

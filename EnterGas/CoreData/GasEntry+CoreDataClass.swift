@@ -13,11 +13,11 @@ import CoreData
 public class GasEntry: NSManagedObject {
     class func RequestAll( vehicleName: String?, context: NSManagedObjectContext) -> NSArray?
     {
-        if let theVehicle = vehicleName {
+        if let theVehicleName = vehicleName {
 
             let request: NSFetchRequest<GasEntry> = GasEntry.fetchRequest()
-            if theVehicle != "all" {
-                request.predicate = NSPredicate(format: "vehicle.vehicleName = %@", theVehicle)
+            if theVehicleName != "all" {
+                request.predicate = NSPredicate(format: "vehicle.vehicleName = %@", theVehicleName)
             } // else request ALL entries
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
             
@@ -135,13 +135,13 @@ public class GasEntry: NSManagedObject {
             errors.append("Bad Amount value\n")
         }
         
-        let theVehicle = (vehicleName ?? "").trimmingCharacters(in: [" "])
-        if theVehicle == "" {
+        let theVehicleName = (vehicleName ?? "").trimmingCharacters(in: [" "])
+        if theVehicleName == "" {
             errors.append ("Please fill in a vehicle name\n")
         } else {
             // set the current and default Vehicles
-            currentVehicle = theVehicle
-            defaults.setValue(theVehicle, forKey: vehicleNameKey)
+            currentVehicle = theVehicleName
+            defaults.setValue(theVehicleName, forKey: vehicleNameKey)
         }
         
         var theDate : TimeInterval
@@ -168,7 +168,7 @@ public class GasEntry: NSManagedObject {
             self.distance =  NSDecimalNumber(value:theOdo)
         }
         
-        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicle)")
+        print ("Save this Entry: brand=\(theBrand), odo=\(theOdo), cost=\(theCost), gals=\(theAmount), vehicle=\(theVehicleName)")
         
         if errors != "" && validate {
             print ("There are errors")
@@ -179,7 +179,7 @@ public class GasEntry: NSManagedObject {
         let brandEntry = Brand.FindOrAdd(theBrand:theBrand, context:self.managedObjectContext!)
         self.brand = brandEntry
         
-        let vehicleEntry = Vehicle.FindOrAdd(theVehicle:theVehicle, context:self.managedObjectContext!)
+        let vehicleEntry = Vehicle.FindOrAdd(theVehicleName:theVehicleName, context:self.managedObjectContext!)
         vehicle = vehicleEntry
         print("created Brand and Vehicle Entity links")
         
@@ -216,13 +216,23 @@ public class GasEntry: NSManagedObject {
         }
     }
 
-    class func recalcDistances() {
+    class func recalcStats() {
         let myContext: NSManagedObjectContext = (((UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext))!
         // get the entire table, but only the current vehicles, newest first
         // then walk the array backwards, working on the Next entry, using the odometer from the Prev entry
         var gasEntryArray = (GasEntry.RequestAll( vehicleName: currentVehicle, context: myContext) as? Array<GasEntry>)!
         var thisEntry = gasEntryArray[0]
         gasEntryArray.remove(at: 0)
+        
+        // accumulators
+        var minDist = 9999
+        var maxDist = 0
+        var totDist = 0
+        var minAmt  = 9999.9
+        var maxAmt  = 0.0
+        var totAmt  = 0.0
+        var numFills = 0
+        
         for prevEntry in gasEntryArray {
             let theOdo  = OptInt.int(from: thisEntry.odometer!)
             let prevOdo = OptInt.int(from: prevEntry.odometer!)
@@ -237,9 +247,28 @@ public class GasEntry: NSManagedObject {
                     print("Core Data Save Error: \(error.code)")
                 }
             }
+
+            // update accumulators
+            minDist = min(minDist, newDistance)
+            maxDist = max(maxDist, newDistance)
+            totDist += newDistance
+            minAmt = min(minAmt, thisEntry.amount! as Double)
+            maxAmt = max(maxAmt, thisEntry.amount! as Double)
+            totAmt += thisEntry.amount! as Double
+            numFills += 1
             
             thisEntry = prevEntry
         }
+
+        print ("DIST: \(minDist),\(maxDist),\(totDist); AMT: \(minAmt),\(maxAmt),\(totAmt); count=\(numFills)")
+        theVehicle.set(key: "min"+distKey, value: minDist as NSNumber)
+        theVehicle.set(key: "max"+distKey, value: maxDist as NSNumber)
+        theVehicle.set(key: "tot"+distKey, value: totDist as NSNumber)
+        theVehicle.set(key: "min"+amtKey, value: minAmt as NSNumber)
+        theVehicle.set(key: "max"+amtKey, value: maxAmt as NSNumber)
+        theVehicle.set(key: "tot"+amtKey, value: totAmt as NSNumber)
+        theVehicle.set(key: countKey, value: numFills as NSNumber)
+        theVehicle.save()
     }
 
     class func createCSVfromDB() -> String {

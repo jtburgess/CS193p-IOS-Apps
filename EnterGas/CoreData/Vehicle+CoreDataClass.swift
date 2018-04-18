@@ -12,36 +12,36 @@ import CoreData
 @objc(Vehicle)
 public class Vehicle: NSManagedObject {
 
-    fileprivate class func New (theVehicle:String, context:NSManagedObjectContext) -> Vehicle {
+    fileprivate class func New (theVehicleName:String, context:NSManagedObjectContext) -> Vehicle {
         let vehicle = NSEntityDescription.insertNewObject(forEntityName: "Vehicle", into: context) as? Vehicle
-        print("create new Vehicle Entity: \(theVehicle).")
-        vehicle!.vehicleName = theVehicle
+        print("create new Vehicle Entity: \(theVehicleName).")
+        vehicle!.vehicleName = theVehicleName
         return vehicle!
     }
     
     // request a single vehicle. If it doesnt exist, add it
-    class func FindOrAdd(theVehicle: String, context: NSManagedObjectContext) -> Vehicle {
+    class func FindOrAdd(theVehicleName: String, context: NSManagedObjectContext) -> Vehicle {
         let request: NSFetchRequest<Vehicle> = Vehicle.fetchRequest()
-        request.predicate = NSPredicate(format: "vehicleName = %@", theVehicle)
+        request.predicate = NSPredicate(format: "vehicleName = %@", theVehicleName)
         request.sortDescriptors = [NSSortDescriptor(key: "vehicleName", ascending: true)]
         
-        print("Request Vehicle \(theVehicle)")
+        print("Request Vehicle \(theVehicleName)")
         do {
             let result =  try context.fetch(request)
             switch result.count {
             case 1:
                 return result[0] as Vehicle
             case 0:
-                let newVehicle = New (theVehicle:theVehicle, context:context)
+                let newVehicle = New (theVehicleName:theVehicleName, context:context)
                 return newVehicle
             default:
-                print("Warn: More than one (\(result.count)) Vehicle returned for \(theVehicle)")
+                print("Warn: More than one (\(result.count)) Vehicle returned for \(theVehicleName)")
                 return result[0] as Vehicle
             }
         } catch let error as NSError {
             // ToDo - add Vehicle here
             print("Vehicle Fetch error: \(error.code)")
-            return New (theVehicle:theVehicle, context:context)
+            return New (theVehicleName:theVehicleName, context:context)
         }
     }
     
