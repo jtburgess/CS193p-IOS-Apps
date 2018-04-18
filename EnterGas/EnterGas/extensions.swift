@@ -31,6 +31,7 @@ let brandKey = "brand"
 // prefix min,max,tot ...
 let amtKey = "amount"
 let distKey  = "distance"
+let costKey  = "cost"
 let countKey = "count"
 
 

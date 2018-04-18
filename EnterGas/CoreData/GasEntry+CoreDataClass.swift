@@ -231,6 +231,9 @@ public class GasEntry: NSManagedObject {
         var minAmt  = 9999.9
         var maxAmt  = 0.0
         var totAmt  = 0.0
+        var minCost  = 9999.9
+        var maxCost  = 0.0
+        var totCost  = 0.0
         var numFills = 0
         
         for prevEntry in gasEntryArray {
@@ -255,6 +258,9 @@ public class GasEntry: NSManagedObject {
             minAmt = min(minAmt, thisEntry.amount! as Double)
             maxAmt = max(maxAmt, thisEntry.amount! as Double)
             totAmt += thisEntry.amount! as Double
+            minCost = min(minCost, thisEntry.cost! as Double)
+            maxCost = max(maxCost, thisEntry.cost! as Double)
+            totCost += thisEntry.cost! as Double
             numFills += 1
             
             thisEntry = prevEntry
@@ -267,6 +273,9 @@ public class GasEntry: NSManagedObject {
         theVehicle.set(key: "min"+amtKey, value: minAmt as NSNumber)
         theVehicle.set(key: "max"+amtKey, value: maxAmt as NSNumber)
         theVehicle.set(key: "tot"+amtKey, value: totAmt as NSNumber)
+        theVehicle.set(key: "min"+costKey, value: minCost as NSNumber)
+        theVehicle.set(key: "max"+costKey, value: maxCost as NSNumber)
+        theVehicle.set(key: "tot"+costKey, value: totCost as NSNumber)
         theVehicle.set(key: countKey, value: numFills as NSNumber)
         theVehicle.save()
     }

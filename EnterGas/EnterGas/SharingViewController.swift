@@ -29,7 +29,7 @@ class SharingViewController: UIViewController {
                     defaults.setValue(theVehicleName, forKey: vehicleNameKey)
                     let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
                     let context: NSManagedObjectContext = container.viewContext
-                    _ = Vehicle.FindOrAdd(theVehicle: theVehicleName, context: context)
+                    _ = Vehicle.FindOrAdd(theVehicleName: theVehicleName, context: context)
                 }
         }
     }
@@ -88,15 +88,32 @@ class SharingViewController: UIViewController {
     @IBOutlet weak var avgCostPG: UITextField!
     @IBOutlet weak var maxCostPG: UITextField!
     
+    @IBOutlet weak var totDistance: UITextField!
+    @IBOutlet weak var totCost: UITextField!
+    @IBOutlet weak var totAmount: UITextField!
+    @IBOutlet weak var numFillups: UITextField!
+    
     private func displayStats () {
         let numFills = theVehicle.get(key: countKey) as? Double ?? 0.0
         if numFills > 0 {
-            minMPFill.text = String(format:"%.2f", theVehicle.get(key: "min"+distKey) as! Double)
-            maxMPFill.text = String(format:"%.2f", theVehicle.get(key: "max"+distKey) as! Double)
-            avgMPFill.text = String(format:"%.2f", theVehicle.get(key: "tot"+distKey) as! Double / numFills)
+            minMPFill.text = String(format:"%.1f", theVehicle.get(key: "min"+distKey) as! Double)
+            maxMPFill.text = String(format:"%.1f", theVehicle.get(key: "max"+distKey) as! Double)
+            avgMPFill.text = String(format:"%.1f", theVehicle.get(key: "tot"+distKey) as! Double / numFills)
 
+            // NOTE this is amount (gallons per fillup)
+            minMPG.text = String(format:"%.1f", theVehicle.get(key: "min"+amtKey) as! Double)
+            maxMPG.text = String(format:"%.1f", theVehicle.get(key: "max"+amtKey) as! Double)
+            avgMPG.text = String(format:"%.1f", theVehicle.get(key: "tot"+amtKey) as! Double / numFills)
+
+            // NOTE this is Cost ($$ per fillup)
+            minCostPG.text = String(format:"%.1f", theVehicle.get(key: "min"+costKey) as! Double)
+            maxCostPG.text = String(format:"%.1f", theVehicle.get(key: "max"+costKey) as! Double)
+            avgCostPG.text = String(format:"%.1f", theVehicle.get(key: "tot"+costKey) as! Double / numFills)
         }
-
+        totDistance.text = String(format:"%.0f", theVehicle.get(key: "tot"+distKey) as! Double)
+        totCost.text = String(format:"%.0f", theVehicle.get(key: "tot"+costKey) as! Double)
+        totAmount.text = String(format:"%.0f", theVehicle.get(key: "tot"+amtKey) as! Double)
+        numFillups.text = String(format:"%.0f", numFills)
     }
     
     

@@ -71,9 +71,7 @@ class EditFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         note.text = myData?.note
         vehicleName.text = myData?.vehicle?.vehicleName
         myFuelTypeID = myData?.fuelTypeID as! Int
-        let tmpStr = fuelTypePickerValues[ myFuelTypeID ]
-        // retain only the first char as string
-        fuelType.text = tmpStr[tmpStr.startIndex...tmpStr.startIndex]
+        fuelType.text = fuelTypePickerValues[ myFuelTypeID ]
 
         // handle older records by assuming true for the new Bools
         if myData?.cash_credit == nil || myData?.cash_credit as! Bool {
