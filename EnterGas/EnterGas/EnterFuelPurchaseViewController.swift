@@ -62,19 +62,35 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
 
     private func resetFields() {
         // reset fields to empty
-        brand.text = ""
+        let myBrandID = theVehicle.get(key: brandKey) as! Int
+        BrandPickerValues = Brand.RequestAll() as! [String]
+        brand.text = BrandPickerValues[myBrandID]
         odometer.text = ""
         toEmpty.text = ""
         cost.text = ""
         note.text = ""
         amount.text = ""
         Errors.text = ""
+
+        vehicleName.text = currentVehicle
         myFuelTypeID = theVehicle.get(key: fuelTypeKey) as! Int
         fuelType.text = fuelTypePickerValues [myFuelTypeID]
         if date.text == "" || date.text == "theDate" {
             self.date.text = myDate.string(from: Date.init())
         }
-        vehicleName.text = currentVehicle
+        let myCashCredit = theVehicle.get(key: cashCreditKey) as! Int
+        if myCashCredit == 0 {
+            cash_credit.setTitle("Cash", for: .normal)
+        } else {
+            cash_credit.setTitle("Credit", for: .normal)
+        }
+        let mypartialFill = theVehicle.get(key: partialFillKey) as! Int
+        if mypartialFill == 0 {
+            cash_credit.setTitle("Partial", for: .normal)
+        } else {
+            cash_credit.setTitle("Fill", for: .normal)
+        }
+
         print("fields reset")
     }
 

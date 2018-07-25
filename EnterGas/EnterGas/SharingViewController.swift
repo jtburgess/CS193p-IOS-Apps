@@ -75,6 +75,15 @@ class SharingViewController: UIViewController {
         }
     }
 
+    @IBOutlet weak var measureSystem: UIButton!
+    @IBAction func USorMetric(_ sender: Any) {
+        if measureSystem.currentTitle == "US" {
+            measureSystem.setTitle("Metric", for: .normal)
+        } else {
+            measureSystem.setTitle("US", for: .normal)
+        }
+    }
+
     // MARK: statistics
     @IBOutlet weak var minMPG: UITextField!
     @IBOutlet weak var avgMPG: UITextField!

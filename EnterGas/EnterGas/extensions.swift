@@ -28,24 +28,27 @@ let fuelTypeKey = "fuelType"
 let cashCreditKey = "cashOrCredit"
 let partialFillKey = "partialOrFillUp"
 let brandKey = "brand"
+let unitKey  = "unitType"
+
 // prefix min,max,tot ...
 let amtKey = "amount"
 let distKey  = "distance"
 let costKey  = "cost"
 let countKey = "count"
+let distPerUnitKey   = "distPerUnit"
+let costPerUnitKey   = "costPerUnit"
 
-
-// still separate, still needed?
-let emailAddressKey = "emailAddress"
-var currentEmailAddress : String = "none"
+// allow the various display strings to be localized to either the british or metric system of units
+let unitLabels: [String:[String:String]] =
+    [ "US": [
+        "mpg" : "mpg"
+        ],
+      "metric": [
+        "mpg" : "kpl"
+        ]
+    ]
 
 func getDefaults() {
-    if  let anyValue = defaults.object(forKey: emailAddressKey),
-        let tmp = anyValue as? String {
-        currentEmailAddress = tmp
-    } else {
-        // need to assign a default email address - segue to that screen
-    }
     print("TabBarDefaults did load")
 }
 
