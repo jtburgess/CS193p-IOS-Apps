@@ -28,7 +28,7 @@ let fuelTypeKey = "fuelType"
 let cashCreditKey = "cashOrCredit"
 let partialFillKey = "partialOrFillUp"
 let brandKey = "brand"
-let unitKey  = "unitType"
+let measureSystemKey  = "measurementSystem"
 
 // prefix min,max,tot ...
 let amtKey = "amount"
@@ -39,14 +39,20 @@ let distPerUnitKey   = "distPerUnit"
 let costPerUnitKey   = "costPerUnit"
 
 // allow the various display strings to be localized to either the british or metric system of units
-let unitLabels: [String:[String:String]] =
-    [ "US": [
-        "mpg" : "mpg"
+let unitLabelDict: [Int:[String:String]] =
+    [ 0: [
+        "mpg" : "mpg",
+        "dist": "mi",
+        "unit": "gal"
         ],
-      "metric": [
-        "mpg" : "kpl"
+      1: [
+        "mpg" : "kpl",
+        "dist": "km",
+        "unit": "l"
         ]
     ]
+
+var unitLabels: [String:String] = [:]
 
 func getDefaults() {
     print("TabBarDefaults did load")
@@ -82,7 +88,10 @@ class vehicleData: NSObject {
                 print ("no default fuel type")
             }
         }
-        
+
+        let measSys = self.get(key:measureSystemKey) as? Int
+        unitLabels = unitLabelDict[measSys ?? 0]!
+        print ("init measurement Sys \(String(describing: measSys))=\(unitLabels)")
     }
     func get (key:String) -> NSNumber? {
         return vehicleData[key]
@@ -98,7 +107,7 @@ class vehicleData: NSObject {
 // MARK: my custom format classes and global vars
 let myDate: MyDate = MyDate()
 let myCurrency: MyCurrency = MyCurrency()
-let currencySymbol = NSLocale.current.currencyCode!
+let currencySymbol = NSLocale.current.currencySymbol!
 
 // my date is either a string: yyyy-mm-dd, or a time-interval-since-1970
 // this subclass enforces those conversion formats / rules

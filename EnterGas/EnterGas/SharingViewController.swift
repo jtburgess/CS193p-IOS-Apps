@@ -12,6 +12,7 @@ import MessageUI
 
 class SharingViewController: UIViewController {
 
+    let PerUnit = true // eventually make this a checkBox
     // MARK: popups
     @IBAction func SelectVehiclePopup(_ sender: Any) {
         print ("set default vehicle popup")
@@ -60,18 +61,22 @@ class SharingViewController: UIViewController {
     @IBAction func CashOrCredit(_ sender: Any) {
         if cash_credit.currentTitle == "Credit" {
             cash_credit.setTitle("Cash", for: .normal)
+            theVehicle.set(key: cashCreditKey, value: 0)
         } else {
             cash_credit.setTitle("Credit", for: .normal)
+            theVehicle.set(key: cashCreditKey, value: 1)
         }
     }
     
     // ... and fill-up or partial
     @IBOutlet weak var partial_fill: UIButton!
     @IBAction func FillOrPartial(_ sender: Any) {
-        if partial_fill.currentTitle == "FillUp" {
+        if partial_fill.currentTitle == "Fill" {
             partial_fill.setTitle("Partial", for: .normal)
+            theVehicle.set(key: partialFillKey, value: 0)
         } else {
-            partial_fill.setTitle("FillUp", for: .normal)
+            partial_fill.setTitle("Fill", for: .normal)
+            theVehicle.set(key: partialFillKey, value: 1)
         }
     }
 
@@ -79,23 +84,28 @@ class SharingViewController: UIViewController {
     @IBAction func USorMetric(_ sender: Any) {
         if measureSystem.currentTitle == "US" {
             measureSystem.setTitle("Metric", for: .normal)
+            theVehicle.set(key: measureSystemKey, value: 1)
         } else {
             measureSystem.setTitle("US", for: .normal)
+            theVehicle.set(key: measureSystemKey, value: 0)
         }
     }
 
     // MARK: statistics
-    @IBOutlet weak var minMPG: UITextField!
-    @IBOutlet weak var avgMPG: UITextField!
-    @IBOutlet weak var maxMPG: UITextField!
+    @IBOutlet weak var labelUnitPerFill: UILabel!
+    @IBOutlet weak var minUnitPerFill: UITextField!
+    @IBOutlet weak var avgUnitPerFill: UITextField!
+    @IBOutlet weak var maxUnitPerFill: UITextField!
+    
+    @IBOutlet weak var labelDistPerX: UILabel!
+    @IBOutlet weak var minDistPerX: UITextField!
+    @IBOutlet weak var avgDistPerX: UITextField!
+    @IBOutlet weak var maxDistPerX: UITextField!
 
-    @IBOutlet weak var minMPFill: UITextField!
-    @IBOutlet weak var avgMPFill: UITextField!
-    @IBOutlet weak var maxMPFill: UITextField!
-
-    @IBOutlet weak var minCostPG: UITextField!
-    @IBOutlet weak var avgCostPG: UITextField!
-    @IBOutlet weak var maxCostPG: UITextField!
+    @IBOutlet weak var labelCostPerX: UILabel!
+    @IBOutlet weak var minCostPerX: UITextField!
+    @IBOutlet weak var avgCostPerX: UITextField!
+    @IBOutlet weak var maxCostPerX: UITextField!
     
     @IBOutlet weak var totDistance: UITextField!
     @IBOutlet weak var totCost: UITextField!
@@ -105,19 +115,38 @@ class SharingViewController: UIViewController {
     private func displayStats () {
         let numFills = theVehicle.get(key: countKey) as? Double ?? 0.0
         if numFills > 0 {
-            minMPFill.text = String(format:"%.1f", theVehicle.get(key: "min"+distKey) as! Double)
-            maxMPFill.text = String(format:"%.1f", theVehicle.get(key: "max"+distKey) as! Double)
-            avgMPFill.text = String(format:"%.1f", theVehicle.get(key: "tot"+distKey) as! Double / numFills)
-
             // NOTE this is amount (gallons per fillup)
-            minMPG.text = String(format:"%.1f", theVehicle.get(key: "min"+amtKey) as! Double)
-            maxMPG.text = String(format:"%.1f", theVehicle.get(key: "max"+amtKey) as! Double)
-            avgMPG.text = String(format:"%.1f", theVehicle.get(key: "tot"+amtKey) as! Double / numFills)
+            minUnitPerFill.text = String(format:"%.1f", theVehicle.get(key: "min"+amtKey) as! Double)
+            maxUnitPerFill.text = String(format:"%.1f", theVehicle.get(key: "max"+amtKey) as! Double)
+            avgUnitPerFill.text = String(format:"%.1f", theVehicle.get(key: "tot"+amtKey) as! Double / numFills)
+            labelUnitPerFill.text = unitLabels["unit"]! + "/fill"
 
-            // NOTE this is Cost ($$ per fillup)
-            minCostPG.text = String(format:"%.1f", theVehicle.get(key: "min"+costKey) as! Double)
-            maxCostPG.text = String(format:"%.1f", theVehicle.get(key: "max"+costKey) as! Double)
-            avgCostPG.text = String(format:"%.1f", theVehicle.get(key: "tot"+costKey) as! Double / numFills)
+            if PerUnit {
+                let numTrueFills = theVehicle.get(key: "True" + countKey) as? Double ?? 0.0
+                // NOTE this is distance per Unit
+                labelDistPerX.text = unitLabels["dist"]! + "/" + unitLabels["unit"]!
+                minDistPerX.text = String(format:"%.1f", theVehicle.get(key: "min"+distKey+"PU") as! Double)
+                maxDistPerX.text = String(format:"%.1f", theVehicle.get(key: "max"+distKey+"PU") as! Double)
+                avgDistPerX.text = String(format:"%.1f", theVehicle.get(key: "tot"+distKey+"PU") as! Double / numTrueFills)
+
+                // NOTE this is Cost ($$ per Unit)
+                labelCostPerX.text = currencySymbol + "/" + unitLabels["unit"]!
+                minCostPerX.text = String(format:"%.2f", theVehicle.get(key: "min"+costKey+"PU") as! Double)
+                maxCostPerX.text = String(format:"%.2f", theVehicle.get(key: "max"+costKey+"PU") as! Double)
+                avgCostPerX.text = String(format:"%.2f", theVehicle.get(key: "tot"+costKey+"PU") as! Double / numFills)
+            } else {
+                // NOTE this is distance per FillUp
+                labelDistPerX.text = unitLabels["dist"]! + "/fill"
+                minDistPerX.text = String(format:"%.1f", theVehicle.get(key: "min"+distKey) as! Double)
+                maxDistPerX.text = String(format:"%.1f", theVehicle.get(key: "max"+distKey) as! Double)
+                avgDistPerX.text = String(format:"%.1f", theVehicle.get(key: "tot"+distKey) as! Double / numFills)
+
+                // NOTE this is Cost ($$ per fillup)
+                labelCostPerX.text = currencySymbol + "/fill"
+                minCostPerX.text = String(format:"%.2f", theVehicle.get(key: "min"+costKey) as! Double)
+                maxCostPerX.text = String(format:"%.2f", theVehicle.get(key: "max"+costKey) as! Double)
+                avgCostPerX.text = String(format:"%.2f", theVehicle.get(key: "tot"+costKey) as! Double / numFills)
+            }
         }
         totDistance.text = String(format:"%.0f", theVehicle.get(key: "tot"+distKey) as! Double)
         totCost.text = String(format:"%.0f", theVehicle.get(key: "tot"+costKey) as! Double)

@@ -19,6 +19,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var toEmpty: UITextField!
     @IBOutlet weak var costLabel: UILabel!
     @IBOutlet weak var cost: UITextField!
+    @IBOutlet weak var UnitLabel: UILabel!
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var date: UITextField!
     @IBOutlet weak var note: UITextField!
@@ -39,10 +40,10 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     // ... and fill-up or partial
     @IBOutlet weak var partial_fill: UIButton!
     @IBAction func FillOrPartial(_ sender: Any) {
-        if partial_fill.currentTitle == "FillUp" {
+        if partial_fill.currentTitle == "Fill" {
             partial_fill.setTitle("Partial", for: .normal)
         } else {
-            partial_fill.setTitle("FillUp", for: .normal)
+            partial_fill.setTitle("Fill", for: .normal)
         }
     }
 
@@ -57,14 +58,18 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         getDefaults()
         resetFields()
         assignNextActions()
-        costLabel.text = "Cost (\(currencySymbol))"
+        costLabel.text = "cost (\(currencySymbol))"
+        UnitLabel.text = "amount (" + unitLabels["unit"]! + ")"
     }
 
     private func resetFields() {
         // reset fields to empty
-        let myBrandID = theVehicle.get(key: brandKey) as! Int
-        BrandPickerValues = Brand.RequestAll() as! [String]
-        brand.text = BrandPickerValues[myBrandID]
+        if let myBrandID = theVehicle.get(key: brandKey) as! Int? {
+            BrandPickerValues = Brand.RequestAll() as! [String]
+            brand.text = BrandPickerValues[myBrandID]
+        } else {
+            brand.text = ""
+        }
         odometer.text = ""
         toEmpty.text = ""
         cost.text = ""
@@ -78,17 +83,17 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
         if date.text == "" || date.text == "theDate" {
             self.date.text = myDate.string(from: Date.init())
         }
-        let myCashCredit = theVehicle.get(key: cashCreditKey) as! Int
-        if myCashCredit == 0 {
+        
+        if let myCashCredit = theVehicle.get(key: cashCreditKey) as! Int?, myCashCredit == 0 {
             cash_credit.setTitle("Cash", for: .normal)
         } else {
             cash_credit.setTitle("Credit", for: .normal)
         }
-        let mypartialFill = theVehicle.get(key: partialFillKey) as! Int
-        if mypartialFill == 0 {
-            cash_credit.setTitle("Partial", for: .normal)
+        
+        if let mypartialFill = theVehicle.get(key: partialFillKey) as! Int?, mypartialFill == 0 {
+            partial_fill.setTitle("Partial", for: .normal)
         } else {
-            cash_credit.setTitle("Fill", for: .normal)
+            partial_fill.setTitle("Fill", for: .normal)
         }
 
         print("fields reset")
@@ -205,7 +210,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveThisEntry(_ sender: UIButton) {
         print("Enter SaveThisEntry")
         let cashCreditBool  = (cash_credit.currentTitle == "Credit")
-        let partialFillBool = (partial_fill.currentTitle == "FillUp")
+        let partialFillBool = (partial_fill.currentTitle == "Fill")
         Errors.text = GasEntry.save(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                            cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
                            note: note.text, fuelTypeID: myFuelTypeID, date: date.text,
@@ -227,7 +232,7 @@ class EnterFuelPurchaseViewController: UIViewController, UITextFieldDelegate {
     @IBAction func SaveWithoutValidation(_ sender: Any) {
         print("Enter Save UNVALIDATED Entry")
         let cashCreditBool  = (cash_credit.currentTitle == "Credit")
-        let partialFillBool = (partial_fill.currentTitle == "FillUp")
+        let partialFillBool = (partial_fill.currentTitle == "Fill")
         var errorMessage = GasEntry.save(brand: brand.text, odometer: odometer.text, toEmpty: toEmpty.text,
                                     cost: cost.text, amount: amount.text, vehicleName: vehicleName.text,
                                     note: note.text, fuelTypeID: myFuelTypeID, date: date.text,

@@ -63,7 +63,7 @@ public class Brand: NSManagedObject {
                 if let brand = entry as? Brand {
                     if brand.fillups!.count > 0 {
                         brandList.append(brand.brandName)
-                        print("append brand: \(brand.brandName)")
+                        // print("append brand: \(brand.brandName)")
                     } else {
                         print("skip unused brand: \(brand.brandName)")
                     }

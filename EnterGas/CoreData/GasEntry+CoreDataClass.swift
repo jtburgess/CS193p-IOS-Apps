@@ -224,7 +224,7 @@ public class GasEntry: NSManagedObject {
         var thisEntry = gasEntryArray[0]
         gasEntryArray.remove(at: 0)
         
-        // accumulators
+        // accumulators -- per fillup
         var minDist = 9999
         var maxDist = 0
         var totDist = 0
@@ -236,11 +236,20 @@ public class GasEntry: NSManagedObject {
         var totCost  = 0.0
         var numFills = 0
         
+        // accumulators -- per unit
+        var minDistPU = 999.9
+        var maxDistPU = 0.0
+        var totDistPU = 0.0
+        var minCostPU  = 999.9
+        var maxCostPU  = 0.0
+        var totCostPU  = 0.0
+        var numTrueFillUps = 0
+        
         for prevEntry in gasEntryArray {
             let theOdo  = OptInt.int(from: thisEntry.odometer!)
             let prevOdo = OptInt.int(from: prevEntry.odometer!)
             let distance = OptInt.int(from: thisEntry.distance!)
-            let newDistance = (theOdo - prevOdo)
+            var newDistance = (theOdo - prevOdo)
             if distance != newDistance {
                 print ("distance changed for \(thisEntry.date); was \(distance), now \(newDistance)")
                 thisEntry.distance = NSDecimalNumber(value:newDistance)
@@ -263,10 +272,34 @@ public class GasEntry: NSManagedObject {
             totCost += thisEntry.cost! as Double
             numFills += 1
             
+            // update per unit values (e.g., mpg, $pg)
+            let costPerUnit = (thisEntry.cost! as Double) / (thisEntry.amount! as Double)
+            minCostPU = min(minCostPU, costPerUnit)
+            maxCostPU = max(maxCostPU, costPerUnit)
+            totCostPU += costPerUnit
+            
+            // for partials, include with next fill
+            // or since we're working backwards, include the prev with this
+            // if 2 or more partials in a row, bleah; skip em.
+            // nil is to account for entries saved before this field was added
+            if thisEntry.partial_fill == nil || thisEntry.partial_fill == 1 {
+                numTrueFillUps += 1
+                var tmpAmount = (thisEntry.amount! as Double)
+                if prevEntry.partial_fill == 0 {
+                    // assumes the previous entry's distance is correct
+                    newDistance += OptInt.int(from: prevEntry.distance!)
+                    tmpAmount   += prevEntry.amount! as Double
+                }
+                let distPerUnit = Double(newDistance) / tmpAmount
+                minDistPU = min(minDistPU, distPerUnit)
+                maxDistPU = max(maxDistPU, distPerUnit)
+                totDistPU += distPerUnit
+            }
+
             thisEntry = prevEntry
         }
 
-        print ("DIST: \(minDist),\(maxDist),\(totDist); AMT: \(minAmt),\(maxAmt),\(totAmt); count=\(numFills)")
+        print ("DIST stats : \(minDist), \(maxDist), \(totDist); AMT: \(minAmt), \(maxAmt), \(totAmt); count=\(numFills)")
         theVehicle.set(key: "min"+distKey, value: minDist as NSNumber)
         theVehicle.set(key: "max"+distKey, value: maxDist as NSNumber)
         theVehicle.set(key: "tot"+distKey, value: totDist as NSNumber)
@@ -277,6 +310,15 @@ public class GasEntry: NSManagedObject {
         theVehicle.set(key: "max"+costKey, value: maxCost as NSNumber)
         theVehicle.set(key: "tot"+costKey, value: totCost as NSNumber)
         theVehicle.set(key: countKey, value: numFills as NSNumber)
+
+        print ("DISTPUstat: \(minDistPU), \(maxDistPU), \(totDistPU); Cost PU: \(minCostPU), \(maxCostPU), \(totCostPU); count=\(numTrueFillUps)")
+        theVehicle.set(key: "min"+distKey+"PU", value: minDistPU as NSNumber)
+        theVehicle.set(key: "max"+distKey+"PU", value: maxDistPU as NSNumber)
+        theVehicle.set(key: "tot"+distKey+"PU", value: totDistPU as NSNumber)
+        theVehicle.set(key: "min"+costKey+"PU", value: minCostPU as NSNumber)
+        theVehicle.set(key: "max"+costKey+"PU", value: maxCostPU as NSNumber)
+        theVehicle.set(key: "tot"+costKey+"PU", value: totCostPU as NSNumber)
+        theVehicle.set(key: "True"+countKey, value: numTrueFillUps as NSNumber)
         theVehicle.save()
     }
 
